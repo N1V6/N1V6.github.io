@@ -25,7 +25,7 @@
 
   
 
-<link rel="canonical" href="http://example.com/2024/09/06/themes/shoka/languages/README/">
+<link rel="canonical" href="http://example.com/2024/09/06/themes/shoka/README/">
 
 
 
@@ -100,12 +100,12 @@ N1V = Blog</title>
       </div>
       <div id="imgs" class="pjax">
         <ul>
-          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gicljgocqbj20zk0m8e81.jpg"></li>
-          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gicm0n457cj20zk0m8e81.jpg"></li>
-          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giph47e9vtj20zk0m8x6l.jpg"></li>
-          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipexw3o58j20zk0m8e81.jpg"></li>
-          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giclip4jbpj20zk0m87cv.jpg"></li>
-          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipex2cdtbj20zk0m8x6p.jpg"></li>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giciuv0socj20zk0m8qes.jpg"></li>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipevgoki5j20zk0m84qp.jpg"></li>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gicljgocqbj20zk0m8e81.jpg"></li>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gicm0fdw5cj20zk0m8hdt.jpg"></li>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giclwrdwyaj20zk0m8are.jpg"></li>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipeuibk9fj20zk0m8ay2.jpg"></li>
         </ul>
       </div>
     </header>
@@ -134,7 +134,7 @@ N1V = Blog</title>
 </div>
 
     <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
-  <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/06/themes/shoka/languages/README/">
+  <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/06/themes/shoka/README/">
 
   <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="image" content="/images/avatar.jpg">
@@ -149,15 +149,34 @@ N1V = Blog</title>
   <div class="body md" itemprop="articleBody">
     
 
-    <h1 id="override-default-translations"><a class="anchor" href="#override-default-translations">#</a> Override Default Translations</h1>
-<p>If you would like to customize the default translation, you do not need to modify the translation files in the  <code>languages</code>  directory. You can override all translations using <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3MvZGF0YS1maWxlcw==">Data Files</span>.</p>
+    <h1 id="hexo-theme-shoka"><a class="anchor" href="#hexo-theme-shoka">#</a> Hexo Theme Shoka</h1>
+<h2 id="usage"><a class="anchor" href="#usage">#</a> Usage</h2>
 <ol>
+<li>Clone this repository</li>
+</ol>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cd your-blog</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/amehime/hexo-theme-shoka.git ./themes/shoka</span><br></pre></td></tr></table></figure></p>
+<ol start="2">
+<li>Make changes to the root  <code>_config.yml</code></li>
+</ol>
+<ul>
+<li>update  <code>theme</code>  fragment as  <code>shoka</code> .</li>
+</ul>
+<ol start="3">
+<li>Install the necessary plugins</li>
+</ol>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cubnBtanMuY29tL3BhY2thZ2UvaGV4by1yZW5kZXJlci1tdWx0aS1tYXJrZG93bi1pdA==">hexo-renderer-multi-markdown-it</span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cubnBtanMuY29tL3BhY2thZ2UvaGV4by1hdXRvcHJlZml4ZXI=">hexo-autoprefixer</span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cubnBtanMuY29tL3BhY2thZ2UvaGV4by1hbGdvbGlhc2VhcmNo">hexo-algoliasearch</span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cubnBtanMuY29tL3BhY2thZ2UvaGV4by1zeW1ib2xzLWNvdW50LXRpbWU=">hexo-symbols-count-time</span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cubnBtanMuY29tL3BhY2thZ2UvaGV4by1mZWVk">hexo-feed</span></li>
+</ul>
+<ol start="4">
 <li>
-<p>Creat a  <code>languages.yml</code>  in  <code>source/_data</code> .</p>
+<p>View a site configuration example in the  <code>example</code>  folder.</p>
 </li>
 <li>
-<p>Insert following codes: (be careful about the two-space indent)</p>
-<p><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># language</span></span><br><span class="line"><span class="attr">zh-CN:</span></span><br><span class="line">  <span class="comment"># items</span></span><br><span class="line">  <span class="attr">post:</span></span><br><span class="line">    <span class="attr">copyright:</span></span><br><span class="line">      <span class="comment"># the translation you perfer</span></span><br><span class="line">      <span class="attr">author:</span> <span class="string">本文博主</span></span><br><span class="line"><span class="attr">en:</span></span><br><span class="line">  <span class="attr">menu:</span></span><br><span class="line">    <span class="attr">schedule:</span> <span class="string">Calendar</span></span><br></pre></td></tr></table></figure></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9zaG9rYS5sb3N0eXUubWUvY29tcHV0ZXItc2NpZW5jZS9ub3RlL3RoZW1lLXNob2thLWRvYy8=">中文使用说明</span></p>
 </li>
 </ol>
 
@@ -207,7 +226,7 @@ N1V = Blog</title>
   </li>
   <li class="link">
     <strong>Post link: </strong>
-    <a href="http://example.com/2024/09/06/themes/shoka/languages/README/" title="">http://example.com/2024/09/06/themes/shoka/languages/README/</a>
+    <a href="http://example.com/2024/09/06/themes/shoka/README/" title="">http://example.com/2024/09/06/themes/shoka/README/</a>
   </li>
   <li class="license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
@@ -226,20 +245,20 @@ N1V = Blog</title>
     <div class="item left">
       
 
-  <a href="/2024/09/06/themes/shoka/example/source/friends/index/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva4.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipewf5l51j20zk0m8b29.jpg" title="友情链接">
+  <a href="/2024/05/20/%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84%E7%88%B1%E6%83%85/" itemprop="url" rel="prev" data-background-image="&#x2F;2024&#x2F;05&#x2F;20&#x2F;%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84%E7%88%B1%E6%83%85&#x2F;image-20240520010603680.png" title="关于我的爱情">
   <span class="type">Previous Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
-  <h3>友情链接</h3>
+  <h3>关于我的爱情</h3>
   </a>
 
     </div>
     <div class="item right">
       
 
-  <a href="/2024/09/06/themes/themes/shoka/README/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva4.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giciszlczyj20zk0m816d.jpg" title="Untitled">
+  <a href="/2024/09/06/themes/shoka/example/source/friends/index/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva3.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipevarprfj20zk0m8npd.jpg" title="友情链接">
   <span class="type">Next Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
-  <h3>Untitled</h3>
+  <h3>友情链接</h3>
   </a>
 
     </div>
@@ -258,7 +277,7 @@ N1V = Blog</title>
   <div class="panels">
     <div class="inner">
       <div class="contents panel pjax" data-title="Contents">
-          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#override-default-translations"><span class="toc-number">1.</span> <span class="toc-text"> Override Default Translations</span></a></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#hexo-theme-shoka"><span class="toc-number">1.</span> <span class="toc-text"> Hexo Theme Shoka</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#usage"><span class="toc-number">1.1.</span> <span class="toc-text"> Usage</span></a></li></ol></li></ol>
       </div>
       <div class="related panel pjax" data-title="Related">
       </div>
@@ -331,12 +350,12 @@ N1V = Blog</title>
 
   <ul id="quick">
     <li class="prev pjax">
-        <a href="/2024/09/06/themes/shoka/example/source/friends/index/" rel="prev" title="Previous Post"><i class="ic i-chevron-left"></i></a>
+        <a href="/2024/05/20/%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84%E7%88%B1%E6%83%85/" rel="prev" title="Previous Post"><i class="ic i-chevron-left"></i></a>
     </li>
     <li class="up"><i class="ic i-arrow-up"></i></li>
     <li class="down"><i class="ic i-arrow-down"></i></li>
     <li class="next pjax">
-        <a href="/2024/09/06/themes/themes/shoka/README/" rel="next" title="Next Post"><i class="ic i-chevron-right"></i></a>
+        <a href="/2024/09/06/themes/shoka/example/source/friends/index/" rel="next" title="Next Post"><i class="ic i-chevron-right"></i></a>
     </li>
     <li class="percent"></li>
   </ul>
@@ -360,24 +379,6 @@ N1V = Blog</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2024/05/16/python%E7%88%AC%E8%99%AB%EF%BC%9A%E7%9B%B4%E6%92%AD%E5%BC%B9%E5%B9%95/" title="python爬虫：直播弹幕">python爬虫：直播弹幕</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2024/09/06/themes/shoka/README/" title="Untitled">Untitled</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
     <span><a href="/2024/05/17/%E5%85%B3%E4%BA%8E%E6%88%91%E5%85%B3%E4%BA%8E%E9%82%A3%E4%BA%9B%E5%B9%B4/" title="关于我的那些年">关于我的那些年</a></span>
   </li>
 
@@ -387,34 +388,7 @@ N1V = Blog</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2024/09/06/themes/themes/shoka/README/" title="Untitled">Untitled</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2002/03/15/%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84%E8%AF%85%E5%92%92/" title="关于我的诅咒">关于我的诅咒</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2024/05/20/%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84%E7%88%B1%E6%83%85/" title="关于我的爱情">关于我的爱情</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2024/09/06/themes/themes/shoka/example0/source/friends0/index/" title="友情链接">友情链接</a></span>
+    <span><a href="/2024/09/06/themes/themes/shoka/example/source/friends/index/" title="友情链接">友情链接</a></span>
   </li>
 
       
@@ -432,7 +406,25 @@ N1V = Blog</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2024/09/06/themes/themes/shoka/languages/README/" title="Untitled">Untitled</a></span>
+    <span><a href="/2024/09/06/themes/shoka/README/" title="Untitled">Untitled</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/05/16/python%E7%88%AC%E8%99%AB%EF%BC%9A%E7%9B%B4%E6%92%AD%E5%BC%B9%E5%B9%95/" title="python爬虫：直播弹幕">python爬虫：直播弹幕</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/05/20/%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84%E7%88%B1%E6%83%85/" title="关于我的爱情">关于我的爱情</a></span>
   </li>
 
       
@@ -442,6 +434,33 @@ N1V = Blog</title>
 </div>
 
     <span><a href="/2024/09/06/themes/shoka/example/source/friends/index/" title="友情链接">友情链接</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2002/03/15/%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84%E8%AF%85%E5%92%92/" title="关于我的诅咒">关于我的诅咒</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/09/06/themes/themes/shoka/README/" title="Untitled">Untitled</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/09/06/themes/themes/shoka/languages/README/" title="Untitled">Untitled</a></span>
   </li>
 
   </ul>
@@ -472,7 +491,7 @@ N1V = Blog</title>
   </div>
 <script data-config type="text/javascript">
   var LOCAL = {
-    path: '2024/09/06/themes/shoka/languages/README/',
+    path: '2024/09/06/themes/shoka/README/',
     favicon: {
       show: "（●´3｀●）Goooood",
       hide: "(´Д｀)Booooom"
