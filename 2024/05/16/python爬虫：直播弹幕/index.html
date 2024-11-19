@@ -174,8 +174,7 @@ N1V = Blog</title>
 <h2 id="2-playwright"><a class="anchor" href="#2-playwright">#</a> 2. playwright</h2>
 <p>playwright 库是一个用于自动化浏览器操作的库。</p>
 <p>下面是一个简单的例子。</p>
-<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> playwright.sync_api <span class="keyword">import</span> sync_playwright</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">run</span>(<span class="params">playwright</span>):</span><br><span class="line">    <span class="comment"># 启动Chromium浏览器</span></span><br><span class="line">    browser = playwright.chromium.launch(headless=<span class="literal">False</span>)</span><br><span class="line">    <span class="comment"># 创建一个新的浏览器页面</span></span><br><span class="line">    page = browser.new_page()</span><br><span class="line">    <span class="comment"># 导航到一个网页</span></span><br><span class="line">    page.goto(<span class="string">&#x27;https://example.com&#x27;</span>)</span><br><span class="line">    <span class="comment"># 截图保存页面</span></span><br><span class="line">    page.screenshot(path=<span class="string">&#x27;example.png&#x27;</span>)</span><br><span class="line">    <span class="comment"># 关闭浏览器</span></span><br><span class="line">    browser.close()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用Playwright运行自动化脚本</span></span><br><span class="line"><span class="keyword">with</span> sync_playwright() <span class="keyword">as</span> playwright:</span><br><span class="line">    run(playwright)</span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
-<h2 id="3数据处理"><a class="anchor" href="#3数据处理">#</a> 3. 数据处理</h2>
+<figure class="highlight python"><figcaption data-lang="python"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">from</span> playwright<span class="token punctuation">.</span>sync_api <span class="token keyword">import</span> sync_playwright</pre></td></tr><tr><td data-num="2"></td><td><pre></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token keyword">def</span> <span class="token function">run</span><span class="token punctuation">(</span>playwright<span class="token punctuation">)</span><span class="token punctuation">:</span></pre></td></tr><tr><td data-num="4"></td><td><pre>    <span class="token comment"># 启动 Chromium 浏览器</span></pre></td></tr><tr><td data-num="5"></td><td><pre>    browser <span class="token operator">=</span> playwright<span class="token punctuation">.</span>chromium<span class="token punctuation">.</span>launch<span class="token punctuation">(</span>headless<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="6"></td><td><pre>    <span class="token comment"># 创建一个新的浏览器页面</span></pre></td></tr><tr><td data-num="7"></td><td><pre>    page <span class="token operator">=</span> browser<span class="token punctuation">.</span>new_page<span class="token punctuation">(</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="8"></td><td><pre>    <span class="token comment"># 导航到一个网页</span></pre></td></tr><tr><td data-num="9"></td><td><pre>    page<span class="token punctuation">.</span>goto<span class="token punctuation">(</span><span class="token string">'https://example.com'</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="10"></td><td><pre>    <span class="token comment"># 截图保存页面</span></pre></td></tr><tr><td data-num="11"></td><td><pre>    page<span class="token punctuation">.</span>screenshot<span class="token punctuation">(</span>path<span class="token operator">=</span><span class="token string">'example.png'</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="12"></td><td><pre>    <span class="token comment"># 关闭浏览器</span></pre></td></tr><tr><td data-num="13"></td><td><pre>    browser<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="14"></td><td><pre></pre></td></tr><tr><td data-num="15"></td><td><pre><span class="token comment"># 使用 Playwright 运行自动化脚本</span></pre></td></tr><tr><td data-num="16"></td><td><pre><span class="token keyword">with</span> sync_playwright<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">as</span> playwright<span class="token punctuation">:</span></pre></td></tr><tr><td data-num="17"></td><td><pre>    run<span class="token punctuation">(</span>playwright<span class="token punctuation">)</span></pre></td></tr></table></figure><h2 id="3数据处理"><a class="anchor" href="#3数据处理">#</a> 3. 数据处理</h2>
 <p>最难的一步，一直懵懵懂懂的，搞不来，慢慢学习吧</p>
 <p>protobuf 协议</p>
 
@@ -244,7 +243,7 @@ N1V = Blog</title>
     <div class="item left">
       
 
-  <a href="/2002/03/15/%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84%E8%AF%85%E5%92%92/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva3.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipeudstjqj20zk0m8k3r.jpg" title="关于我的诅咒">
+  <a href="/2002/03/15/%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84%E8%AF%85%E5%92%92/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva3.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicliierfjj20zk0m8npd.jpg" title="关于我的诅咒">
   <span class="type">Previous Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
   <h3>关于我的诅咒</h3>
@@ -378,7 +377,7 @@ N1V = Blog</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2024/05/16/python%E7%88%AC%E8%99%AB%EF%BC%9A%E7%9B%B4%E6%92%AD%E5%BC%B9%E5%B9%95/" title="python爬虫：直播弹幕">python爬虫：直播弹幕</a></span>
+    <span><a href="/2024/11/16/JavaScript%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" title="JavaScript代码审计">JavaScript代码审计</a></span>
   </li>
 
       
@@ -396,24 +395,6 @@ N1V = Blog</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2024/05/17/%E5%85%B3%E4%BA%8E%E6%88%91%E5%85%B3%E4%BA%8E%E9%82%A3%E4%BA%9B%E5%B9%B4/" title="关于我的那些年">关于我的那些年</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2024/05/20/%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84%E7%88%B1%E6%83%85/" title="关于我的爱情">关于我的爱情</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
     <span><a href="/2002/03/15/%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84%E8%AF%85%E5%92%92/" title="关于我的诅咒">关于我的诅咒</a></span>
   </li>
 
@@ -423,7 +404,25 @@ N1V = Blog</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2024/11/16/JavaScript%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" title="JavaScript代码审计">JavaScript代码审计</a></span>
+    <span><a href="/2024/05/17/%E5%85%B3%E4%BA%8E%E6%88%91%E5%85%B3%E4%BA%8E%E9%82%A3%E4%BA%9B%E5%B9%B4/" title="关于我的那些年">关于我的那些年</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/05/16/python%E7%88%AC%E8%99%AB%EF%BC%9A%E7%9B%B4%E6%92%AD%E5%BC%B9%E5%B9%95/" title="python爬虫：直播弹幕">python爬虫：直播弹幕</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/05/20/%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84%E7%88%B1%E6%83%85/" title="关于我的爱情">关于我的爱情</a></span>
   </li>
 
   </ul>
