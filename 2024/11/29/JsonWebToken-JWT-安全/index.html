@@ -1,0 +1,690 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="记录·分享·碎碎念·电子墓碑" href="http://example.com/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="记录·分享·碎碎念·电子墓碑" href="http://example.com/atom.xml" />
+<link rel="alternate" type="application/json" title="记录·分享·碎碎念·电子墓碑" href="http://example.com/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="Penetration,JWT,权限绕过" />
+
+
+<link rel="canonical" href="http://example.com/2024/11/29/JsonWebToken-JWT-%E5%AE%89%E5%85%A8/">
+
+
+
+  <title>
+Json Web Token(JWT)安全 |
+N1V = 记录·分享·碎碎念·电子墓碑</title>
+<meta name="generator" content="Hexo 7.2.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">Json Web Token(JWT)安全
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="创建时间：2024-11-29 00:00:00">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">发表于</span>
+    <time itemprop="dateCreated datePublished" datetime="2024-11-29T00:00:00+08:00">2024-11-29</time>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="切换导航栏">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">N1V</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+          <img src="/2024/11/29/JsonWebToken-JWT-%E5%AE%89%E5%85%A8/cover.png">
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">首页</a></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN">
+  <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/29/JsonWebToken-JWT-%E5%AE%89%E5%85%A8/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/avatar.jpg">
+    <meta itemprop="name" content="N1U">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="记录·分享·碎碎念·电子墓碑">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h1 id="什么是jwt"><a class="anchor" href="#什么是jwt">#</a> 什么是 JWT</h1>
+<p>**JWT（JSON Web Token）** 是一种开放标准（RFC 7519），用于在网络应用环境中传递声明和验证信息的 compact URL-safe 标记。它广泛应用于 <code>身份认证</code> 和 <code>授权</code> 的场景，尤其是在 Web 应用和 API 认证中。</p>
+<p>在 web 中经常遇到 JWT 进行身份验证和识别，比如某个请求包的 cookie 或 session 就会包含 JWT。JWT 最显著的特征是  <code>ey</code>  开头，且三段数据被两个 <code>.</code>  隔开，比如</p>
+<pre><code class="language-JWT">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiaGksYnJvISIsImlhdCI6MTczMjgwOTYwMH0.huUcP1qz1hQhktX22tvOV9OImb_MK68SQJ7Kp8t7g48
+</code></pre>
+<p>这是因为 JWT 的原始数据是 JSON 格式的，而 JSON 数据是由 <code>&#123;&quot;&lt;data&gt;&quot;&#125;</code>  进行包裹的， <code>&#123;&quot;</code>  经过 base64 编码后的字符串就是以 <code>ey</code>  开头的。</p>
+<p><img data-src="image-20241129010454828.png" alt="image-20241129010454828"></p>
+<blockquote>
+<p>上图中，左边是编码后的数据，右边是原始数据</p>
+</blockquote>
+<h2 id="jwt的结构"><a class="anchor" href="#jwt的结构">#</a> JWT 的结构</h2>
+<p>JWT 由三部分组成，每一部分都经过 Base64Url 编码，中间用 <code>.</code>  分隔：</p>
+<ol>
+<li><strong>Header（头部）</strong>：
+<ul>
+<li>Header 通常由两部分组成： <code>alg</code> （签名算法）和 <code>typ</code> （令牌类型）。最常见的签名算法是 HMAC SHA256。</li>
+<li>示例： <code>&#123;&quot;alg&quot;: &quot;HS256&quot;, &quot;typ&quot;: &quot;JWT&quot;&#125;</code></li>
+</ul>
+</li>
+<li><strong>Payload（载荷）</strong>：
+<ul>
+<li>Payload 部分包含声明（Claims）。声明是关于实体（通常是用户）和其他数据的元数据，也是 JWT 的主要有效内容。</li>
+<li>示例： <code>&#123;&quot;name&quot;: &quot;admin&quot;, &quot;iat&quot;: 1732809600&#125;</code></li>
+</ul>
+</li>
+<li><strong>Signature（签名）</strong>：
+<ul>
+<li>使用 <code>密钥</code> （通常是服务器端保密的）和指定的 <code>签名算法</code> （例如 HMAC SHA256）对 Header 和 Payload 进行签名。签名确保 JWT 的内容没有被篡改。</li>
+<li>签名生成过程： <code>HMACSHA256( base64UrlEncode(header) + &quot;.&quot; + base64UrlEncode(payload), secretKey)</code></li>
+<li>由上面的生成算法我们可以得知，只要 <code>header</code>  和 <code>payload</code>  改变了，最后的 <code>signature</code>  也随之改变，所以 signatue 字段主要起到签名的作用，接收方可以验证 JWT 的完整性，并确保数据是由合法的服务端生成的。</li>
+</ul>
+</li>
+</ol>
+<h2 id="jwt的工作原理"><a class="anchor" href="#jwt的工作原理">#</a> JWT 的工作原理</h2>
+<ol>
+<li><strong>用户登录，服务器生成 JWT</strong>*</li>
+</ol>
+<ul>
+<li>
+<p>用户在客户端提交其用户名和密码。</p>
+</li>
+<li>
+<p>服务器验证用户的凭证（例如查数据库验证密码是否正确）。</p>
+</li>
+<li>
+<p>如果凭证正确，服务器生成一个 JWT，通常包括用户的 ID、角色、权限等信息，并将此 JWT 返回给客户端。这个 JWT 包含了关于用户身份和授权的数据。</p>
+<p>例如，生成的 JWT 可能包含以下信息：</p>
+<ul>
+<li><code>sub</code> （subject）：用户 ID</li>
+<li><code>role</code> （角色）：用户角色（如 admin、user 等）</li>
+<li><code>exp</code> （过期时间）：JWT 的有效期限</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li><strong>客户端存储 JWT</strong></li>
+</ol>
+<ul>
+<li>客户端（浏览器或移动应用）接收到 JWT 后，通常将其存储在本地存储（如 <code>localStorage</code>  或 <code>sessionStorage</code> ）中，或者在 HTTP 请求中将其存储为 Cookie（最好设置为 HTTP-only 和 Secure 属性，以提高安全性）。</li>
+</ul>
+<ol start="3">
+<li><strong>客户端发起请求，携带 JWT</strong></li>
+</ol>
+<ul>
+<li>
+<p>当客户端需要访问受保护的资源时，它会在请求的 <code>Authorization</code>  头部携带 JWT。通常使用 <code>Bearer</code>  模式：</p>
+<figure class="highlight http"><figcaption data-lang="HTTP"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token header"><span class="token header-name keyword">Authorization</span><span class="token punctuation">:</span> <span class="token header-value">Bearer &lt;JWT></span></span></pre></td></tr></table></figure></li>
+</ul>
+<ol start="4">
+<li><strong>服务器验证 JWT</strong>*</li>
+</ol>
+<ul>
+<li>服务器接收到请求后，会从 <code>Authorization</code>  头部提取 JWT。</li>
+<li>服务器使用预设的密钥（或者公钥，如果使用非对称加密的话）验证 JWT 的签名是否正确，以确保请求未被篡改。如果签名验证成功，服务器还会检查 JWT 中的 <code>exp</code>  等声明，确保 JWT 没有过期。</li>
+<li>补充一下，验证过程其实是客户端发来的 <code>signature</code>  与服务器自己用密钥重新计算得到的 <code>signature</code>  进行比较的过程，并不依赖于 “加解密” 的操作，而是 “ <code>签名验证</code> ”。非对称加密的话，就用私钥进行签名，公钥来验证。</li>
+</ul>
+<ol start="5">
+<li><strong>服务器响应请求</strong></li>
+</ol>
+<ul>
+<li>如果 JWT 验证通过且有效，服务器将允许访问受保护资源并返回相应的数据（例如用户信息、API 数据等）。</li>
+<li>如果验证失败或 JWT 无效（如签名错误、过期等），服务器将返回 401 Unauthorized 错误，要求用户重新登录。</li>
+</ul>
+<h3 id="jwt的优点"><a class="anchor" href="#jwt的优点">#</a> JWT 的优点</h3>
+<ul>
+<li><strong>无状态</strong>：JWT 包含了所有用户的身份信息，因此服务器不需要存储会话状态，减少了服务器负担。</li>
+<li><strong>跨域支持</strong>：JWT 是自包含的，可以在不同的系统和服务之间进行传输，特别适用于跨域请求。</li>
+<li><strong>灵活性</strong>：JWT 可以承载多种自定义数据，适合用于分布式系统中不同服务之间的认证与授权。所以 JWT 还可用于 SSO 登录（单点登录）。</li>
+</ul>
+<h1 id="jwt存在的安全问题"><a class="anchor" href="#jwt存在的安全问题">#</a> JWT 存在的安全问题</h1>
+<h2 id="签名算法"><a class="anchor" href="#签名算法">#</a> 签名算法</h2>
+<p>JWT 的 <code>header</code>  部分包含一个 <code>alg</code>  字段，它指定了签名的算法，例如 <code>HS256</code> （HMAC SHA-256）、 <code>RS256</code> （RSA 签名）等。</p>
+<h3 id="none算法漏洞"><a class="anchor" href="#none算法漏洞">#</a> none 算法漏洞</h3>
+<p>如果 <code>alg</code>  字段被恶意修改为 <code>none</code> ，<strong>JWT 将被认为是未签名的</strong>，从而使得任何人都可以篡改 <code>payload</code>  而不影响 JWT 的有效性。比如：</p>
+<p><strong>header：</strong></p>
+<pre><code>&#123;&quot;typ&quot;: &quot;JWT&quot;, &quot;alg&quot;: &quot;none&quot;&#125;
+</code></pre>
+<p><strong>payload：</strong></p>
+<pre><code>&#123;&quot;user&quot;:&quot;admin&quot;, &quot;iat&quot;:1730000000&#125;
+</code></pre>
+<p>此时 signature 字段可以省略。</p>
+<p>对两个字段进行处理 ： <code>base64(header).base64(payload).</code>   生成 JWT</p>
+<pre><code>eyJ0eXAiOiAiSldUIiwgImFsZyI6ICJub25lIn0.eyJ1c2VyIjoiYWRtaW4iLCAiaWF0IjoxNzMwMDAwMDAwfQ.
+</code></pre>
+<blockquote>
+<p>要注意的是，JWT 使用的 base64 编码算法为 <code>base64UrlEncode</code> ，要把 base64 编码后的 <code>=</code>  去掉；同时要注意 JWT 中 <code>base64(payload)</code>  后的 <code>.</code>  不能省略</p>
+</blockquote>
+<p>此时就可以自由修改 payload 的内容，用生成的恶意 JWT 代替原始 JWT 去进行权限绕过了。</p>
+<h3 id="将非对称加密算法替换为对称加密算法"><a class="anchor" href="#将非对称加密算法替换为对称加密算法">#</a> 将非对称加密算法替换为对称加密算法</h3>
+<p>从上文提到的 JWT 工作原理中，我们可以得知：JWT 在进行身份验证的时候，是通过 <code>alg</code>  指定算法的密钥（或公钥）进行签名验证的。</p>
+<p>alg 算法可以是对称加密（如 HMAC），也可以是非对称加密 (如 RSA)。</p>
+<p>如果是 <code>对称加密算法</code> ：</p>
+<ul>
+<li>用密钥签名</li>
+<li>用同一个密钥验证</li>
+</ul>
+<p>如果是 <code>非对称加密算法</code> ：</p>
+<ul>
+<li>用私钥签名</li>
+<li>用公钥验证</li>
+</ul>
+<p>如果一个 web 应用程序使用 RS256 (非对称加密算法) 进行 JWT 的签名验证，则签名时调用 <code>RS256_sign(private_key, data)</code> ，验证时调用 <code>RS256_verify(public_key, data)</code> ，如果这时候我们把 <code>alg</code>  字段修改为 <code>HS256</code>  (对称加密算法)，它就会在验证时调用  <code>HS256(public_key, data)</code> ，上面我们提到，用对称加密算法签名验证时使用的是同一个密钥，所以，我们要用 public_key (也就是 RS256 的公钥) 对 data 进行签名，而不是用 private_key，因为我们通过修改 <code>alg</code>  把非对称加密算法换成了对称加密算法，这时候就能通过验证。</p>
+<p>因此我们需要获得 public_key，这个公钥可能藏在 JS 代码中，或者通过目录扫描发现的文件里等等。</p>
+<p>所以这个漏洞的利用要满足两个条件：</p>
+<ul>
+<li>alg 可修改并且修改后也起作用</li>
+<li>获得非对称加密的公钥</li>
+</ul>
+<h2 id="kid字段"><a class="anchor" href="#kid字段">#</a> kid 字段</h2>
+<p>在 JWT 的 header 中，除了常见的 alg 和 type，还有一个可选字段 <code>kid</code> ，用于指明签名时使用哪个密钥。</p>
+<p>有时候服务端使用多对密钥对（例如多个 RSA 公钥私钥），并且每个公钥都有一个唯一标识符 <code>kid</code> ，当服务器生成 JWT 时，可以在 header 中加上 <code>kid</code>  字段，指明验证 JWT 签名时使用哪个公钥进行验证。</p>
+<p>比如：</p>
+<ul>
+<li><code>&quot;kid&quot;: &quot;abc123&quot;</code> ：指示该 JWT 是用  <code>abc123</code>  对应的密钥签名的。</li>
+<li><code>&quot;kid&quot;: &quot;xyz789&quot;</code> ：指示该 JWT 是用  <code>xyz789</code>  对应的密钥签名的。</li>
+</ul>
+<h3 id="目录遍历"><a class="anchor" href="#目录遍历">#</a> 目录遍历</h3>
+<p>如果  <code>kid</code>  被用来从文件系统中加载公钥（如  <code>/keys/$&#123;kid&#125;.pem</code> ）的话，攻击者可以构造恶意的 kid 字段，造成目录遍历漏洞。通常情况下我们进行目录遍历是为了未授权获取某些文件，但在 JWT 中则是为了 <code>绕过</code> 。</p>
+<p>比如某个 JWT 的 headr 字段是这样的：</p>
+<pre><code>&#123;
+  &quot;typ&quot;: &quot;JWT&quot;,
+  &quot;alg&quot;: &quot;HS256&quot;,
+  &quot;kid&quot;: &quot;0001&quot;
+&#125;
+</code></pre>
+<p>此时服务端会去文件系统中取标识符为 0001 的密钥进行签名，我们假设公钥文件位于 <code>/var/www/html/publickey/0001</code> ，我们可以通过修改 kid，让公钥变成我们已知内容的文件，比如构造 <code>&quot;kid&quot;: &quot;../../../../var/null&quot;</code> ，此时公钥就是 /var/www/html/publickey/../../../../var/null，也就是 <code>/var/null</code> ，我们知道 /var/null 文件在 Linux 中是个特殊的文件，它永远为空，所以密钥是空的，既然已知密钥了，此时就可以构造恶意的 JWT 去进行绕过。</p>
+<pre><code>&#123;
+  &quot;typ&quot;: &quot;JWT&quot;,
+  &quot;alg&quot;: &quot;HS256&quot;,
+  &quot;kid&quot;: &quot;../../../../var/null&quot;
+&#125;
+</code></pre>
+<p><img data-src="image-20241130232906158.png" alt="image-20241130232906158"></p>
+<p>不只是 /dev/null 文件，只要服务器中存在某个可读文件，且你可以知道内容，那么也可以当作密钥，比如最常见的就是 js、css 文件了。</p>
+<h3 id="sql注入"><a class="anchor" href="#sql注入">#</a> SQL 注入</h3>
+<p>如果密钥文件是存储在数据库里，kid 获取密钥文件需要运行 sql 语句，那么攻击者也可以构造恶意的 kid 造成 sql 注入。比如：</p>
+<figure class="highlight sql"><figcaption data-lang="SQL"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">SELECT</span> public_key <span class="token keyword">FROM</span> <span class="token keyword">keys</span> <span class="token keyword">WHERE</span> kid <span class="token operator">=</span> <span class="token string">'&lt;kid>'</span><span class="token punctuation">;</span></pre></td></tr></table></figure><p>攻击者在 kid 注入下面内容：</p>
+<pre><code class="language-jwt">&#123;
+  &quot;kid&quot;: &quot;1' OR 1=1 -- &quot;
+&#125;
+</code></pre>
+<p>导致查询变成：</p>
+<figure class="highlight sql"><figcaption data-lang="SQL"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">SELECT</span> public_key <span class="token keyword">FROM</span> <span class="token keyword">keys</span> <span class="token keyword">WHERE</span> kid <span class="token operator">=</span> <span class="token string">'1'</span> <span class="token operator">OR</span> <span class="token number">1</span><span class="token operator">=</span><span class="token number">1</span> <span class="token comment">-- ';</span></pre></td></tr></table></figure><p>但要记住我们的目的是 <code>绕过</code> ，所以要让 public_key 成为我们已知的值。可以这样构造： <code>&quot;kid&quot;: &quot;-1' union select 'aaa' -- &quot;</code> ，这时候密钥就是 <code>aaa</code>  了。</p>
+<h2 id="jku字段"><a class="anchor" href="#jku字段">#</a> jku 字段</h2>
+<p>在 JWT 中， <code>jku</code>  是一个可选的 header 字段，代表 <strong>JWK Set URL</strong>（JSON Web Key Set URL）。它的作用是指向一个 URI，该 URI 返回包含公钥的 JSON Web 密钥集（JWK Set），用来验证 JWT 的签名。当  <code>jku</code>  被使用时，签名的验证过程将通过这个 URL 获取到的公钥来进行。</p>
+<p>就像下面这样：</p>
+<figure class="highlight json"><figcaption data-lang="JSON"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="2"></td><td><pre>  <span class="token property">"alg"</span><span class="token operator">:</span> <span class="token string">"RS256"</span><span class="token punctuation">,</span></pre></td></tr><tr><td data-num="3"></td><td><pre>  <span class="token property">"typ"</span><span class="token operator">:</span> <span class="token string">"JWT"</span><span class="token punctuation">,</span></pre></td></tr><tr><td data-num="4"></td><td><pre>  <span class="token property">"jku"</span><span class="token operator">:</span> <span class="token string">"https://example.com/jwks.json"</span></pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>看了这里，你应该知道怎么去构造恶意的 jku 了，其实就像文件包含漏洞一样，你可以修改 jku 让它指向一个恶意的 URL，达到将密钥修改成已知内容的目的。但首先我们得知道这个 jwks.json 是个什么样格式的文件。</p>
+<p>jku 返还的内容是 JSON Web 密钥集（JWK Set）通常用于存储公钥，格式如下：</p>
+<figure class="highlight json"><figcaption data-lang="JSON"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="2"></td><td><pre>  <span class="token property">"keys"</span><span class="token operator">:</span> <span class="token punctuation">[</span></pre></td></tr><tr><td data-num="3"></td><td><pre>    <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="4"></td><td><pre>      <span class="token property">"kty"</span><span class="token operator">:</span> <span class="token string">"RSA"</span><span class="token punctuation">,</span></pre></td></tr><tr><td data-num="5"></td><td><pre>      <span class="token property">"use"</span><span class="token operator">:</span> <span class="token string">"sig"</span><span class="token punctuation">,</span></pre></td></tr><tr><td data-num="6"></td><td><pre>      <span class="token property">"kid"</span><span class="token operator">:</span> <span class="token string">"0001"</span><span class="token punctuation">,</span></pre></td></tr><tr><td data-num="7"></td><td><pre>      <span class="token property">"n"</span><span class="token operator">:</span> <span class="token string">"oTtAXRgdJ6Pu0jr3hK3opCF5uqKWKbm4KkqIiDJSEsQ4PnAz14P_aJnfnsQwgchFGN95cfCO7euC8HjT-u5WHHDn08GQ7ot6Gq6j-fbwMdRWjLC74XqQ0JNDHRJoM4bbj4i8FaBdYKvKmnJ8eSeEjA0YrG8KuTOPbLsglADUubNw9kggRIvj6au88dnBJ9HeZ27QVVFaIllZpMITtocuPkOKd8bHzkZzKN4HJtM0hgzOjeyCfqZxh1V8LybliWDXYivUqmvrzchzwXTAQPJBBfYo9BO6D4Neui8rGbc49OBCnHLCWtPH7m7xp3cz-PbVnLhRczzsQE_3escvTF0FGw"</span><span class="token punctuation">,</span></pre></td></tr><tr><td data-num="8"></td><td><pre>      <span class="token property">"e"</span><span class="token operator">:</span> <span class="token string">"AQAB"</span><span class="token punctuation">,</span></pre></td></tr><tr><td data-num="9"></td><td><pre>      <span class="token property">"alg"</span><span class="token operator">:</span> <span class="token string">"RS256"</span></pre></td></tr><tr><td data-num="10"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="11"></td><td><pre>  <span class="token punctuation">]</span></pre></td></tr><tr><td data-num="12"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><blockquote>
+<p>其中（n,e）是 RSA 的公钥</p>
+</blockquote>
+<p>那如何生成这样的 jwk set 呢？</p>
+<h3 id="生成jwk-set-的步骤"><a class="anchor" href="#生成jwk-set-的步骤">#</a> 生成 JWK Set 的步骤</h3>
+<h4 id="步骤-1使用-openssl-生成-rsa-密钥对"><a class="anchor" href="#步骤-1使用-openssl-生成-rsa-密钥对">#</a> 步骤 1：使用 OpenSSL 生成 RSA 密钥对</h4>
+<ol>
+<li>
+<p><strong>生成私钥</strong>：首先，你需要生成一个 RSA 私钥。可以使用以下命令生成一个 2048 位的私钥文件：</p>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre>openssl genpkey <span class="token parameter variable">-algorithm</span> RSA <span class="token parameter variable">-out</span> private_key.pem <span class="token parameter variable">-aes256</span> <span class="token parameter variable">-pkeyopt</span> rsa_keygen_bits:2048</pre></td></tr></table></figure><p>这会生成一个加密的 RSA 私钥，并将其保存在  <code>private_key.pem</code>  文件中。你也可以选择不使用密码加密：</p>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre>openssl genpkey <span class="token parameter variable">-algorithm</span> RSA <span class="token parameter variable">-out</span> private_key.pem <span class="token parameter variable">-pkeyopt</span> rsa_keygen_bits:2048</pre></td></tr></table></figure></li>
+<li>
+<p><strong>导出公钥</strong>：一旦生成了私钥，你可以从私钥中提取公钥。可以使用以下命令：</p>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre>openssl rsa <span class="token parameter variable">-in</span> private_key.pem <span class="token parameter variable">-pubout</span> <span class="token parameter variable">-out</span> public_key.pem</pre></td></tr></table></figure><p>这会生成一个未加密的公钥文件  <code>public_key.pem</code> 。</p>
+</li>
+</ol>
+<h4 id="步骤-2提取-n-和-e"><a class="anchor" href="#步骤-2提取-n-和-e">#</a> 步骤 2：提取  <code>n</code>  和  <code>e</code></h4>
+<p>要从公钥中提取出 RSA 公钥的模数 ( <code>n</code> ) 和公钥指数 ( <code>e</code> )，你可以使用以下命令：</p>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre>openssl rsa <span class="token parameter variable">-in</span> private_key.pem <span class="token parameter variable">-pubout</span> <span class="token parameter variable">-text</span></pre></td></tr></table></figure><p>这个命令将显示 RSA 公钥的详细信息，其中包含  <code>n</code>  和  <code>e</code>  的值。例如，输出结果可能如下：</p>
+<figure class="highlight ruby"><figcaption data-lang="ruby"></figcaption><table><tr><td data-num="1"></td><td><pre>Public<span class="token operator">-</span>Key <span class="token punctuation">(</span><span class="token number">2048</span> bit<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token symbol">Modulus</span><span class="token operator">:</span></pre></td></tr><tr><td data-num="3"></td><td><pre>    <span class="token number">00</span><span class="token symbol">:ad</span><span class="token operator">:</span><span class="token number">3</span>e<span class="token symbol">:ed</span><span class="token operator">:</span><span class="token number">93</span><span class="token operator">:</span><span class="token number">2</span>d<span class="token operator">:</span><span class="token number">4</span>d<span class="token operator">:</span><span class="token number">3</span>e<span class="token operator">:</span><span class="token number">56</span><span class="token symbol">:bb</span><span class="token operator">:</span>fd<span class="token operator">:</span><span class="token number">67</span><span class="token operator">:</span><span class="token number">16</span><span class="token symbol">:a6</span><span class="token operator">:</span><span class="token number">7</span>a<span class="token operator">:</span></pre></td></tr><tr><td data-num="4"></td><td><pre>    <span class="token number">14</span><span class="token symbol">:ae</span><span class="token operator">:</span><span class="token number">3</span>c<span class="token symbol">:a9</span><span class="token operator">:</span><span class="token number">31</span><span class="token operator">:</span><span class="token number">47</span><span class="token operator">:</span><span class="token number">64</span><span class="token operator">:</span><span class="token number">6</span>b<span class="token operator">:</span><span class="token number">77</span><span class="token symbol">:fa</span><span class="token operator">:</span><span class="token number">60</span><span class="token symbol">:ae</span><span class="token operator">:</span><span class="token number">69</span><span class="token operator">:</span><span class="token number">72</span><span class="token symbol">:ac</span><span class="token operator">:</span></pre></td></tr><tr><td data-num="5"></td><td><pre>    <span class="token operator">...</span></pre></td></tr><tr><td data-num="6"></td><td><pre><span class="token symbol">Exponent</span><span class="token operator">:</span> <span class="token number">65537</span> <span class="token punctuation">(</span><span class="token number">0x10001</span><span class="token punctuation">)</span></pre></td></tr></table></figure><ul>
+<li><strong>Modulus ( <code>n</code> )</strong> 是一个长整数，它是公钥的一部分，通常会以十六进制格式显示。</li>
+<li><strong>Exponent ( <code>e</code> )</strong> 是公钥的指数，通常是一个固定的值，最常见的就是  <code>65537</code> （即  <code>0x10001</code> ）。</li>
+</ul>
+<h4 id="步骤-3转换为-jwks-格式"><a class="anchor" href="#步骤-3转换为-jwks-格式">#</a> 步骤 3：转换为 JWKS 格式</h4>
+<p>在你提取出  <code>n</code>  和  <code>e</code>  后，可以将它们放入  <code>jwks.json</code>  文件。 <code>n</code>  和  <code>e</code>  必须使用 Base64 URL 编码格式。</p>
+<p><strong>1. Base64 URL 编码  <code>n</code>  和  <code>e</code> </strong></p>
+<p>使用 OpenSSL 将  <code>n</code>  和  <code>e</code>  编码为 Base64 URL 格式：</p>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment"># 对模数 (n) 进行 Base64 URL 编码</span></pre></td></tr><tr><td data-num="2"></td><td><pre>openssl base64 <span class="token parameter variable">-A</span> <span class="token parameter variable">-in</span> n.hex  <span class="token comment"># n.hex 是包含十六进制形式模数的文件</span></pre></td></tr><tr><td data-num="3"></td><td><pre></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token comment"># 对公钥指数 (e) 进行 Base64 URL 编码</span></pre></td></tr><tr><td data-num="5"></td><td><pre>openssl base64 <span class="token parameter variable">-A</span> <span class="token parameter variable">-in</span> e.hex  <span class="token comment"># e.hex 是包含十六进制形式指数的文件</span></pre></td></tr></table></figure><ul>
+<li><code>n</code> （模数）：&quot;ad3eed932d4d3e56bbfd6716a67a14ae3ca93147646b77fa60ae6972ac...&quot;</li>
+<li><code>e</code> （公钥指数）： <code>65537</code> （即  <code>0x10001</code> ）</li>
+</ul>
+<p>然后，你就可以将这些编码后的  <code>n</code>  和  <code>e</code>  放入  <code>jwks.json</code>  文件中。</p>
+<p><strong>2. 生成  <code>jwks.json</code>  示例</strong></p>
+<p>假设你已经提取并编码了  <code>n</code>  和  <code>e</code> ，可以生成如下格式的  <code>jwks.json</code> ：</p>
+<figure class="highlight json"><figcaption data-lang="JSON"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="2"></td><td><pre>  <span class="token property">"keys"</span><span class="token operator">:</span> <span class="token punctuation">[</span></pre></td></tr><tr><td data-num="3"></td><td><pre>    <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="4"></td><td><pre>      <span class="token property">"kty"</span><span class="token operator">:</span> <span class="token string">"RSA"</span><span class="token punctuation">,</span></pre></td></tr><tr><td data-num="5"></td><td><pre>      <span class="token property">"kid"</span><span class="token operator">:</span> <span class="token string">"key1"</span><span class="token punctuation">,</span></pre></td></tr><tr><td data-num="6"></td><td><pre>      <span class="token property">"use"</span><span class="token operator">:</span> <span class="token string">"sig"</span><span class="token punctuation">,</span></pre></td></tr><tr><td data-num="7"></td><td><pre>      <span class="token property">"alg"</span><span class="token operator">:</span> <span class="token string">"RS256"</span><span class="token punctuation">,</span></pre></td></tr><tr><td data-num="8"></td><td><pre>      <span class="token property">"n"</span><span class="token operator">:</span> <span class="token string">"ad3eed932d4d3e56bbfd6716a67a14ae3ca93147646b77fa60ae6972ac..."</span><span class="token punctuation">,</span>  <span class="token comment">// Base64 URL 编码的模数</span></pre></td></tr><tr><td data-num="9"></td><td><pre>      <span class="token property">"e"</span><span class="token operator">:</span> <span class="token string">"AQAB"</span>  <span class="token comment">// 公钥指数 (通常是 65537，即 "AQAB")</span></pre></td></tr><tr><td data-num="10"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="11"></td><td><pre>  <span class="token punctuation">]</span></pre></td></tr><tr><td data-num="12"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>ok，我们已经让服务器用我们的公钥进行验证了，接下去就要用对应的私钥进行签名。</p>
+<p>我们刚刚在刚刚构造 JWK Set 的时候生成了一个私钥 <code>private_key.pem</code> ，我们用 python 进行签名：</p>
+<figure class="highlight python"><figcaption data-lang="python"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">import</span> jwt</pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token keyword">from</span> cryptography<span class="token punctuation">.</span>hazmat<span class="token punctuation">.</span>primitives <span class="token keyword">import</span> serialization</pre></td></tr><tr><td data-num="3"></td><td><pre></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token comment"># 加载私钥</span></pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">"private_key.pem"</span><span class="token punctuation">,</span> <span class="token string">"rb"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> key_file<span class="token punctuation">:</span></pre></td></tr><tr><td data-num="6"></td><td><pre>    private_key <span class="token operator">=</span> serialization<span class="token punctuation">.</span>load_pem_private_key<span class="token punctuation">(</span></pre></td></tr><tr><td data-num="7"></td><td><pre>        key_file<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span></pre></td></tr><tr><td data-num="8"></td><td><pre>        password<span class="token operator">=</span><span class="token boolean">None</span></pre></td></tr><tr><td data-num="9"></td><td><pre>    <span class="token punctuation">)</span></pre></td></tr><tr><td data-num="10"></td><td><pre></pre></td></tr><tr><td data-num="11"></td><td><pre><span class="token comment"># 定义 JWT 头部</span></pre></td></tr><tr><td data-num="12"></td><td><pre><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="13"></td><td><pre>  <span class="token string">"alg"</span><span class="token punctuation">:</span> <span class="token string">"RS256"</span><span class="token punctuation">,</span></pre></td></tr><tr><td data-num="14"></td><td><pre>  <span class="token string">"typ"</span><span class="token punctuation">:</span> <span class="token string">"JWT"</span><span class="token punctuation">,</span></pre></td></tr><tr><td data-num="15"></td><td><pre>  <span class="token string">"jku"</span><span class="token punctuation">:</span> <span class="token string">"https://your_vps/jwks.json"</span></pre></td></tr><tr><td data-num="16"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="17"></td><td><pre><span class="token comment"># 定义 JWT 负载</span></pre></td></tr><tr><td data-num="18"></td><td><pre>payload <span class="token operator">=</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="19"></td><td><pre>    <span class="token string">"name"</span><span class="token punctuation">:</span> <span class="token string">"admin"</span><span class="token punctuation">,</span></pre></td></tr><tr><td data-num="20"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="21"></td><td><pre></pre></td></tr><tr><td data-num="22"></td><td><pre><span class="token comment"># 使用私钥签名生成 JWT</span></pre></td></tr><tr><td data-num="23"></td><td><pre>encoded_jwt <span class="token operator">=</span> jwt<span class="token punctuation">.</span>encode<span class="token punctuation">(</span>payload<span class="token punctuation">,</span> private_key<span class="token punctuation">,</span> algorithm<span class="token operator">=</span><span class="token string">"RS256"</span><span class="token punctuation">,</span> headers<span class="token operator">=</span>haeder<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="24"></td><td><pre></pre></td></tr><tr><td data-num="25"></td><td><pre><span class="token keyword">print</span><span class="token punctuation">(</span>encoded_jwt<span class="token punctuation">)</span></pre></td></tr></table></figure><hr>
+<p>当然，jku 会有一些安全措施，比如设置对 URL 进行验证或设置白名单、配置跨域资源共享（CORS）以限制 URL 的跳转等。根据不同的安全措施和限制程度，有以下操作方法：</p>
+<h3 id="远程文件获取"><a class="anchor" href="#远程文件获取">#</a> 远程文件获取</h3>
+<p>如果服务器不限制 jku 获取的 URL，那么就能让其指向恶意的 jwks 文件，就是我们上面举例的例子。</p>
+<h3 id="本地文件获取"><a class="anchor" href="#本地文件获取">#</a> 本地文件获取</h3>
+<p>如果服务器规定 jku 不允许跨域，只允许同一服务器或域来获取 URL</p>
+<h4 id="配合文件上传"><a class="anchor" href="#配合文件上传">#</a> 配合文件上传</h4>
+<p>我们可以试着使用文件上传功能将我们的 JWK 文件放在同一服务器上，从而绕过限制（因为我们的恶意 URL 将以其域的 URL 开头）。</p>
+<h4 id="配合open-rection"><a class="anchor" href="#配合open-rection">#</a> 配合 <code>Open Rection</code></h4>
+<p>举个例子就懂了</p>
+<figure class="highlight json"><figcaption data-lang="JSON"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="2"></td><td><pre>  <span class="token property">"alg"</span><span class="token operator">:</span> <span class="token string">"RS256"</span><span class="token punctuation">,</span></pre></td></tr><tr><td data-num="3"></td><td><pre>  <span class="token property">"typ"</span><span class="token operator">:</span> <span class="token string">"JWT"</span><span class="token punctuation">,</span></pre></td></tr><tr><td data-num="4"></td><td><pre>  <span class="token property">"jku"</span><span class="token operator">:</span> <span class="token string">"https://victim-site.com/redirect?url=https://attacker-site.com/jwks.json"</span></pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure>
+      <div class="tags">
+          <a href="/tags/Penetration/" rel="tag"><i class="ic i-tag"></i> Penetration</a>
+          <a href="/tags/JWT/" rel="tag"><i class="ic i-tag"></i> JWT</a>
+          <a href="/tags/%E6%9D%83%E9%99%90%E7%BB%95%E8%BF%87/" rel="tag"><i class="ic i-tag"></i> 权限绕过</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">更新于</span>
+    <time title="修改时间：2024-12-01 16:27:41" itemprop="dateModified" datetime="2024-12-01T16:27:41+08:00">2024-12-01</time>
+  </span>
+  <span id="2024/11/29/JsonWebToken-JWT-安全/" class="item leancloud_visitors" data-flag-title="Json Web Token(JWT)安全" title="阅读次数">
+      <span class="icon">
+        <i class="ic i-eye"></i>
+      </span>
+      <span class="text">阅读次数</span>
+      <span class="leancloud-visitors-count"></span>
+      <span class="text">次</span>
+  </span>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>本文作者： </strong>N1U <i class="ic i-at"><em>@</em></i>记录·分享·碎碎念·电子墓碑
+  </li>
+  <li class="link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2024/11/29/JsonWebToken-JWT-%E5%AE%89%E5%85%A8/" title="Json Web Token(JWT)安全">http://example.com/2024/11/29/JsonWebToken-JWT-安全/</a>
+  </li>
+  <li class="license">
+    <strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2024/11/24/%E3%80%8Eweekly%E3%80%8F%E5%85%B3%E4%BA%8E%E6%B8%B8%E6%88%8F/" itemprop="url" rel="prev" data-background-image="&#x2F;2024&#x2F;11&#x2F;24&#x2F;%E3%80%8Eweekly%E3%80%8F%E5%85%B3%E4%BA%8E%E6%B8%B8%E6%88%8F&#x2F;%E5%91%A8%E8%AE%B0%E5%B0%81%E9%9D%A2.png" title="『weekly』《咒》《女鬼桥》《还愿》关于恐怖游戏">
+  <span class="type">上一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>『weekly』《咒》《女鬼桥》《还愿》关于恐怖游戏</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+      
+
+  <a href="/2024/12/01/%E3%80%8Eweekly%E3%80%8F%E5%85%B3%E4%BA%8E%E8%87%AA%E6%88%91%E6%84%9F%E5%8A%A8/" itemprop="url" rel="next" data-background-image="&#x2F;2024&#x2F;12&#x2F;01&#x2F;%E3%80%8Eweekly%E3%80%8F%E5%85%B3%E4%BA%8E%E8%87%AA%E6%88%91%E6%84%9F%E5%8A%A8&#x2F;%E5%91%A8%E8%AE%B0%E5%B0%81%E9%9D%A2.png" title="『weekly』入冬 模型 关于自我感动">
+  <span class="type">下一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>『weekly』入冬 模型 关于自我感动</h3>
+  </a>
+
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="文章目录">
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFjwt"><span class="toc-number">1.</span> <span class="toc-text"> 什么是 JWT</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#jwt%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-number">1.1.</span> <span class="toc-text"> JWT 的结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jwt%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">1.2.</span> <span class="toc-text"> JWT 的工作原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#jwt%E7%9A%84%E4%BC%98%E7%82%B9"><span class="toc-number">1.2.1.</span> <span class="toc-text"> JWT 的优点</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#jwt%E5%AD%98%E5%9C%A8%E7%9A%84%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98"><span class="toc-number">2.</span> <span class="toc-text"> JWT 存在的安全问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AD%BE%E5%90%8D%E7%AE%97%E6%B3%95"><span class="toc-number">2.1.</span> <span class="toc-text"> 签名算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#none%E7%AE%97%E6%B3%95%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.1.1.</span> <span class="toc-text"> none 算法漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%86%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E6%9B%BF%E6%8D%A2%E4%B8%BA%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95"><span class="toc-number">2.1.2.</span> <span class="toc-text"> 将非对称加密算法替换为对称加密算法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#kid%E5%AD%97%E6%AE%B5"><span class="toc-number">2.2.</span> <span class="toc-text"> kid 字段</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86"><span class="toc-number">2.2.1.</span> <span class="toc-text"> 目录遍历</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sql%E6%B3%A8%E5%85%A5"><span class="toc-number">2.2.2.</span> <span class="toc-text"> SQL 注入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jku%E5%AD%97%E6%AE%B5"><span class="toc-number">2.3.</span> <span class="toc-text"> jku 字段</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90jwk-set-%E7%9A%84%E6%AD%A5%E9%AA%A4"><span class="toc-number">2.3.1.</span> <span class="toc-text"> 生成 JWK Set 的步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4-1%E4%BD%BF%E7%94%A8-openssl-%E7%94%9F%E6%88%90-rsa-%E5%AF%86%E9%92%A5%E5%AF%B9"><span class="toc-number">2.3.1.1.</span> <span class="toc-text"> 步骤 1：使用 OpenSSL 生成 RSA 密钥对</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4-2%E6%8F%90%E5%8F%96-n-%E5%92%8C-e"><span class="toc-number">2.3.1.2.</span> <span class="toc-text"> 步骤 2：提取  n  和  e</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4-3%E8%BD%AC%E6%8D%A2%E4%B8%BA-jwks-%E6%A0%BC%E5%BC%8F"><span class="toc-number">2.3.1.3.</span> <span class="toc-text"> 步骤 3：转换为 JWKS 格式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9C%E7%A8%8B%E6%96%87%E4%BB%B6%E8%8E%B7%E5%8F%96"><span class="toc-number">2.3.2.</span> <span class="toc-text"> 远程文件获取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E8%8E%B7%E5%8F%96"><span class="toc-number">2.3.3.</span> <span class="toc-text"> 本地文件获取</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E5%90%88%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0"><span class="toc-number">2.3.3.1.</span> <span class="toc-text"> 配合文件上传</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E5%90%88open-rection"><span class="toc-number">2.3.3.2.</span> <span class="toc-text"> 配合 Open Rection</span></a></li></ol></li></ol></li></ol></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="系列文章">
+      </div>
+      <div class="overview panel" data-title="站点概览">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="N1U"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">N1U</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">14</span>
+        <span class="name">文章</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">12</span>
+        <span class="name">标签</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+      <span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL04xVjY=" title="https:&#x2F;&#x2F;github.com&#x2F;N1V6"><i class="ic i-github"></i></span>
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>首页</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/archives/" rel="section"><i class="ic i-list-alt"></i>归档</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/categories/" rel="section"><i class="ic i-th"></i>分类</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/tags/" rel="section"><i class="ic i-tags"></i>标签</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/links/" rel="section"><i class="ic i-magic"></i>链接</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+        <a href="/2024/11/24/%E3%80%8Eweekly%E3%80%8F%E5%85%B3%E4%BA%8E%E6%B8%B8%E6%88%8F/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a>
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+        <a href="/2024/12/01/%E3%80%8Eweekly%E3%80%8F%E5%85%B3%E4%BA%8E%E8%87%AA%E6%88%91%E6%84%9F%E5%8A%A8/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a>
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>随机文章</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/12/04/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" title="PHP代码审计">PHP代码审计</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/12/01/%E3%80%8Eweekly%E3%80%8F%E5%85%B3%E4%BA%8E%E8%87%AA%E6%88%91%E6%84%9F%E5%8A%A8/" title="『weekly』入冬 模型 关于自我感动">『weekly』入冬 模型 关于自我感动</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/12/26/xss%E7%BB%BC%E5%90%88%E5%88%A9%E7%94%A8%E5%A7%BF%E5%8A%BF/" title="xss综合利用姿势">xss综合利用姿势</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/12/29/%E3%80%8Eweekly%E3%80%8F2024%E6%9C%80%E5%90%8E%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" title="『weekly』2024最后一篇博客">『weekly』2024最后一篇博客</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/11/16/JavaScript%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" title="JavaScript代码审计">JavaScript代码审计</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/05/20/%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84%E7%88%B1%E6%83%85/" title="关于我的爱情">关于我的爱情</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/11/17/%E3%80%8Eweekly%E3%80%8F%E4%B8%BA%E4%BB%80%E4%B9%88%E5%86%99%E5%91%A8%E8%AE%B0/" title="『weekly』为什么写周记 关于朋友圈">『weekly』为什么写周记 关于朋友圈</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/11/24/%E3%80%8Eweekly%E3%80%8F%E5%85%B3%E4%BA%8E%E6%B8%B8%E6%88%8F/" title="『weekly』《咒》《女鬼桥》《还愿》关于恐怖游戏">『weekly』《咒》《女鬼桥》《还愿》关于恐怖游戏</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/12/15/%E3%80%8Eweekly%E3%80%8F%E5%85%B3%E4%BA%8E%E9%BB%91%E7%A5%9E%E8%AF%9D%E4%B8%8ETGA/" title="『weekly』黑神话与TGA">『weekly』黑神话与TGA</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/12/22/%E3%80%8Eweekly%E3%80%8F%E8%B1%86%E5%8C%85%E4%B8%8E%E9%9A%90%E7%A7%81/" title="『weekly』豆包与个人隐私">『weekly』豆包与个人隐私</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>最新评论</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">N1U @ N1V</span>
+  </div>
+  <div class="powered-by">
+    基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2024/11/29/JsonWebToken-JWT-安全/',
+    favicon: {
+      show: "欢迎回来",
+      hide: "N1V6"
+    },
+    search : {
+      placeholder: "文章搜索",
+      empty: "关于 「 ${query} 」，什么也没搜到",
+      stats: "${time} ms 内找到 ${hits} 条结果"
+    },
+    valine: true,fancybox: true,
+    copyright: '复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>

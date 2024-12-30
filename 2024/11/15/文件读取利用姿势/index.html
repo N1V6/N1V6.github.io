@@ -1,0 +1,829 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="记录·分享·碎碎念·电子墓碑" href="http://example.com/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="记录·分享·碎碎念·电子墓碑" href="http://example.com/atom.xml" />
+<link rel="alternate" type="application/json" title="记录·分享·碎碎念·电子墓碑" href="http://example.com/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="Penetration" />
+
+
+<link rel="canonical" href="http://example.com/2024/11/15/%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E5%88%A9%E7%94%A8%E5%A7%BF%E5%8A%BF/">
+
+
+
+  <title>
+文件读取利用姿势 |
+N1V = 记录·分享·碎碎念·电子墓碑</title>
+<meta name="generator" content="Hexo 7.2.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">文件读取利用姿势
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="创建时间：2024-11-15 00:00:00">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">发表于</span>
+    <time itemprop="dateCreated datePublished" datetime="2024-11-15T00:00:00+08:00">2024-11-15</time>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="切换导航栏">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">N1V</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+          <img src="/2024/11/15/%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E5%88%A9%E7%94%A8%E5%A7%BF%E5%8A%BF/fengmian.png">
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">首页</a></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN">
+  <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/15/%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E5%88%A9%E7%94%A8%E5%A7%BF%E5%8A%BF/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/avatar.jpg">
+    <meta itemprop="name" content="N1U">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="记录·分享·碎碎念·电子墓碑">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h2 id="1-linux系统"><a class="anchor" href="#1-linux系统">#</a> 1. Linux 系统</h2>
+<table>
+<thead>
+<tr>
+<th>文件路径</th>
+<th>利用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/root/.ssh/authorized_keys</td>
+<td>如需登录到远程主机，需要到.ssh 目录下，新建 authorized_keys 文件，并将 id_rsa.pub 内容复制进去</td>
+</tr>
+<tr>
+<td>/root/.ssh/id_rsa</td>
+<td>ssh 私钥，ssh 公钥是 id_rsa.pub</td>
+</tr>
+<tr>
+<td>/root/.ssh/id_ras.keystore</td>
+<td>记录每个访问计算机用户的公钥</td>
+</tr>
+<tr>
+<td>/root/.ssh/known_hosts</td>
+<td>ssh 会把每个访问过计算机的公钥 (public key) 都记录在～/.ssh/known_hosts。当下次访问相同计算机时，OpenSSH 会核对公钥。如果公钥不同，OpenSSH 会发出警告， 避免你受到 DNS Hijack 之类的攻击。</td>
+</tr>
+<tr>
+<td>/etc/passwd</td>
+<td>账户信息</td>
+</tr>
+<tr>
+<td>/etc/shadow</td>
+<td>账户密码文件</td>
+</tr>
+<tr>
+<td>/etc/my.cnf</td>
+<td>mysql 配置文件</td>
+</tr>
+<tr>
+<td>/etc/httpd/conf/httpd.conf</td>
+<td>Apache 配置文件</td>
+</tr>
+<tr>
+<td>/etc/redhat-release</td>
+<td>系统版本</td>
+</tr>
+<tr>
+<td>/root/.bash_history</td>
+<td>用户历史命令记录文件</td>
+</tr>
+<tr>
+<td>/root/.mysql_history</td>
+<td>mysql 历史命令记录文件</td>
+</tr>
+<tr>
+<td><strong>/var/lib/mlocate/mlocate.db (centos)  /var/lib/mlocate.db</strong></td>
+<td><strong>全文件路径</strong>，  这个文件基本包含 linux 所有文件路径信息 ，一天一更新  &lt;br /&gt; 下载回来后搜索  &lt;br /&gt;locate -d  mlocate.db | grep -E '.conf\|\.php|\key|\secret|\password|\id_rsa'</td>
+</tr>
+<tr>
+<td>/proc/self/fd/fd[0-9]</td>
+<td>(文件标识符)</td>
+</tr>
+<tr>
+<td>/proc/mounts</td>
+<td>记录系统挂载设备</td>
+</tr>
+<tr>
+<td>/porc/config.gz</td>
+<td>内核配置文件</td>
+</tr>
+<tr>
+<td>/porc/self/cmdline</td>
+<td>当前进程的 cmdline 参数</td>
+</tr>
+<tr>
+<td>/proc/sched_debug</td>
+<td>配置文件可以看到当前运行的进程并可以获得对应进程的 pid</td>
+</tr>
+<tr>
+<td>/proc/pid/cmdline</td>
+<td>可以看到对应 pid 进程的完整命令行。</td>
+</tr>
+<tr>
+<td>/proc/net/fib_trie</td>
+<td>内网 IP</td>
+</tr>
+<tr>
+<td>/proc/self/environ</td>
+<td>环境变量</td>
+</tr>
+<tr>
+<td>/proc/self/loginuid</td>
+<td>当前用户</td>
+</tr>
+<tr>
+<td>/etc/issue</td>
+<td>系统版本</td>
+</tr>
+<tr>
+<td>/etc/fstab</td>
+<td></td>
+</tr>
+<tr>
+<td>/etc/host.conf</td>
+<td></td>
+</tr>
+<tr>
+<td>/var/log/xferlog</td>
+<td>FTP 会话，记录拷贝了什么文件</td>
+</tr>
+<tr>
+<td>/var/log/cron</td>
+<td>计划任务日志</td>
+</tr>
+<tr>
+<td>/etc/(cron.d/|crontab)</td>
+<td>这两个也是定时任务文件</td>
+</tr>
+<tr>
+<td>/var/log/secure</td>
+<td>用户登录安全日志</td>
+</tr>
+<tr>
+<td>/etc/rc.local</td>
+<td>读 apache 的路径</td>
+</tr>
+<tr>
+<td>/etc/motd</td>
+<td></td>
+</tr>
+<tr>
+<td>/etc/sysctl.conf</td>
+<td></td>
+</tr>
+<tr>
+<td>/var/log/syslog</td>
+<td>记录登陆错误时的密码等信息</td>
+</tr>
+<tr>
+<td><strong>/etc/environment</strong></td>
+<td>环境变量配置文件 ，可能泄露<strong>大量目录信息</strong></td>
+</tr>
+<tr>
+<td>/etc/inputrc</td>
+<td>输入设备配置文件</td>
+</tr>
+<tr>
+<td>/etc/default/useradd</td>
+<td>添加用户的默认信息的文件</td>
+</tr>
+<tr>
+<td>/etc/login.defs</td>
+<td>是用户密码信息的默认属性</td>
+</tr>
+<tr>
+<td>/etc/skel</td>
+<td>用户信息的骨架</td>
+</tr>
+<tr>
+<td>/sbin/nologin</td>
+<td>不能登陆的用户</td>
+</tr>
+<tr>
+<td>/var/log/message</td>
+<td>系统的日志文件</td>
+</tr>
+<tr>
+<td>/etc/httpd/conf/httpd.conf</td>
+<td>配置 http 服务的配置文件</td>
+</tr>
+<tr>
+<td><strong>/etc/mtab</strong></td>
+<td>包含当前安装的文件系统列表  有时可以读取到<strong>当前网站的路径</strong></td>
+</tr>
+<tr>
+<td>/etc/ld.so.conf</td>
+<td></td>
+</tr>
+<tr>
+<td>/etc/my.cnf</td>
+<td></td>
+</tr>
+<tr>
+<td>/proc/mounts</td>
+<td></td>
+</tr>
+<tr>
+<td>tomcat/conf/server.xml</td>
+<td>tomcat 连接数据库的密码配置文件</td>
+</tr>
+<tr>
+<td>tomcat/webapps/ROOT/WEB-INF/classes/database.properties</td>
+<td>同上</td>
+</tr>
+<tr>
+<td>tomcat/conf/tomcat-users.xml tomcat</td>
+<td>管理员账号密码的配置文件</td>
+</tr>
+<tr>
+<td>/etc/httpd/conf/httpd.conf</td>
+<td>Apache 配置文件</td>
+</tr>
+<tr>
+<td>/usr/local/app/apache2/conf/httpd.conf</td>
+<td>Apache2 默认配置文件</td>
+</tr>
+<tr>
+<td>/usr/local/app/apache2/conf/extra/httpd-vhost.conf</td>
+<td>虚拟网站配置</td>
+</tr>
+<tr>
+<td>/usr/local/app/php5/lib/php.ini</td>
+<td>PHP 相关配置</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>中间件路径</td>
+<td>说明</td>
+</tr>
+<tr>
+<td>----------------------------------------------------------</td>
+<td>------------------------------------</td>
+</tr>
+<tr>
+<td>/etc/apache2/apache2.conf</td>
+<td>apache 配置文件</td>
+</tr>
+<tr>
+<td>/etc/httpd/conf/httpd.conf</td>
+<td>apache 配置文件，具体路径取决于发行版</td>
+</tr>
+<tr>
+<td>/opt/tomcat/conf/server.xml</td>
+<td>tomcat 主要配置文件</td>
+</tr>
+<tr>
+<td>/opt/tomcat/conf/context.xml</td>
+<td>tomcat Web 应用上下文配置</td>
+</tr>
+<tr>
+<td>/etc/nginx/nginx.conf</td>
+<td>nginx 主配置文件</td>
+</tr>
+<tr>
+<td>/etc/nginx/sites-available/ <code>和</code>  /etc/nginx/sites-enabled/</td>
+<td>nginx 站点配置</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-windows-系统"><a class="anchor" href="#2-windows-系统">#</a> 2. windows 系统</h2>
+<h3 id="1-系统配置信息"><a class="anchor" href="#1-系统配置信息">#</a> 1. 系统配置信息</h3>
+<table>
+<thead>
+<tr>
+<th>路径</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C:\boot.ini</td>
+<td>查看系统版本</td>
+</tr>
+<tr>
+<td>C:\Windows\System32\inetsrv\MetaBase.xml</td>
+<td>IIS 配置文件</td>
+</tr>
+<tr>
+<td>C:\Windows\repair\sam</td>
+<td>存储系统初次安装的密码</td>
+</tr>
+<tr>
+<td>C:\Program Files\mysql\my.ini</td>
+<td>Mysql 配置</td>
+</tr>
+<tr>
+<td>C:\Program Files\mysql\data\mysql\user.MYD</td>
+<td>Mysql root</td>
+</tr>
+<tr>
+<td>C:\Windows\php.ini</td>
+<td>php 配置信息</td>
+</tr>
+<tr>
+<td>C:\Windows\my.ini</td>
+<td>Mysql 配置信息</td>
+</tr>
+<tr>
+<td>C:\WINNT\system32\inetsrv\MetaBase.bin</td>
+<td>IIS  5 配置信息</td>
+</tr>
+<tr>
+<td>C:\WINDOWS\system32\inetsrv\MetaBase.xml</td>
+<td>IIS  6 配置信息</td>
+</tr>
+<tr>
+<td>C:\WINDOWS\system32\inetstr\config\applicationHost.config</td>
+<td>IIS  7 配置信息</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-从蜜罐朔源的角度"><a class="anchor" href="#2-从蜜罐朔源的角度">#</a> 2. 从蜜罐（朔源）的角度：</h3>
+<table>
+<thead>
+<tr>
+<th>路径</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C:/Windows/PFRO.log</td>
+<td>Windows 操作系统中的一个日志文件，主要记录了系统在启动时保护注册表和系统文件的操作。     一般可以获取到个人 PC 用户名以及杂七杂八的文件路径</td>
+</tr>
+<tr>
+<td>C:/Users/ 用户名 / Documents/WeChat Files/All Users/config/config.data</td>
+<td>获取微信号 wxid_xxxxxx</td>
+</tr>
+<tr>
+<td>C:/Users/ 用户名 / Documents/WeChat Files/wx_id/config/AccInfo.dat</td>
+<td>获取微信昵称、手机号等；目前测试不成功</td>
+</tr>
+<tr>
+<td>C:\Users\ 用户名.aggressor.prop</td>
+<td>获取 CS 的登录信息，包括地址，密码，端口等；所以如果不是二开的 CS 的话很危险，要么添加二次加密，要么敏感信息加密</td>
+</tr>
+<tr>
+<td>用户桌面，文档，下载文件夹等</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-其他"><a class="anchor" href="#3-其他">#</a> 3. 其他</h3>
+<table>
+<thead>
+<tr>
+<th>路径</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C:\Users\ 用户名 \AppData\Local\IconCache.db</td>
+<td>Windows 用来缓存桌面和文件夹中图标信息的文件。它通过存储图标缓存数据来加速图标的加载速度，从而减少系统读取每个文件的图标资源的时间。  可以看到一些应用的绝对路径，比如网站使用 phpstudy_pro 搭建（判断什么搭建的一般用 404 或报错信息得出），则可以看到 phpstudy.exe 的绝对路径，也就得到其网站路径。</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+      <div class="tags">
+          <a href="/tags/Penetration/" rel="tag"><i class="ic i-tag"></i> Penetration</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">更新于</span>
+    <time title="修改时间：2024-11-15 14:51:19" itemprop="dateModified" datetime="2024-11-15T14:51:19+08:00">2024-11-15</time>
+  </span>
+  <span id="2024/11/15/文件读取利用姿势/" class="item leancloud_visitors" data-flag-title="文件读取利用姿势" title="阅读次数">
+      <span class="icon">
+        <i class="ic i-eye"></i>
+      </span>
+      <span class="text">阅读次数</span>
+      <span class="leancloud-visitors-count"></span>
+      <span class="text">次</span>
+  </span>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>本文作者： </strong>N1U <i class="ic i-at"><em>@</em></i>记录·分享·碎碎念·电子墓碑
+  </li>
+  <li class="link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2024/11/15/%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E5%88%A9%E7%94%A8%E5%A7%BF%E5%8A%BF/" title="文件读取利用姿势">http://example.com/2024/11/15/文件读取利用姿势/</a>
+  </li>
+  <li class="license">
+    <strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2024/05/20/%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84%E7%88%B1%E6%83%85/" itemprop="url" rel="prev" data-background-image="&#x2F;2024&#x2F;05&#x2F;20&#x2F;%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84%E7%88%B1%E6%83%85&#x2F;image-20240520010603680.png" title="关于我的爱情">
+  <span class="type">上一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>关于我的爱情</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+      
+
+  <a href="/2024/11/16/JavaScript%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" itemprop="url" rel="next" data-background-image="&#x2F;2024&#x2F;11&#x2F;16&#x2F;JavaScript%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1&#x2F;fengmian.png" title="JavaScript代码审计">
+  <span class="type">下一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>JavaScript代码审计</h3>
+  </a>
+
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="文章目录">
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-linux%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.</span> <span class="toc-text"> 1. Linux 系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-windows-%E7%B3%BB%E7%BB%9F"><span class="toc-number">2.</span> <span class="toc-text"> 2. windows 系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF"><span class="toc-number">2.1.</span> <span class="toc-text"> 1. 系统配置信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BB%8E%E8%9C%9C%E7%BD%90%E6%9C%94%E6%BA%90%E7%9A%84%E8%A7%92%E5%BA%A6"><span class="toc-number">2.2.</span> <span class="toc-text"> 2. 从蜜罐（朔源）的角度：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%85%B6%E4%BB%96"><span class="toc-number">2.3.</span> <span class="toc-text"> 3. 其他</span></a></li></ol></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="系列文章">
+      </div>
+      <div class="overview panel" data-title="站点概览">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="N1U"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">N1U</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">14</span>
+        <span class="name">文章</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">12</span>
+        <span class="name">标签</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+      <span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL04xVjY=" title="https:&#x2F;&#x2F;github.com&#x2F;N1V6"><i class="ic i-github"></i></span>
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>首页</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/archives/" rel="section"><i class="ic i-list-alt"></i>归档</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/categories/" rel="section"><i class="ic i-th"></i>分类</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/tags/" rel="section"><i class="ic i-tags"></i>标签</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/links/" rel="section"><i class="ic i-magic"></i>链接</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+        <a href="/2024/05/20/%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84%E7%88%B1%E6%83%85/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a>
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+        <a href="/2024/11/16/JavaScript%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a>
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>随机文章</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/12/22/%E3%80%8Eweekly%E3%80%8F%E8%B1%86%E5%8C%85%E4%B8%8E%E9%9A%90%E7%A7%81/" title="『weekly』豆包与个人隐私">『weekly』豆包与个人隐私</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/12/04/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" title="PHP代码审计">PHP代码审计</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/11/16/JavaScript%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" title="JavaScript代码审计">JavaScript代码审计</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/11/29/JsonWebToken-JWT-%E5%AE%89%E5%85%A8/" title="Json Web Token(JWT)安全">Json Web Token(JWT)安全</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/11/17/%E3%80%8Eweekly%E3%80%8F%E4%B8%BA%E4%BB%80%E4%B9%88%E5%86%99%E5%91%A8%E8%AE%B0/" title="『weekly』为什么写周记 关于朋友圈">『weekly』为什么写周记 关于朋友圈</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/12/26/xss%E7%BB%BC%E5%90%88%E5%88%A9%E7%94%A8%E5%A7%BF%E5%8A%BF/" title="xss综合利用姿势">xss综合利用姿势</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/11/24/%E3%80%8Eweekly%E3%80%8F%E5%85%B3%E4%BA%8E%E6%B8%B8%E6%88%8F/" title="『weekly』《咒》《女鬼桥》《还愿》关于恐怖游戏">『weekly』《咒》《女鬼桥》《还愿》关于恐怖游戏</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/05/20/%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84%E7%88%B1%E6%83%85/" title="关于我的爱情">关于我的爱情</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/05/17/%E5%85%B3%E4%BA%8E%E6%88%91%E5%85%B3%E4%BA%8E%E9%82%A3%E4%BA%9B%E5%B9%B4/" title="关于我的那些年">关于我的那些年</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/11/15/%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E5%88%A9%E7%94%A8%E5%A7%BF%E5%8A%BF/" title="文件读取利用姿势">文件读取利用姿势</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>最新评论</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">N1U @ N1V</span>
+  </div>
+  <div class="powered-by">
+    基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2024/11/15/文件读取利用姿势/',
+    favicon: {
+      show: "欢迎回来",
+      hide: "N1V6"
+    },
+    search : {
+      placeholder: "文章搜索",
+      empty: "关于 「 ${query} 」，什么也没搜到",
+      stats: "${time} ms 内找到 ${hits} 条结果"
+    },
+    valine: true,fancybox: true,
+    copyright: '复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>

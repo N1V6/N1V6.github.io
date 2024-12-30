@@ -1,0 +1,560 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="记录·分享·碎碎念·电子墓碑" href="http://example.com/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="记录·分享·碎碎念·电子墓碑" href="http://example.com/atom.xml" />
+<link rel="alternate" type="application/json" title="记录·分享·碎碎念·电子墓碑" href="http://example.com/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="代码审计,PHP" />
+
+
+<link rel="canonical" href="http://example.com/2024/12/04/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
+
+
+
+  <title>
+PHP代码审计 |
+N1V = 记录·分享·碎碎念·电子墓碑</title>
+<meta name="generator" content="Hexo 7.2.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">PHP代码审计
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="创建时间：2024-12-04 00:00:00">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">发表于</span>
+    <time itemprop="dateCreated datePublished" datetime="2024-12-04T00:00:00+08:00">2024-12-04</time>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="切换导航栏">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">N1V</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+          <img src="/2024/12/04/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/cover.png">
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">首页</a></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN">
+  <link itemprop="mainEntityOfPage" href="http://example.com/2024/12/04/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/avatar.jpg">
+    <meta itemprop="name" content="N1U">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="记录·分享·碎碎念·电子墓碑">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h2 id><a class="anchor" href="#">#</a> </h2>
+<h3 id="1-目录遍历漏洞"><a class="anchor" href="#1-目录遍历漏洞">#</a> 1. 目录遍历漏洞</h3>
+<figure class="highlight php"><figcaption data-lang="PHP"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">function</span> <span class="token function-definition function">list_files_for_user</span><span class="token punctuation">(</span><span class="token variable">$username</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="2"></td><td><pre>  <span class="token variable">$base</span> <span class="token operator">=</span> <span class="token string double-quoted-string">"files/"</span><span class="token operator">.</span><span class="token variable">$username</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="3"></td><td><pre>  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">file_exists</span><span class="token punctuation">(</span><span class="token variable">$base</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="4"></td><td><pre>    <span class="token function">mkdir</span><span class="token punctuation">(</span><span class="token variable">$base</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="5"></td><td><pre>  <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="6"></td><td><pre>  <span class="token keyword">return</span> <span class="token function">array_diff</span><span class="token punctuation">(</span><span class="token function">scandir</span><span class="token punctuation">(</span><span class="token variable">$base</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">array</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'..'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'.'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="7"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>这个函数的作用是列出用户目录下的所有文件和文件夹，但在第二行的代码中没有对 <code>$username</code>  做严格过滤，可能导致目录穿越漏洞。</p>
+<h3 id="2绕过"><a class="anchor" href="#2绕过">#</a> 2. 绕过</h3>
+<figure class="highlight php"><figcaption data-lang="PHP"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">function</span> <span class="token function-definition function">addfile</span><span class="token punctuation">(</span><span class="token variable">$user</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="2"></td><td><pre>  <span class="token variable">$file</span> <span class="token operator">=</span> <span class="token string double-quoted-string">"files/"</span><span class="token operator">.</span><span class="token function">basename</span><span class="token punctuation">(</span><span class="token variable">$user</span><span class="token punctuation">)</span><span class="token operator">.</span><span class="token string double-quoted-string">"/"</span><span class="token operator">.</span><span class="token function">basename</span><span class="token punctuation">(</span><span class="token variable">$_FILES</span><span class="token punctuation">[</span><span class="token string double-quoted-string">"file"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string double-quoted-string">"name"</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="3"></td><td><pre>  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">preg_match</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"/\.pdf/"</span><span class="token punctuation">,</span> <span class="token variable">$file</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="4"></td><td><pre>    <span class="token keyword">return</span>  <span class="token string double-quoted-string">"Only PDF are allowed"</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="5"></td><td><pre>  <span class="token punctuation">&#125;</span> <span class="token keyword">elseif</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">move_uploaded_file</span><span class="token punctuation">(</span><span class="token variable">$_FILES</span><span class="token punctuation">[</span><span class="token string double-quoted-string">"file"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string double-quoted-string">"tmp_name"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token variable">$file</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="6"></td><td><pre>    <span class="token keyword">return</span> <span class="token string double-quoted-string">"Sorry, there was an error uploading your file."</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="7"></td><td><pre> <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="8"></td><td><pre>  <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="9"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><blockquote>
+<p>basename () 函数返回路径中的文件名部分。<br>
+-- basename（&quot;/testweb/home.php&quot;）返回 home.php</p>
+</blockquote>
+<p>问题出现在第 3 行，如果 <code>$file</code>  的值为 <code>shell.pdf.php</code> ，还是可以绕过。</p>
+<h3 id="3in_array弱类型比较"><a class="anchor" href="#3in_array弱类型比较">#</a> 3.in_array () 弱类型比较</h3>
+<figure class="highlight php"><figcaption data-lang="PHP"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token variable">$parts</span> <span class="token operator">=</span> <span class="token function">explode</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'.'</span><span class="token punctuation">,</span> <span class="token variable">$GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'jwt'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token variable">$algorithms</span> <span class="token operator">=</span> <span class="token keyword">array</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'HS256'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'HS384'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'HS512'</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token number">3</span> <span class="token operator">!==</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token variable">$parts</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="4"></td><td><pre>  <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name class-name-fully-qualified"><span class="token punctuation">\</span>InvalidArgumentException</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'Invalid or malformed JWT supplied.'</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="6"></td><td><pre><span class="token variable">$header</span> <span class="token operator">=</span> <span class="token function">jsondecode</span><span class="token punctuation">(</span><span class="token keyword static-context">self</span><span class="token operator">::</span><span class="token function">decode</span><span class="token punctuation">(</span><span class="token variable">$parts</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token constant boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="7"></td><td><pre><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">in_array</span><span class="token punctuation">(</span><span class="token variable">$header</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'alg'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token variable">$algorithms</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="8"></td><td><pre>  <span class="token operator">...</span></pre></td></tr><tr><td data-num="9"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>这是 JWT 的部分验证代码，问题出现在第 7 行</p>
+<blockquote>
+<p>in_array () 函数搜索数组中是否存在指定的值。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><em>needle</em></td>
+<td style="text-align:left">必需。规定要在数组搜索的值。</td>
+</tr>
+<tr>
+<td style="text-align:left"><em>haystack</em></td>
+<td style="text-align:left">必需。规定要搜索的数组。</td>
+</tr>
+<tr>
+<td style="text-align:left"><em><strong>strict</strong></em></td>
+<td style="text-align:left">可选。如果该参数设置为 TRUE，则 in_array () 函数检查搜索的数据与数组的值的类型是否相同。</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<p>没有将第三个参数设置为 ture，会进行若类型比较，可能绕过验证。</p>
+<h3 id="4判断语句-and"><a class="anchor" href="#4判断语句-and">#</a> 4. 判断语句 and</h3>
+<figure class="highlight php"><figcaption data-lang="PHP"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">function</span> <span class="token function-definition function">verify</span><span class="token punctuation">(</span><span class="token variable">$jwt</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="2"></td><td><pre>    <span class="token keyword">list</span><span class="token punctuation">(</span><span class="token variable">$h64</span><span class="token punctuation">,</span><span class="token variable">$d64</span><span class="token punctuation">,</span><span class="token variable">$sign</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token function">explode</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"."</span><span class="token punctuation">,</span><span class="token variable">$jwt</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="3"></td><td><pre>    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">empty</span><span class="token punctuation">(</span><span class="token variable">$sign</span><span class="token punctuation">)</span> <span class="token keyword">and</span> <span class="token punctuation">(</span><span class="token class-name static-context">JWT</span><span class="token operator">::</span><span class="token function">signature</span><span class="token punctuation">(</span><span class="token variable">$h64</span><span class="token operator">.</span><span class="token string double-quoted-string">"."</span><span class="token operator">.</span><span class="token variable">$d64</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token variable">$sign</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="4"></td><td><pre>      <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"Invalid Signature"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="5"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="6"></td><td><pre>    <span class="token variable">$header</span> <span class="token operator">=</span> <span class="token function">base64_decode</span><span class="token punctuation">(</span><span class="token variable">$h64</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="7"></td><td><pre>    <span class="token variable">$data</span> <span class="token operator">=</span> <span class="token function">base64_decode</span><span class="token punctuation">(</span><span class="token variable">$d64</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="8"></td><td><pre>    <span class="token keyword">return</span> <span class="token class-name static-context">JWT</span><span class="token operator">::</span><span class="token function">parse_json</span><span class="token punctuation">(</span><span class="token variable">$data</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="9"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>使用 and 连接两个条件进行判断时，如果第一个条件为真，则会进行对第二个条件再进行判断；如果第一个条件为假，那这个语句必定为假，所以第二个条件也不必判断了。</p>
+<p>所以问题在第 3 行，如果 <code>!empty($sign)</code>  为假，程序就不会对后面的  <code>(JWT::signature($h64.&quot;.&quot;.$d64) != $sign)</code>  这条验证语句进行判断了。所以把构造 jwt 时把 sign 置空就能绕过，即 <code>header.pauload.</code></p>
+<h3 id="5报错信息导致xss"><a class="anchor" href="#5报错信息导致xss">#</a> 5. 报错信息导致 xss</h3>
+<figure class="highlight php"><figcaption data-lang="PHP"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">function</span> <span class="token function-definition function">register</span><span class="token punctuation">(</span><span class="token variable">$user</span><span class="token punctuation">,</span> <span class="token variable">$hashed_password</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="2"></td><td><pre>  <span class="token variable">$sql</span> <span class="token operator">=</span> <span class="token string double-quoted-string">"INSERT INTO  users (login,password) values (\""</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="3"></td><td><pre>  <span class="token variable">$sql</span><span class="token operator">.=</span> <span class="token function">mysql_real_escape_string</span><span class="token punctuation">(</span><span class="token variable">$user</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="4"></td><td><pre>  <span class="token variable">$sql</span><span class="token operator">.=</span> <span class="token string double-quoted-string">"\", \""</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="5"></td><td><pre>  <span class="token variable">$sql</span><span class="token operator">.=</span> <span class="token function">mysql_real_escape_string</span><span class="token punctuation">(</span><span class="token variable">$hashed_password</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="6"></td><td><pre>  <span class="token variable">$sql</span><span class="token operator">.=</span> <span class="token string double-quoted-string">"\")"</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="7"></td><td><pre>  <span class="token variable">$result</span> <span class="token operator">=</span> <span class="token function">mysql_query</span><span class="token punctuation">(</span><span class="token variable">$sql</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="8"></td><td><pre>  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$result</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="9"></td><td><pre>    <span class="token keyword">return</span> <span class="token constant boolean">TRUE</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="10"></td><td><pre>  <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="11"></td><td><pre>  <span class="token keyword">else</span></pre></td></tr><tr><td data-num="12"></td><td><pre>    <span class="token keyword">echo</span> <span class="token function">mysql_error</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="13"></td><td><pre>  <span class="token keyword">return</span> <span class="token constant boolean">FALSE</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="14"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><blockquote>
+<p><strong>mysql_real_escape_string()</strong> 调用 mysql 库的函数 mysql_real_escape_string, 在以下字符前添加反斜线： <code>\x00</code> 、 <code>\n</code> 、 <code>\r</code> 、 <code>\</code> 、 <code>'</code> 、 <code>&quot;</code>  和  <code>\x1a</code> .</p>
+</blockquote>
+<p>先入为主以为是 SQL 注入。但问题在第 13 行的 mysql_error ();</p>
+<p><code>mysql_error()</code>  返回的是最近一次 MySQL 操作的错误信息，这些错误信息可能包含用户输入或其他不受控制的内容。如果错误信息中包含恶意的 JavaScript 代码或者 HTML 标签，攻击者就可以利用这个漏洞进行 XSS 攻击。</p>
+<p>例如，假设用户提供的用户名为 <code>&lt;script&gt;alert('XSS');&lt;/script&gt;</code> ，如果这个错误信息未经处理直接输出在网页上，页面会执行恶意的 JavaScript 代码。</p>
+<ol start="6">
+<li></li>
+</ol>
+<figure class="highlight php"><figcaption data-lang="PHP"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">'</span>/profile/<span class="token php language-php"><span class="token delimiter important">&lt;?php</span> <span class="token keyword">echo</span> <span class="token function">htmlentities</span><span class="token punctuation">(</span><span class="token variable">$user</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token delimiter important">?></span></span><span class="token punctuation">'</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span></pre></td></tr></table></figure><blockquote>
+<p>htmlentities(<em>string,flags,character-set,double_encode</em>) 函数可以把一些字符转换为 HTML 实体，flags 默认情况下为 ENT_COMPAT，仅编码双引号。</p>
+</blockquote>
+<p>所以可以构造恶意的 user，如 '&gt;&lt;script&gt;alert ('test')&lt;/script&gt;&lt;a&gt; 进行绕过，触发 XSS</p>
+<p>7.php 类型转换</p>
+<figure class="highlight php"><figcaption data-lang="PHP"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string double-quoted-string">"count"</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">and</span> </pre></td></tr><tr><td data-num="2"></td><td><pre>            <span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string double-quoted-string">"count"</span><span class="token punctuation">]</span> <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">and</span></pre></td></tr><tr><td data-num="3"></td><td><pre>            <span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string double-quoted-string">"count"</span><span class="token punctuation">]</span> <span class="token operator">&lt;=</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="4"></td><td><pre>    <span class="token keyword">echo</span> <span class="token function">system</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"ping pentesterlab.com -c "</span><span class="token operator">.</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'count'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="5"></td><td><pre>  <span class="token punctuation">&#125;</span></pre></td></tr></table></figure><ul>
+<li>当比较不同类型的值时，PHP 会尝试将它们转换为相同的类型以进行比较。</li>
+<li>如果一个操作数是字符串，另一个操作数是数字，PHP 会尝试将字符串转换为数字。</li>
+</ul>
+<p>构造恶意语句，可以执行命令：</p>
+<figure class="highlight url"><figcaption data-lang="url"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token scheme">http<span class="token scheme-delimiter">:</span></span><span class="token authority"><span class="token authority-delimiter">//</span><span class="token host">example.com</span></span><span class="token path"><span class="token path-separator">/</span></span><span class="token query"><span class="token query-delimiter">?</span><span class="token pair"><span class="token key">count</span>=<span class="token value">4</span></span><span class="token pair-delimiter">;</span><span class="token pair"><span class="token key">cat+/etc/passwd</span></span></span></pre></td></tr></table></figure><p>实际执行：</p>
+<pre><code>ping pentesterlab.com -c 4;cat /etc/passwd
+</code></pre>
+<ol start="8">
+<li>hash_hmac () 函数</li>
+</ol>
+<figure class="highlight php"><figcaption data-lang="PHP"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">define</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'KEY'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'...'</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="2"></td><td><pre>  <span class="token keyword">function</span> <span class="token function-definition function">sign</span><span class="token punctuation">(</span><span class="token variable">$data</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="3"></td><td><pre>    <span class="token keyword">return</span> <span class="token function">hash_hmac</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'sha256'</span><span class="token punctuation">,</span> <span class="token variable">$data</span><span class="token punctuation">,</span> <span class="token constant">KEY</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="4"></td><td><pre>  <span class="token punctuation">&#125;</span> </pre></td></tr><tr><td data-num="5"></td><td><pre>  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string double-quoted-string">"data"</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">and</span></pre></td></tr><tr><td data-num="6"></td><td><pre>      <span class="token function">sign</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string double-quoted-string">"data"</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string double-quoted-string">"signature"</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="7"></td><td><pre>      <span class="token keyword">echo</span> <span class="token string double-quoted-string">"Valid Signature"</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="8"></td><td><pre>      <span class="token comment">//...</span></pre></td></tr><tr><td data-num="9"></td><td><pre>  <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="10"></td><td><pre>    <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"Invalid Signature"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="11"></td><td><pre>  <span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>这是一个签名验证函数，问题出现在第 6 行。</p>
+<blockquote>
+<p>hash_mac () 函数，如果传入的 data 是一个数组，则会返回 null</p>
+</blockquote>
+<p>如果这时 signature 也是 null，则会通过比较。</p>
+<p>绕过示例：</p>
+<pre><code>http://example.com/?data[]=test&amp;signature=
+</code></pre>
+<p>这时 php 会抛出一个异常，但也会通过验证。</p>
+<ol start="9">
+<li>弱比较运算符（==）</li>
+</ol>
+<figure class="highlight php"><figcaption data-lang="PHP"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">define</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'KEY'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'...'</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="2"></td><td><pre>  <span class="token keyword">function</span> <span class="token function-definition function">sign</span><span class="token punctuation">(</span><span class="token variable">$data</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="3"></td><td><pre>    <span class="token keyword">return</span> <span class="token function">hash_hmac</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'sha256'</span><span class="token punctuation">,</span> <span class="token variable">$data</span><span class="token punctuation">,</span> <span class="token constant">KEY</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="4"></td><td><pre>  <span class="token punctuation">&#125;</span> </pre></td></tr><tr><td data-num="5"></td><td><pre>  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string double-quoted-string">"data"</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">and</span></pre></td></tr><tr><td data-num="6"></td><td><pre>      <span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string double-quoted-string">"signature"</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">and</span></pre></td></tr><tr><td data-num="7"></td><td><pre>      <span class="token function">sign</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string double-quoted-string">"data"</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string double-quoted-string">"signature"</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="8"></td><td><pre>      <span class="token keyword">echo</span> <span class="token string double-quoted-string">"Valid Signature"</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="9"></td><td><pre>      <span class="token comment">//...</span></pre></td></tr><tr><td data-num="10"></td><td><pre>  <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="11"></td><td><pre>    <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"Invalid Signature"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="12"></td><td><pre>  <span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>弱比较运算符会进行 <strong>类型转换</strong>。</p>
+<p>如果  <code>$_GET[&quot;signature&quot;]</code>  的值是特殊的字符串（如  <code>&quot;0e123456789&quot;</code> ），且  <code>sign($_GET[&quot;data&quot;])</code>  返回一个类似的值（例如  <code>&quot;0e0987654321&quot;</code> ），PHP 会将它们 &lt;u&gt; 都解释为科学计数法表示的数字  <code>0</code> &lt;/u&gt;，从而使比较成立。</p>
+<p>以  <code>0e</code>  开头的字符串容易被 PHP 弱比较漏洞利用的核心原因是：</p>
+<ul>
+<li>PHP 会将类似  <code>0e12345</code>  的字符串当作科学计数法表示的数字  <code>0</code> 。（0*10 的 12345 次方）</li>
+<li>弱比较 ( <code>==</code> ) 会触发这种隐式类型转换。</li>
+</ul>
+
+      <div class="tags">
+          <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" rel="tag"><i class="ic i-tag"></i> 代码审计</a>
+          <a href="/tags/PHP/" rel="tag"><i class="ic i-tag"></i> PHP</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">更新于</span>
+    <time title="修改时间：2024-12-17 00:00:05" itemprop="dateModified" datetime="2024-12-17T00:00:05+08:00">2024-12-17</time>
+  </span>
+  <span id="2024/12/04/PHP代码审计/" class="item leancloud_visitors" data-flag-title="PHP代码审计" title="阅读次数">
+      <span class="icon">
+        <i class="ic i-eye"></i>
+      </span>
+      <span class="text">阅读次数</span>
+      <span class="leancloud-visitors-count"></span>
+      <span class="text">次</span>
+  </span>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>本文作者： </strong>N1U <i class="ic i-at"><em>@</em></i>记录·分享·碎碎念·电子墓碑
+  </li>
+  <li class="link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2024/12/04/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" title="PHP代码审计">http://example.com/2024/12/04/PHP代码审计/</a>
+  </li>
+  <li class="license">
+    <strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2024/12/01/%E3%80%8Eweekly%E3%80%8F%E5%85%B3%E4%BA%8E%E8%87%AA%E6%88%91%E6%84%9F%E5%8A%A8/" itemprop="url" rel="prev" data-background-image="&#x2F;2024&#x2F;12&#x2F;01&#x2F;%E3%80%8Eweekly%E3%80%8F%E5%85%B3%E4%BA%8E%E8%87%AA%E6%88%91%E6%84%9F%E5%8A%A8&#x2F;%E5%91%A8%E8%AE%B0%E5%B0%81%E9%9D%A2.png" title="『weekly』入冬 模型 关于自我感动">
+  <span class="type">上一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>『weekly』入冬 模型 关于自我感动</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+      
+
+  <a href="/2024/12/15/%E3%80%8Eweekly%E3%80%8F%E5%85%B3%E4%BA%8E%E9%BB%91%E7%A5%9E%E8%AF%9D%E4%B8%8ETGA/" itemprop="url" rel="next" data-background-image="&#x2F;2024&#x2F;12&#x2F;15&#x2F;%E3%80%8Eweekly%E3%80%8F%E5%85%B3%E4%BA%8E%E9%BB%91%E7%A5%9E%E8%AF%9D%E4%B8%8ETGA&#x2F;%E5%91%A8%E8%AE%B0%E5%B0%81%E9%9D%A2.png" title="『weekly』黑神话与TGA">
+  <span class="type">下一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>『weekly』黑神话与TGA</h3>
+  </a>
+
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="文章目录">
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text"> </span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86%E6%BC%8F%E6%B4%9E"><span class="toc-number">1.1.</span> <span class="toc-text"> 1. 目录遍历漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E7%BB%95%E8%BF%87"><span class="toc-number">1.2.</span> <span class="toc-text"> 2. 绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3in_array%E5%BC%B1%E7%B1%BB%E5%9E%8B%E6%AF%94%E8%BE%83"><span class="toc-number">1.3.</span> <span class="toc-text"> 3.in_array () 弱类型比较</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E5%88%A4%E6%96%AD%E8%AF%AD%E5%8F%A5-and"><span class="toc-number">1.4.</span> <span class="toc-text"> 4. 判断语句 and</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%E6%8A%A5%E9%94%99%E4%BF%A1%E6%81%AF%E5%AF%BC%E8%87%B4xss"><span class="toc-number">1.5.</span> <span class="toc-text"> 5. 报错信息导致 xss</span></a></li></ol></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="系列文章">
+      </div>
+      <div class="overview panel" data-title="站点概览">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="N1U"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">N1U</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">14</span>
+        <span class="name">文章</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">12</span>
+        <span class="name">标签</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+      <span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL04xVjY=" title="https:&#x2F;&#x2F;github.com&#x2F;N1V6"><i class="ic i-github"></i></span>
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>首页</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/archives/" rel="section"><i class="ic i-list-alt"></i>归档</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/categories/" rel="section"><i class="ic i-th"></i>分类</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/tags/" rel="section"><i class="ic i-tags"></i>标签</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/links/" rel="section"><i class="ic i-magic"></i>链接</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+        <a href="/2024/12/01/%E3%80%8Eweekly%E3%80%8F%E5%85%B3%E4%BA%8E%E8%87%AA%E6%88%91%E6%84%9F%E5%8A%A8/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a>
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+        <a href="/2024/12/15/%E3%80%8Eweekly%E3%80%8F%E5%85%B3%E4%BA%8E%E9%BB%91%E7%A5%9E%E8%AF%9D%E4%B8%8ETGA/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a>
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>随机文章</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/12/29/%E3%80%8Eweekly%E3%80%8F2024%E6%9C%80%E5%90%8E%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" title="『weekly』2024最后一篇博客">『weekly』2024最后一篇博客</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/05/16/python%E7%88%AC%E8%99%AB%EF%BC%9A%E7%9B%B4%E6%92%AD%E5%BC%B9%E5%B9%95/" title="python爬虫：直播弹幕">python爬虫：直播弹幕</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/12/04/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" title="PHP代码审计">PHP代码审计</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/11/29/JsonWebToken-JWT-%E5%AE%89%E5%85%A8/" title="Json Web Token(JWT)安全">Json Web Token(JWT)安全</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/11/16/JavaScript%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" title="JavaScript代码审计">JavaScript代码审计</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/11/15/%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E5%88%A9%E7%94%A8%E5%A7%BF%E5%8A%BF/" title="文件读取利用姿势">文件读取利用姿势</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/12/26/xss%E7%BB%BC%E5%90%88%E5%88%A9%E7%94%A8%E5%A7%BF%E5%8A%BF/" title="xss综合利用姿势">xss综合利用姿势</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/11/24/%E3%80%8Eweekly%E3%80%8F%E5%85%B3%E4%BA%8E%E6%B8%B8%E6%88%8F/" title="『weekly』《咒》《女鬼桥》《还愿》关于恐怖游戏">『weekly』《咒》《女鬼桥》《还愿》关于恐怖游戏</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/12/15/%E3%80%8Eweekly%E3%80%8F%E5%85%B3%E4%BA%8E%E9%BB%91%E7%A5%9E%E8%AF%9D%E4%B8%8ETGA/" title="『weekly』黑神话与TGA">『weekly』黑神话与TGA</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/05/17/%E5%85%B3%E4%BA%8E%E6%88%91%E5%85%B3%E4%BA%8E%E9%82%A3%E4%BA%9B%E5%B9%B4/" title="关于我的那些年">关于我的那些年</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>最新评论</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">N1U @ N1V</span>
+  </div>
+  <div class="powered-by">
+    基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2024/12/04/PHP代码审计/',
+    favicon: {
+      show: "欢迎回来",
+      hide: "N1V6"
+    },
+    search : {
+      placeholder: "文章搜索",
+      empty: "关于 「 ${query} 」，什么也没搜到",
+      stats: "${time} ms 内找到 ${hits} 条结果"
+    },
+    valine: true,fancybox: true,
+    copyright: '复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>
