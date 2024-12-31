@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>2025年倒计时</title>
+    <title>春节倒计时</title>
     <!-- 引入Google Fonts的Ma Shan Zheng字体 -->
     <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
     <style>
@@ -150,9 +150,9 @@
     </div>
 
     <div class="container">
-        <h1 style="font-size:48px">2025年倒计时</h1>
+        <h1 style="font-size:48px">2025年春节倒计时</h1>
         <div class="time" style="font-size:36px">当前时间：<span id="currentTime">--:--:--</span></div>
-        <div class="cny-date" style="font-size:36px">2025新年日期：<span id="cnyDate">--</span></div>
+        <div class="cny-date" style="font-size:36px">2025春节日期：<span id="cnyDate">--</span></div>
         <div class="countdown" style="font-size:36px";>倒计时：<span id="countdown">--天 --小时 --分钟 --秒</span></div>
     </div>
 
@@ -169,8 +169,8 @@
             2022: '2022-02-01',
             2023: '2023-01-22',
             2024: '2024-02-10',
-            2025: '2025-01-01',
-            2026: '2025-01-29',
+            2025: '2025-01-29',
+            2026: '2026-01-29',
             2027: '2027-02-06',
             2028: '2028-01-26',
             2029: '2029-02-13',
@@ -191,8 +191,7 @@
             let cnyYear = year;
             let cnyDateStr = cnyDates[cnyYear];
             let cnyDate = cnyDateStr ? new Date(cnyDateStr + 'T00:00:00') : null;
-            // let customDateStr = "2025-02-19";
-            // let cnyDate = new Date(customDateStr + 'T00:00:00');
+
 
             // 如果今年的中国春节已经过去，使用明年的
             if (cnyDate && now > cnyDate) {
