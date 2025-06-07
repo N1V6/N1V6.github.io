@@ -106,7 +106,7 @@
 }
 [data-theme="dark"]:root {
   --grey-0: #222;
-  --grey-1: #21252b;
+  --grey-1: #111; /*背景色 深黑*/
   --grey-2: #363636;
   --grey-3: #444;
   --grey-4: #666;
@@ -123,13 +123,13 @@
   --grey-2-a0: rgba(34,34,34,0);
   --color-pink-light: #131d2f;
   --color-cyan-light: #232c2d;
-  --color-red: rgba(237,118,137,0.9);
-  --color-pink: rgba(241,139,179,0.8);
+  --color-red: rgba(255,209,111,0.9); /*深色模式 字体颜色*/
+  --color-pink: rgba(220,193,151,0.8); /* 鼠标指着时显示的颜色*/
   --color-orange: rgba(240,163,135,0.8);
   --color-yellow: #ffe175;
   --color-green: #86c59d;
   --color-aqua: #97d3d6;
-  --color-blue: #9cd0ed;
+  --color-blue: #e9d8be; /*指着链接时的颜色*/
   --color-purple: #cfacc5;
   --color-grey: #c3c8ca;
   --body-bg-shadow: #000;
@@ -180,10 +180,10 @@
 [data-theme="dark"] .index.wrap .card .message .btn:hover,
 [data-theme="dark"] img:hover,
 [data-theme="dark"] [data-background-image]:hover {
-  opacity: 0.9;
+  opacity: 0.75;
 }
 [data-theme="dark"] #imgs::before {
-  background-color: rgba(0,0,0,0.9);
+  background-color: rgba(0,0,0,0.5);
 }
 .red {
   color: var(--color-red);
