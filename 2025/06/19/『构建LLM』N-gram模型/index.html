@@ -1,0 +1,628 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="学习·记录·碎碎念·电子墓碑" href="http://example.com/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="学习·记录·碎碎念·电子墓碑" href="http://example.com/atom.xml" />
+<link rel="alternate" type="application/json" title="学习·记录·碎碎念·电子墓碑" href="http://example.com/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="LLM,LLM-Build" />
+
+
+<link rel="canonical" href="http://example.com/2025/06/19/%E3%80%8E%E6%9E%84%E5%BB%BALLM%E3%80%8FN-gram%E6%A8%A1%E5%9E%8B/">
+
+
+
+  <title>
+『构建LLM』N-gram模型 |
+N1V = 学习·记录·碎碎念·电子墓碑</title>
+<meta name="generator" content="Hexo 7.2.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">『构建LLM』N-gram模型
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="创建时间：2025-06-19 00:00:00">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">发表于</span>
+    <time itemprop="dateCreated datePublished" datetime="2025-06-19T00:00:00+08:00">2025-06-19</time>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="切换导航栏">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">N1V</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+          <img src="/2025/06/19/%E3%80%8E%E6%9E%84%E5%BB%BALLM%E3%80%8FN-gram%E6%A8%A1%E5%9E%8B/cover.png">
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">首页</a></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN">
+  <link itemprop="mainEntityOfPage" href="http://example.com/2025/06/19/%E3%80%8E%E6%9E%84%E5%BB%BALLM%E3%80%8FN-gram%E6%A8%A1%E5%9E%8B/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/avatar.jpg">
+    <meta itemprop="name" content="N1U">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="学习·记录·碎碎念·电子墓碑">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h2 id="n-gram模型"><a class="anchor" href="#n-gram模型">#</a> N-gram 模型</h2>
+<p>很多 LLM 的核心运行机制和学习范式是 “预测下一个词的生成”，以此来响应并生成用户需要的内容。</p>
+<p>一个基础的问题是：当计算机看到一句话的前面几个词时，它如何预测下一个最可能出现的词是什么？或者，如何判断一句话是不是 “通顺自然”？N-gram 模型就是早期解决这类问题的一种经典方法，它简单、直观，为我们理解更复杂的语言模型打下了坚实的基础。</p>
+<h3 id="一-什么是n-gram-语言的小片段"><a class="anchor" href="#一-什么是n-gram-语言的小片段">#</a> <strong>一、什么是 N-gram？—— 语言的 “小片段”</strong></h3>
+<p>“N-gram” 这个名字听起来有点学术，但拆开来看就很容易理解：</p>
+<ul>
+<li><strong>N</strong>：代表一个自然数，比如 1、2、3 等等。它指的是我们关注的 “词语片段” 的长度。</li>
+<li><strong>gram</strong>：在这里可以理解为一个 “单元” 或 “元素”，在自然语言处理中，这个单元通常是一个<strong>词 (word)</strong>，有时也可以是<strong>字符 (character)</strong>。</li>
+</ul>
+<p>所以，N-gram 模型，简单来说，就是一种基于<strong>统计</strong>的语言模型，它认为一个词的出现概率，可以由它前面 <strong>N-1</strong> 个词来近似决定。</p>
+<p>我们来看几个例子：</p>
+<ul>
+<li>
+<p>Unigram (1-gram)</p>
+<p>：N=1。它假设每个词的出现都是独立的，与上下文无关。</p>
+<ul>
+<li>例如，句子 “我 爱 人工智能” 中的 unigrams 是：“我”、“爱”、“人工智能”。</li>
+</ul>
+</li>
+<li>
+<p>Bigram (2-gram)</p>
+<p>：N=2。它假设一个词的出现概率，只与它前面紧邻的 1 个词有关。</p>
+<ul>
+<li>例如，句子 “我 爱 人工智能” 中的 bigrams 是：“(我，爱)”、“(爱，人工智能)”。</li>
+</ul>
+</li>
+<li>
+<p>Trigram (3-gram)</p>
+<p>：N=3。它假设一个词的出现概率，与它前面紧邻的 2 个词有关。</p>
+<ul>
+<li>例如，句子 “我 爱 人工智能” 中的 trigrams 是：“(我，爱，人工智能)”。</li>
+</ul>
+</li>
+</ul>
+<h3 id="二-n-gram模型的核心思想马尔可夫假设"><a class="anchor" href="#二-n-gram模型的核心思想马尔可夫假设">#</a> <strong>二、N-gram 模型的核心思想：马尔可夫假设</strong></h3>
+<p>要预测一句话中第 <code>k</code>  个词  <code>w_k</code>  是什么，最理想的情况是考虑它前面所有出现过的词： <code>P(w_k | w_1, w_2, ..., w_&#123;k-1&#125;)</code> 。 但这里有个大问题：如果句子很长，比如前面有 20 个词，那么  <code>(w_1, w_2, ..., w_&#123;19&#125;)</code>  这个组合在我们的训练数据中可能从未出现过！这样我们就无法估计  <code>w_k</code>  出现的概率了。</p>
+<p>为了解决这个问题，N-gram 模型引入了一个重要的简化假设，称为<strong>马尔可夫假设 (Markov Assumption)</strong>。它认为： <strong>一个词的出现，只与它前面有限的 N-1 个词有关，而与更早的词无关。</strong></p>
+<ul>
+<li>对于 <strong>Unigram</strong>：P (w_k) ≈ P (w_k) （当前词的概率与前面所有词都无关）</li>
+<li>对于 <strong>Bigram</strong>：P (w_k | w_1, ..., w_{k-1}) ≈ P (w_k | w_{k-1}) （当前词的概率只与前 1 个词有关）</li>
+<li>对于 <strong>Trigram</strong>：P (w_k | w_1, ..., w_{k-1}) ≈ P (w_k | w_{k-2}, w_{k-1}) （当前词的概率只与前 2 个词有关）</li>
+</ul>
+<p>这个假设大大简化了问题。就像我们玩积木，下一个积木怎么放，我们可能只看它下面那一块，或者下面两块，而不是看最底下的第一块积木。</p>
+<h3 id="三-如何构建训练一个n-gram模型"><a class="anchor" href="#三-如何构建训练一个n-gram模型">#</a> <strong>三、如何构建（训练）一个 N-gram 模型？</strong></h3>
+<p>构建 N-gram 模型的过程，就像是教计算机 “阅读” 大量的文本，然后 “记住” 哪些词语组合更常见。</p>
+<ol>
+<li>
+<p><strong>准备语料库 (Corpus) 和预处理</strong>：</p>
+<ul>
+<li>
+<p>首先，我们需要大量的文本数据，这叫做语料库。比如，很多新闻文章、小说、网页内容等。</p>
+</li>
+<li>
+<p>分词 (Tokenization)</p>
+<p>：对于中文这样的语言，词与词之间没有天然的空格，所以需要先进行分词。</p>
+<ul>
+<li>例如，句子  <code>我喜欢吃苹果。</code>  分词后变成： <code>我</code>   <code>喜欢</code>   <code>吃</code>   <code>苹果</code>   <code>。</code>  (标点也常被视为一个 token)</li>
+</ul>
+</li>
+<li>
+<p>添加句子边界符</p>
+<p>：为了能处理句子的开头和结尾，我们通常会在每个句子的开头加上一个特殊的 “开始” 标记（比如 &lt; S&gt;），在结尾加上 “结束” 标记（比如 &lt;/S&gt;）。</p>
+<ul>
+<li>例如： <code>&lt;S&gt; 我 喜欢 吃 苹果 。&lt;/S&gt;</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>统计 N-gram 频次 (Counting Frequencies)</strong>： 在处理好的语料库上，我们开始数数。我们要数出所有不同 N-gram 序列以及它们的 (N-1)-gram 前缀序列出现的次数。</p>
+<p>以 <strong>Bigram (N=2)</strong> 模型为例，对于句子  <code>&lt;S&gt; 我 喜欢 吃 苹果 。&lt;/S&gt;</code> ：</p>
+<ul>
+<li>我们需要统计的 Bigrams (长度为 2 的序列) 及其频次：
+<ul>
+<li>Count( <code>&lt;S&gt;</code> , 我)</li>
+<li>Count (我，喜欢)</li>
+<li>Count (喜欢，吃)</li>
+<li>Count (吃，苹果)</li>
+<li>Count (苹果，。)</li>
+<li>Count(。,  <code>&lt;/S&gt;</code> )</li>
+</ul>
+</li>
+<li>我们还需要统计其前缀 Unigrams (长度为 1 的序列) 及其频次：
+<ul>
+<li>Count( <code>&lt;S&gt;</code> )</li>
+<li>Count (我)</li>
+<li>Count (喜欢)</li>
+<li>Count (吃)</li>
+<li>Count (苹果)</li>
+<li>Count(。)</li>
+</ul>
+</li>
+</ul>
+<p>假设我们的语料库很小，只有两句话：</p>
+<ul>
+<li><code>&lt;S&gt; 我 喜欢 吃 苹果 &lt;/S&gt;</code></li>
+<li><code>&lt;S&gt; 我 喜欢 看 书 &lt;/S&gt;</code></li>
+</ul>
+<p>那么部分频次统计如下：</p>
+<ul>
+<li>Count( <code>&lt;S&gt;</code> ) = 2</li>
+<li>Count (我) = 2</li>
+<li>Count (喜欢) = 2</li>
+<li>Count (吃) = 1</li>
+<li>Count (苹果) = 1</li>
+<li>Count (看) = 1</li>
+<li>Count (书) = 1</li>
+<li>Count( <code>&lt;S&gt;</code> , 我) = 2</li>
+<li>Count (我，喜欢) = 2</li>
+<li>Count (喜欢，吃) = 1</li>
+<li>Count (喜欢，看) = 1</li>
+<li>Count (吃，苹果) = 1</li>
+<li>Count (看，书) = 1</li>
+</ul>
+</li>
+<li>
+<p><strong>计算条件概率 (Calculating Conditional Probabilities)</strong>： 有了频次，我们就可以根据最大似然估计 (Maximum Likelihood Estimation, MLE) 来计算条件概率了。 公式为：<strong>P(w_n | w_1, ..., w_{n-1}) = Count(w_1, ..., w_{n-1}, w_n) / Count(w_1, ..., w_{n-1})</strong></p>
+<p>以 Bigram 为例，P (w_i | w_{i-1}) = Count (w_{i-1}, w_i) / Count (w_{i-1})。 根据上面小语料库的例子：</p>
+<ul>
+<li>P (我 |  <code>&lt;S&gt;</code> ) = Count( <code>&lt;S&gt;</code> , 我) / Count ( <code>&lt;S&gt;</code> ) = 2 / 2 = 1</li>
+<li>P (喜欢 | 我) = Count (我，喜欢) / Count (我) = 2 / 2 = 1</li>
+<li>P (吃 | 喜欢) = Count (喜欢，吃) / Count (喜欢) = 1 / 2 = 0.5</li>
+<li>P (看 | 喜欢) = Count (喜欢，看) / Count (喜欢) = 1 / 2 = 0.5</li>
+<li>P (苹果 | 吃) = Count (吃，苹果) / Count (吃) = 1 / 1 = 1</li>
+<li>P (书 | 看) = Count (看，书) / Count (看) = 1 / 1 = 1</li>
+</ul>
+<p>这样，我们就构建好了一个 Bigram 模型，它存储了所有这些条件概率。</p>
+</li>
+</ol>
+<h3 id="四-n-gram模型的应用"><a class="anchor" href="#四-n-gram模型的应用">#</a> <strong>四、N-gram 模型的应用</strong></h3>
+<p>一旦模型构建完成，我们就可以用它来做很多事情：</p>
+<ol>
+<li><strong>计算句子概率</strong>： 一个句子的整体概率可以看作是其包含的所有 N-gram 概率的连乘。 例如，对于 Bigram 模型，句子 S = w_1 w_2 ... w_k 的概率是： P (S) = P (w_1 |  <code>&lt;S&gt;</code> ) * P(w_2 | w_1) * P(w_3 | w_2) * ... * P(w_k | w_{k-1}) * P( <code>&lt;/S&gt;</code>  | w_k) 这个概率可以用来衡量一个句子是否 “自然” 或 “通顺”。在机器翻译或语音识别中，如果有多个候选结果，可以选概率最高的那个。</li>
+<li><strong>文本生成 (预测下一个词)</strong>： 给定一个词或一段前文，我们可以预测下一个最可能出现的词。 比如，我们输入 &quot;我 喜欢&quot;，模型会查找所有以 &quot;喜欢&quot; 开头的 bigram 的条件概率，例如 P (吃 | 喜欢) = 0.5, P (看 | 喜欢) = 0.5。如果还有 P (玩 | 喜欢) = 0.01 等等。 最简单的生成策略是<strong>贪心搜索</strong>：每次都选择条件概率最高的那个词作为下一个词。 例如，如果 P (吃 | 喜欢) 比 P (看 | 喜欢) 略高一点，模型就可能生成 &quot;我 喜欢 吃&quot;。然后，再根据 &quot;吃&quot; 来预测下一个词，比如 &quot;苹果&quot;。最终可能生成 &quot;我 喜欢 吃 苹果&quot;。</li>
+</ol>
+<h3 id="五-n-gram模型的局限性"><a class="anchor" href="#五-n-gram模型的局限性">#</a> <strong>五、N-gram 模型的局限性</strong></h3>
+<p>尽管 N-gram 模型直观且在一定程度上有效，但它有几个显著的局限性：</p>
+<ol>
+<li><strong>无法捕捉长距离依赖 (Limited Context)</strong>： 马尔可夫假设限制了模型只能 “看到” 前面 N-1 个词。如果一个词的出现依赖于更早之前的信息，N-gram 模型就无能为力了。
+<ul>
+<li><strong>例子</strong>：考虑句子：“我在法国巴黎长大，……，所以我能说一口流利的 ___。” 空缺处很可能是 “法语”。但如果我们的 N-gram 模型 N 值较小（比如 N=2 或 3），当它预测空缺处的词时，可能只看到 “流利的”，或者 “一口 流利的”。这些局部信息不足以推断出 “法语”，因为它依赖于远处的 “法国巴黎”。模型可能会基于 “流利的” 预测出更常见的搭配，如 “英语” 或 “中文”。</li>
+</ul>
+</li>
+<li><strong>数据稀疏性 (Data Sparsity) 与零概率问题 (Zero Probability Problem)</strong>： 这是 N-gram 模型（在不使用平滑技术时）最致命的问题。
+<ul>
+<li><strong>问题描述</strong>：在有限的训练语料中，很多词语组合可能从未出现过。例如，一个词组 “非常 可爱 的 小猫咪”，如果我们的训练数据中从来没有出现过 “可爱 的 小猫咪” 这个 trigram，那么 Count (可爱，的，小猫咪) 就会是 0。</li>
+<li><strong>后果</strong>：根据概率计算公式，P (小猫咪 | 可爱，的) = 0 / Count (可爱，的) = 0。 这意味着，任何包含这个从未见过的 N-gram 的句子，其整体概率都会变成 0！这显然是不合理的，因为这个句子可能是完全正确和自然的。</li>
+<li><strong>N 值的影响</strong>：当 N 增大时，可能的 N-gram 组合数量会指数级增长。比如，一个有 10000 个词的词汇表，可能的 bigram 组合是 10000^2 = 1 亿，trigram 组合是 10000^3 = 1 万亿。即使有海量语料，也很难覆盖所有这些组合，导致大量的 N-gram 频次为零。因此，N 的值通常不会取得很大（常用 2、3，很少超过 5）。</li>
+</ul>
+</li>
+<li><strong>缺乏真正的语义理解</strong>： N-gram 模型本质上是基于词串的表面统计，它并不理解词语的真正含义或句子背后的语法结构。
+<ul>
+<li><strong>例子</strong>：“狗 咬 人” 和 “人 咬 狗”。如果语料中 “狗 咬” 和 “咬 人” 的 bigram，以及 “人 咬” 和 “咬 狗” 的 bigram 都比较常见，模型可能会给这两句话相似的概率，但显然第二句在语义上是很奇怪的。</li>
+</ul>
+</li>
+</ol>
+<h3 id="六-n-gram的意义"><a class="anchor" href="#六-n-gram的意义">#</a> <strong>六、N-gram 的意义</strong></h3>
+<p>尽管存在上述局限性，N-gram 模型在自然语言处理发展史上扮演了非常重要的角色。它简单、高效，为许多应用（如早期的机器翻译、拼写检查、输入法）提供了基础。</p>
+<p>更重要的是，N-gram 模型暴露出的<strong>数据稀疏性</strong>和<strong>无法捕捉长距离依赖</strong>等问题，极大地推动了后续语言模型的研究。为了解决这些问题，研究者们提出了平滑技术（我们这次没讨论）、以及更强大的神经网络语言模型（如 RNN, LSTM, Transformer 等），这些模型能够更好地学习词语的分布式表示（词向量），并捕捉更复杂的上下文信息，从而在各种 NLP 任务上取得了显著的突破。</p>
+<blockquote>
+<p>本文参考《GPT 图解：大模型是怎样构建的》</p>
+<p>最终内容由 gemini 2.5 pro 整理生成</p>
+</blockquote>
+
+      <div class="tags">
+          <a href="/tags/LLM/" rel="tag"><i class="ic i-tag"></i> LLM</a>
+          <a href="/tags/LLM-Build/" rel="tag"><i class="ic i-tag"></i> LLM-Build</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">更新于</span>
+    <time title="修改时间：2025-06-19 13:35:06" itemprop="dateModified" datetime="2025-06-19T13:35:06+08:00">2025-06-19</time>
+  </span>
+  <span id="2025/06/19/『构建LLM』N-gram模型/" class="item leancloud_visitors" data-flag-title="『构建LLM』N-gram模型" title="阅读次数">
+      <span class="icon">
+        <i class="ic i-eye"></i>
+      </span>
+      <span class="text">阅读次数</span>
+      <span class="leancloud-visitors-count"></span>
+      <span class="text">次</span>
+  </span>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>本文作者： </strong>N1U <i class="ic i-at"><em>@</em></i>学习·记录·碎碎念·电子墓碑
+  </li>
+  <li class="link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2025/06/19/%E3%80%8E%E6%9E%84%E5%BB%BALLM%E3%80%8FN-gram%E6%A8%A1%E5%9E%8B/" title="『构建LLM』N-gram模型">http://example.com/2025/06/19/『构建LLM』N-gram模型/</a>
+  </li>
+  <li class="license">
+    <strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2025/06/10/MCP-Security/" itemprop="url" rel="prev" data-background-image="&#x2F;2025&#x2F;06&#x2F;10&#x2F;MCP-Security&#x2F;cover.jpg" title="MCP Security">
+  <span class="type">上一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>MCP Security</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="文章目录">
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#n-gram%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text"> N-gram 模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80-%E4%BB%80%E4%B9%88%E6%98%AFn-gram-%E8%AF%AD%E8%A8%80%E7%9A%84%E5%B0%8F%E7%89%87%E6%AE%B5"><span class="toc-number">1.1.</span> <span class="toc-text"> 一、什么是 N-gram？—— 语言的 “小片段”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C-n-gram%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%81%87%E8%AE%BE"><span class="toc-number">1.2.</span> <span class="toc-text"> 二、N-gram 模型的核心思想：马尔可夫假设</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89-%E5%A6%82%E4%BD%95%E6%9E%84%E5%BB%BA%E8%AE%AD%E7%BB%83%E4%B8%80%E4%B8%AAn-gram%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.3.</span> <span class="toc-text"> 三、如何构建（训练）一个 N-gram 模型？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B-n-gram%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-number">1.4.</span> <span class="toc-text"> 四、N-gram 模型的应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94-n-gram%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%B1%80%E9%99%90%E6%80%A7"><span class="toc-number">1.5.</span> <span class="toc-text"> 五、N-gram 模型的局限性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AD-n-gram%E7%9A%84%E6%84%8F%E4%B9%89"><span class="toc-number">1.6.</span> <span class="toc-text"> 六、N-gram 的意义</span></a></li></ol></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="系列文章">
+      </div>
+      <div class="overview panel" data-title="站点概览">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="N1U"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">N1U</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">28</span>
+        <span class="name">文章</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">28</span>
+        <span class="name">标签</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+      <span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL04xVjY=" title="https:&#x2F;&#x2F;github.com&#x2F;N1V6"><i class="ic i-github"></i></span>
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>首页</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/archives/" rel="section"><i class="ic i-list-alt"></i>归档</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/categories/" rel="section"><i class="ic i-th"></i>分类</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/tags/" rel="section"><i class="ic i-tags"></i>标签</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/links/" rel="section"><i class="ic i-magic"></i>链接</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>随机文章</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2025/03/20/%E6%99%AE%E5%A4%A9%E5%90%8C%E5%BA%86%EF%BC%81/" title="普天同庆">普天同庆</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2025/06/19/%E3%80%8E%E6%9E%84%E5%BB%BALLM%E3%80%8FN-gram%E6%A8%A1%E5%9E%8B/" title="『构建LLM』N-gram模型">『构建LLM』N-gram模型</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/11/29/JsonWebToken-JWT-%E5%AE%89%E5%85%A8/" title="Json Web Token(JWT)安全">Json Web Token(JWT)安全</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2025/06/08/PortSwigger-LLMSecurity-Range/" title="postswigger-LLM安全靶场">postswigger-LLM安全靶场</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/12/01/%E3%80%8Eweekly%E3%80%8F%E5%85%B3%E4%BA%8E%E8%87%AA%E6%88%91%E6%84%9F%E5%8A%A8/" title="『weekly』入冬 模型 关于自我感动">『weekly』入冬 模型 关于自我感动</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2025/03/23/%E3%80%8Eweekly%E3%80%8F%E9%AA%91%E8%A1%8C%E5%B0%8F%E8%AE%B0/" title="『weekly』骑行小记">『weekly』骑行小记</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/11/24/%E3%80%8Eweekly%E3%80%8F%E5%85%B3%E4%BA%8E%E6%B8%B8%E6%88%8F/" title="谈恐怖游戏与中式恐怖">谈恐怖游戏与中式恐怖</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/12/15/%E3%80%8Eweekly%E3%80%8F%E5%85%B3%E4%BA%8E%E9%BB%91%E7%A5%9E%E8%AF%9D%E4%B8%8ETGA/" title="谈黑神话与TGA的“含金量”">谈黑神话与TGA的“含金量”</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2025/03/19/%E5%85%B3%E4%BA%8E%E7%8B%97%E7%9A%84%E9%82%A3%E4%BA%9B%E5%B9%B4/" title="关于狗的那些年">关于狗的那些年</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2025/01/07/xss%E7%BB%BC%E5%90%88%E5%88%A9%E7%94%A8%E5%A7%BF%E5%8A%BF/" title="xss综合利用姿势">xss综合利用姿势</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>最新评论</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">N1U @ N1V</span>
+  </div>
+  <div class="powered-by">
+    基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2025/06/19/『构建LLM』N-gram模型/',
+    favicon: {
+      show: "欢迎回来",
+      hide: "N1V6"
+    },
+    search : {
+      placeholder: "文章搜索",
+      empty: "关于 「 ${query} 」，什么也没搜到",
+      stats: "${time} ms 内找到 ${hits} 条结果"
+    },
+    valine: true,fancybox: true,
+    copyright: '复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>
