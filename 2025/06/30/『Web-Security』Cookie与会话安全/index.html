@@ -1,0 +1,624 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="学习·记录·碎碎念·电子墓碑" href="http://example.com/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="学习·记录·碎碎念·电子墓碑" href="http://example.com/atom.xml" />
+<link rel="alternate" type="application/json" title="学习·记录·碎碎念·电子墓碑" href="http://example.com/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="Security,Web" />
+
+
+<link rel="canonical" href="http://example.com/2025/06/30/%E3%80%8EWeb-Security%E3%80%8FCookie%E4%B8%8E%E4%BC%9A%E8%AF%9D%E5%AE%89%E5%85%A8/">
+
+
+
+  <title>
+『Web Security』Cookie与会话安全 |
+N1V = 学习·记录·碎碎念·电子墓碑</title>
+<meta name="generator" content="Hexo 7.2.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">『Web Security』Cookie与会话安全
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="创建时间：2025-06-30 00:00:00">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">发表于</span>
+    <time itemprop="dateCreated datePublished" datetime="2025-06-30T00:00:00+08:00">2025-06-30</time>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="切换导航栏">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">N1V</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+          <img src="/2025/06/30/%E3%80%8EWeb-Security%E3%80%8FCookie%E4%B8%8E%E4%BC%9A%E8%AF%9D%E5%AE%89%E5%85%A8/cover.jpg">
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">首页</a></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN">
+  <link itemprop="mainEntityOfPage" href="http://example.com/2025/06/30/%E3%80%8EWeb-Security%E3%80%8FCookie%E4%B8%8E%E4%BC%9A%E8%AF%9D%E5%AE%89%E5%85%A8/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/avatar.jpg">
+    <meta itemprop="name" content="N1U">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="学习·记录·碎碎念·电子墓碑">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h1 id="cookie-与-会话安全"><a class="anchor" href="#cookie-与-会话安全">#</a> Cookie 与 会话安全</h1>
+<p>在 Web 世界中，HTTP 协议本身是 “无状态” 的。这意味着服务器默认不会记得上一次与你交互的是谁。为了解决这个问题，让网站能够 “记住” 用户（例如，你登录后刷新页面依然是登录状态），Cookie 和会话（Session）机制应运而生。然而，正是这种 “记忆” 机制，也带来了诸多安全风险。理解并正确管理它们，是 Web 安全的基石。</p>
+<h2 id="一-基础概念cookie-与-session-的协作"><a class="anchor" href="#一-基础概念cookie-与-session-的协作">#</a> <strong>一、 基础概念：Cookie 与 Session 的协作</strong></h2>
+<h3 id="cookie"><a class="anchor" href="#cookie">#</a> Cookie</h3>
+<p>Cookie 是一个由 HTTP 服务器通过 Set-Cookie 响应头发送给用户浏览器，并由浏览器存储在用户本地计算机上的一个小型文本数据段。当浏览器向该服务器发起后续请求时，会自动通过 Cookie 请求头将这个数据段附加并发送回去。它的设计初衷在 RFC 6265 等规范中有详细定义，其核心目的是为无状态的 HTTP 协议引入一种状态保持机制。</p>
+<h3 id="session"><a class="anchor" href="#session">#</a> session</h3>
+<p>Session 是一种在服务器端维持特定用户连续交互状态的抽象机制。它代表了从用户开始访问应用到其离开或超时的整个 “对话” 过程。在技术实现上，Session 是一个在服务器内存、文件系统或数据库中创建的、与唯一会话标识符（Session ID）相关联的数据结构。</p>
+<h3 id="cookie和session的关系"><a class="anchor" href="#cookie和session的关系">#</a> Cookie 和 Session 的关系</h3>
+<p>在现代 Web 应用中，Cookie 和 Session 并非对立关系，而是紧密协作的<strong>互补关系。</strong></p>
+<p>可以这样理解：</p>
+<blockquote>
+<p><strong>Session 是目的，Cookie 是最常用的手段。</strong></p>
+</blockquote>
+<ul>
+<li><strong>目的 (Session)</strong>：服务器需要一种安全的方式来存储和管理每个用户的状态。</li>
+<li><strong>手段 (Cookie)</strong>：服务器创建了 Session 数据后，需要一种机制告诉浏览器 “你是谁”。它将独一无二的 Session ID 生成出来，然后把它 “装进” 一个 Cookie 里，发给浏览器。</li>
+</ul>
+<blockquote>
+<p>想象一个场景：你去一家需要会员卡的俱乐部。</p>
+<ul>
+<li><strong>Cookie</strong>：就像是你的<strong>会员卡</strong>。俱乐部（服务器）在你第一次注册后发给你，上面可能只写了一个独一无二的会员号。你随身携带（存储在浏览器本地），每次去俱乐部（访问网站）时，都需要出示这张卡。</li>
+<li><strong>Session</strong>：是俱乐部<strong>内部的档案</strong>（存储在服务器端）。档案里记录了你的详细信息，比如你的姓名、消费偏好、账户余额等敏感信息。</li>
+<li><strong>SessionID</strong>：就是你会员卡上的那个<strong>会员号</strong>。</li>
+</ul>
+</blockquote>
+<h3 id="工作流程"><a class="anchor" href="#工作流程">#</a> 工作流程</h3>
+<ol>
+<li><strong>用户登录</strong>：你向服务器提交用户名和密码。</li>
+<li><strong>服务器验证</strong>：服务器验证通过后，不会把你的所有信息（如 “角色 = 管理员”）直接写在会员卡上发给你，因为卡片容易被伪造或篡改。</li>
+<li><strong>创建 Session</strong>：服务器会在自己的档案库里为你创建一个档案（Session），并生成一个独一无二、难以猜测的编号（SessionID），例如  <code>phpsessid=a1b2c3d4e5f6g7h8</code> 。</li>
+<li><strong>下发 Cookie</strong>：服务器通过  <code>Set-Cookie</code>  HTTP 响应头，将这个含有 SessionID 的 “会员卡” 发给你的浏览器。</li>
+<li><strong>后续请求</strong>：之后，你每次访问该网站，浏览器都会自动带上这张存有 SessionID 的 Cookie。</li>
+<li><strong>身份识别</strong>：服务器收到请求后，读取 Cookie 中的 SessionID，然后去自己的档案库里查找对应的 Session 档案，从而确认你的身份和状态，并提供个性化服务。</li>
+</ol>
+<p>这种模式的核心优势在于：<strong>敏感数据（Session）保留在安全的服务器端，客户端（Cookie）只持有一个无意义的标识符（SessionID）</strong>。</p>
+<h4 id="二-cookie-的作用域第一方与第三方-cookie"><a class="anchor" href="#二-cookie-的作用域第一方与第三方-cookie">#</a> <strong>二、 Cookie 的作用域：第一方与第三方 Cookie</strong></h4>
+<p>根据 Cookie 的来源域，可以分为两类：</p>
+<ul>
+<li><strong>第一方 Cookie (First-Party Cookie)</strong>：由你当前正在访问的网站设置的 Cookie。例如，你访问  <code>example.com</code> ，由  <code>example.com</code>  设置的 Cookie 就是第一方 Cookie。它主要用于维持登录状态、保存用户偏好等核心功能。</li>
+<li><strong>第三方 Cookie (Third-Party Cookie)</strong>：由你当前访问页面中嵌入的其他域（第三方）设置的 Cookie。
+<ul>
+<li><strong>举例</strong>：你访问新闻网站  <code>news.com</code> ，该页面嵌入了一个来自  <code>google-analytics.com</code>  的分析脚本和一个来自  <code>ads-network.com</code>  的广告。这两个第三方域都可以在你的浏览器上设置它们自己的 Cookie。</li>
+<li><strong>用途</strong>：主要用于跨站用户追踪、广告精准投放和数据分析。</li>
+<li><strong>安全与隐私趋势</strong>：由于第三方 Cookie 引发了严重的隐私担忧，现代浏览器（如 Safari, Firefox, Chrome）正在逐步限制或默认阻止它们，这对数字广告行业产生了深远影响。</li>
+</ul>
+</li>
+</ul>
+<h4 id="三-cookie-的安全阀门详解核心属性"><a class="anchor" href="#三-cookie-的安全阀门详解核心属性">#</a> <strong>三、 Cookie 的安全阀门：详解核心属性</strong></h4>
+<p><code>Set-Cookie</code>  响应头不仅可以设置 Cookie 的键值，还能通过一系列属性来精确控制其行为和安全性。正确配置这些属性是防御多种攻击的关键。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">属性</th>
+<th style="text-align:left">作用</th>
+<th style="text-align:left">安全最佳实践与举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Domain</strong></td>
+<td style="text-align:left">指定 Cookie 生效的域名。</td>
+<td style="text-align:left"><strong>不设置</strong>。默认情况下，Cookie 仅对设置它的具体主机（如  <code>www.example.com</code> ）生效，这是最安全的。如果设置为  <code>Domain=example.com</code> ，则它会对主域及所有子域（ <code>api.example.com</code>  等）生效，可能扩大攻击面。</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Path</strong></td>
+<td style="text-align:left">指定 Cookie 生效的服务器路径。</td>
+<td style="text-align:left"><strong>设置为尽可能具体的路径</strong>，如  <code>/app/</code> 。默认是当前请求的路径。例如， <code>Path=/admin</code>  的 Cookie 不会被发送到  <code>/home</code>  路径的请求中。** 注意：** 它不能用于严格的安全隔离，因为同域下的其他路径漏洞（如 XSS）仍可能影响整个域。</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Expires / Max-Age</strong></td>
+<td style="text-align:left">设置 Cookie 的有效期。</td>
+<td style="text-align:left"><strong>为敏感 Cookie 设置较短的有效期</strong>。 <code>Expires</code>  是绝对时间点， <code>Max-Age</code>  是相对秒数（优先级更高）。不设置则为<strong>会话 Cookie</strong>，浏览器关闭后删除。<strong>举例</strong>： <code>Set-Cookie: session=...; Max-Age=3600</code>  (有效期 1 小时)</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>HttpOnly</strong></td>
+<td style="text-align:left"><strong>[防御 XSS 的关键]</strong> 禁止客户端脚本（JavaScript）访问 Cookie。</td>
+<td style="text-align:left"><strong>必须为存储 SessionID 等敏感信息的 Cookie 设置</strong>。设置后， <code>document.cookie</code>  将无法读取到该 Cookie，有效防止 XSS 漏洞窃取会话。<strong>举例</strong>： <code>Set-Cookie: sessionID=...; HttpOnly</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Secure</strong></td>
+<td style="text-align:left"><strong>[防御中间人攻击的关键]</strong> 保证 Cookie 仅通过加密的 HTTPS 协议传输。</td>
+<td style="text-align:left"><strong>必须为所有敏感 Cookie 设置</strong>。如果不设置，在不安全的 Wi-Fi 环境下，攻击者可以通过中间人攻击嗅探到 HTTP 请求中的明文 Cookie。<strong>举例</strong>： <code>Set-Cookie: sessionID=...; Secure</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>SameSite</strong></td>
+<td style="text-align:left"><strong>[防御 CSRF 的关键]</strong> 控制 Cookie 是否随跨站请求发送。</td>
+<td style="text-align:left"><strong>设置为  <code>Lax</code>  或  <code>Strict</code> </strong>。&lt;br&gt;• <strong>Strict</strong>: 最严格，完全禁止跨站发送 Cookie。&lt;br&gt;・<strong>Lax</strong> (现代浏览器默认值): 允许在顶层导航（如点击链接跳转）等安全的 GET 请求中发送，阻止在  <code>&lt;iframe&gt;</code> 、 <code>&lt;img&gt;</code>  等嵌入资源和 POST 请求中发送，能防御大部分 CSRF 攻击。&lt;br&gt;・<strong>None</strong>: 允许任何跨站请求发送，但<strong>必须同时设置  <code>Secure</code>  属性</strong>。</td>
+</tr>
+</tbody>
+</table>
+<p><strong>安全配置黄金组合示例：</strong><br>
+ <code>Set-Cookie: sessionID=a1b2c3d4e5f6; Path=/; Secure; HttpOnly; SameSite=Lax</code></p>
+<h4 id="四-现代-cookie-安全强化前缀与可信集合"><a class="anchor" href="#四-现代-cookie-安全强化前缀与可信集合">#</a> <strong>四、 现代 Cookie 安全强化：前缀与可信集合</strong></h4>
+<ol>
+<li>
+<p><strong>Cookie 前缀 (Cookie Prefixes)</strong><br>
+ 这是一种由浏览器强制执行的、更强大的安全机制，通过在 Cookie 名称前加上特定前缀来实现。</p>
+<ul>
+<li><code>__Host-</code> ：最严格的前缀。以此开头的 Cookie <strong>必须</strong>满足：
+<ol>
+<li>设置了  <code>Secure</code>  属性。</li>
+<li><code>Path</code>  属性必须为  <code>/</code> 。</li>
+<li><strong>不能</strong>设置  <code>Domain</code>  属性。<br>
+这确保了 Cookie 被锁定在特定的安全来源（HTTPS host），无法被子域覆盖。<br>
+<strong>举例</strong>： <code>Set-Cookie: __Host-id=123; Secure; Path=/</code></li>
+</ol>
+</li>
+<li><code>__Secure-</code> ：一个限制稍弱的版本。以此开头的 Cookie <strong>必须</strong>设置  <code>Secure</code>  属性。</li>
+</ul>
+</li>
+<li>
+<p><strong>SameParty 属性与 First-Party Sets</strong><br>
+ 这是一个较新的标准，旨在应对第三方 Cookie 被禁用的未来。它允许一个组织将其拥有的多个相关域名（如  <code>google.com</code> ,  <code>youtube.com</code> ）声明为一个 “第一方集合”。设置了  <code>SameParty</code>  属性的 Cookie 可以在这个集合内的站点之间传递，即使它们在技术上是跨站的。</p>
+</li>
+</ol>
+<h4 id="五-会话安全管理保护服务器端的档案"><a class="anchor" href="#五-会话安全管理保护服务器端的档案">#</a> <strong>五、 会话安全管理：保护服务器端的 “档案”</strong></h4>
+<p>即使 Cookie 本身配置得再安全，如果服务器端的会话管理存在漏洞，整个防线依然会崩溃。</p>
+<ol>
+<li>
+<p><strong>SessionID 的生命周期安全</strong></p>
+<ul>
+<li><strong>生成</strong>：SessionID 必须使用<strong>密码学安全伪随机数生成器 (CSPRNG)</strong> 生成，且长度足够（如 128 位以上），使其不可预测、无法被暴力破解。</li>
+<li><strong>传输</strong>：除了使用  <code>Secure</code>  Cookie，<strong>永远不要</strong>将会话 ID 放在 URL 中（ <code>example.com?sessionid=...</code> ）。这会导致它在 Referer 头、浏览器历史、服务器日志、网络设备日志中泄露。</li>
+<li><strong>绑定</strong>：可以将 SessionID 与客户端的 IP 地址或 User-Agent 字符串进行绑定。如果检测到变化，则立即使会话失效。这能增加会话劫持的难度，但需注意移动网络用户 IP 频繁变化可能导致的误判。</li>
+<li><strong>过期</strong>：必须设置合理的<strong>活动超时</strong>（如 30 分钟不操作即过期）和<strong>绝对超时</strong>（如 8 小时后必须重新登录）。用户<strong>点击 “注销” 时，服务器必须主动销毁该会话</strong>，而不仅仅是清除客户端 Cookie。</li>
+</ul>
+</li>
+<li>
+<p><strong>防御会话固定攻击 (Session Fixation)</strong><br>
+ 这是一种典型的逻辑漏洞，攻击流程如下：</p>
+<ol>
+<li><strong>固定</strong>：攻击者先访问网站，获取一个合法的（但未认证的）SessionID。然后，通过钓鱼邮件等方式，诱导受害者使用这个由攻击者提供的 SessionID 访问网站。</li>
+<li><strong>认证</strong>：受害者在毫不知情的情况下，使用这个被 “固定” 的 SessionID 完成了登录。服务器将这个 SessionID 与受害者的身份进行了绑定。</li>
+<li><strong>劫持</strong>：攻击者现在就可以使用这个 SessionID，直接以受害者的身份访问网站，因为这个会话已经被认证了。</li>
+</ol>
+<p><strong>核心防御措施</strong>：<strong>会话再生 (Session Regeneration)</strong>。在用户每次成功登录（或权限发生重要变化时），服务器都<strong>必须立即废弃旧的 SessionID，并为其生成一个全新的 SessionID</strong>。这样，攻击者持有的旧 ID 就立刻作废了。</p>
+</li>
+</ol>
+<h4 id="六-总结安全使用的黄金法则"><a class="anchor" href="#六-总结安全使用的黄金法则">#</a> <strong>六、 总结：安全使用的黄金法则</strong></h4>
+<ol>
+<li><strong>数据分离，信任归零</strong>：永远不要在 Cookie 中存储敏感信息（如用户角色、价格等），更不要依赖 Cookie 中的值做关键业务判断。Cookie 只应作为持有无意义 SessionID 的 “钥匙”，所有权限判断和数据都应在服务端基于 Session 进行。</li>
+<li><strong>属性齐全，配置从严</strong>：为敏感 Cookie 开启  <code>HttpOnly</code> ,  <code>Secure</code> ,  <code>SameSite=Lax/Strict</code>  保护，并使用  <code>__Host-</code>  前缀进一步加固。</li>
+<li><strong>会话生命，全程管理</strong>：从生成、传输到销毁，严格管理会话生命周期，特别是要实施会话再生机制来防御会话固定攻击。</li>
+</ol>
+<p>通过这种 “纵深防御” 的策略，将客户端的 Cookie 安全配置与服务器端的严密会话管理相结合，才能构建一个真正健壮的用户认证系统。</p>
+<blockquote>
+<p>本文参考《白帽子学 web 安全第 2 版》</p>
+<p>最终内容由 AI 整理生成</p>
+</blockquote>
+
+      <div class="tags">
+          <a href="/tags/Security/" rel="tag"><i class="ic i-tag"></i> Security</a>
+          <a href="/tags/Web/" rel="tag"><i class="ic i-tag"></i> Web</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">更新于</span>
+    <time title="修改时间：2025-06-30 01:48:28" itemprop="dateModified" datetime="2025-06-30T01:48:28+08:00">2025-06-30</time>
+  </span>
+  <span id="2025/06/30/『Web-Security』Cookie与会话安全/" class="item leancloud_visitors" data-flag-title="『Web Security』Cookie与会话安全" title="阅读次数">
+      <span class="icon">
+        <i class="ic i-eye"></i>
+      </span>
+      <span class="text">阅读次数</span>
+      <span class="leancloud-visitors-count"></span>
+      <span class="text">次</span>
+  </span>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>本文作者： </strong>N1U <i class="ic i-at"><em>@</em></i>学习·记录·碎碎念·电子墓碑
+  </li>
+  <li class="link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2025/06/30/%E3%80%8EWeb-Security%E3%80%8FCookie%E4%B8%8E%E4%BC%9A%E8%AF%9D%E5%AE%89%E5%85%A8/" title="『Web Security』Cookie与会话安全">http://example.com/2025/06/30/『Web-Security』Cookie与会话安全/</a>
+  </li>
+  <li class="license">
+    <strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2025/06/20/%E3%80%8E%E6%9E%84%E5%BB%BALLM%E3%80%8F%E8%AF%8D%E8%A2%8B%E6%A8%A1%E5%9E%8B/" itemprop="url" rel="prev" data-background-image="&#x2F;2025&#x2F;06&#x2F;20&#x2F;%E3%80%8E%E6%9E%84%E5%BB%BALLM%E3%80%8F%E8%AF%8D%E8%A2%8B%E6%A8%A1%E5%9E%8B&#x2F;cover.jpg" title="『构建LLM』词袋模型">
+  <span class="type">上一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>『构建LLM』词袋模型</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+      
+
+  <a href="/2025/07/02/%E3%80%8E%E7%A2%8E%E7%A2%8E%E5%BF%B5%E3%80%8F%E5%AE%89%E5%85%A8%E5%8C%BA/" itemprop="url" rel="next" data-background-image="&#x2F;2025&#x2F;07&#x2F;02&#x2F;%E3%80%8E%E7%A2%8E%E7%A2%8E%E5%BF%B5%E3%80%8F%E5%AE%89%E5%85%A8%E5%8C%BA&#x2F;cover.jpg" title="『碎碎念』安全区">
+  <span class="type">下一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>『碎碎念』安全区</h3>
+  </a>
+
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="文章目录">
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#cookie-%E4%B8%8E-%E4%BC%9A%E8%AF%9D%E5%AE%89%E5%85%A8"><span class="toc-number">1.</span> <span class="toc-text"> Cookie 与 会话安全</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5cookie-%E4%B8%8E-session-%E7%9A%84%E5%8D%8F%E4%BD%9C"><span class="toc-number">1.1.</span> <span class="toc-text"> 一、 基础概念：Cookie 与 Session 的协作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#cookie"><span class="toc-number">1.1.1.</span> <span class="toc-text"> Cookie</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#session"><span class="toc-number">1.1.2.</span> <span class="toc-text"> session</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cookie%E5%92%8Csession%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">1.1.3.</span> <span class="toc-text"> Cookie 和 Session 的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-number">1.1.4.</span> <span class="toc-text"> 工作流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C-cookie-%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F%E7%AC%AC%E4%B8%80%E6%96%B9%E4%B8%8E%E7%AC%AC%E4%B8%89%E6%96%B9-cookie"><span class="toc-number">1.1.4.1.</span> <span class="toc-text"> 二、 Cookie 的作用域：第一方与第三方 Cookie</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89-cookie-%E7%9A%84%E5%AE%89%E5%85%A8%E9%98%80%E9%97%A8%E8%AF%A6%E8%A7%A3%E6%A0%B8%E5%BF%83%E5%B1%9E%E6%80%A7"><span class="toc-number">1.1.4.2.</span> <span class="toc-text"> 三、 Cookie 的安全阀门：详解核心属性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%9B-%E7%8E%B0%E4%BB%A3-cookie-%E5%AE%89%E5%85%A8%E5%BC%BA%E5%8C%96%E5%89%8D%E7%BC%80%E4%B8%8E%E5%8F%AF%E4%BF%A1%E9%9B%86%E5%90%88"><span class="toc-number">1.1.4.3.</span> <span class="toc-text"> 四、 现代 Cookie 安全强化：前缀与可信集合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%94-%E4%BC%9A%E8%AF%9D%E5%AE%89%E5%85%A8%E7%AE%A1%E7%90%86%E4%BF%9D%E6%8A%A4%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E7%9A%84%E6%A1%A3%E6%A1%88"><span class="toc-number">1.1.4.4.</span> <span class="toc-text"> 五、 会话安全管理：保护服务器端的 “档案”</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%AD-%E6%80%BB%E7%BB%93%E5%AE%89%E5%85%A8%E4%BD%BF%E7%94%A8%E7%9A%84%E9%BB%84%E9%87%91%E6%B3%95%E5%88%99"><span class="toc-number">1.1.4.5.</span> <span class="toc-text"> 六、 总结：安全使用的黄金法则</span></a></li></ol></li></ol></li></ol></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="系列文章">
+      </div>
+      <div class="overview panel" data-title="站点概览">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="N1U"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">N1U</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">31</span>
+        <span class="name">文章</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">30</span>
+        <span class="name">标签</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+      <span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL04xVjY=" title="https:&#x2F;&#x2F;github.com&#x2F;N1V6"><i class="ic i-github"></i></span>
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>首页</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/archives/" rel="section"><i class="ic i-list-alt"></i>归档</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/categories/" rel="section"><i class="ic i-th"></i>分类</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/tags/" rel="section"><i class="ic i-tags"></i>标签</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/links/" rel="section"><i class="ic i-magic"></i>链接</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+        <a href="/2025/06/20/%E3%80%8E%E6%9E%84%E5%BB%BALLM%E3%80%8F%E8%AF%8D%E8%A2%8B%E6%A8%A1%E5%9E%8B/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a>
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+        <a href="/2025/07/02/%E3%80%8E%E7%A2%8E%E7%A2%8E%E5%BF%B5%E3%80%8F%E5%AE%89%E5%85%A8%E5%8C%BA/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a>
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>随机文章</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2025/01/05/%E3%80%8Eweekly%E3%80%8F%E8%B7%A8%E5%B9%B4%E5%A4%9C/" title="『weekly』博客完善工程 跨年夜">『weekly』博客完善工程 跨年夜</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2025/06/20/%E3%80%8E%E6%9E%84%E5%BB%BALLM%E3%80%8F%E8%AF%8D%E8%A2%8B%E6%A8%A1%E5%9E%8B/" title="『构建LLM』词袋模型">『构建LLM』词袋模型</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/11/29/JsonWebToken-JWT-%E5%AE%89%E5%85%A8/" title="Json Web Token(JWT)安全">Json Web Token(JWT)安全</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/12/04/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" title="PHP代码审计">PHP代码审计</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2025/06/10/MCP-Security/" title="MCP Security">MCP Security</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/11/16/JavaScript%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" title="JavaScript代码审计">JavaScript代码审计</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2025/03/20/%E6%99%AE%E5%A4%A9%E5%90%8C%E5%BA%86%EF%BC%81/" title="普天同庆">普天同庆</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2025/03/23/%E3%80%8Eweekly%E3%80%8F%E9%AA%91%E8%A1%8C%E5%B0%8F%E8%AE%B0/" title="『weekly』骑行小记">『weekly』骑行小记</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2025/07/02/%E3%80%8E%E7%A2%8E%E7%A2%8E%E5%BF%B5%E3%80%8F%E5%AE%89%E5%85%A8%E5%8C%BA/" title="『碎碎念』安全区">『碎碎念』安全区</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2025/02/16/%E3%80%8Eweekly%E3%80%8F%E8%AF%BB%E4%BB%A3%E7%A0%81%E4%B9%8B%E5%A4%96%E7%9A%84%E8%BD%AF%E6%8A%80%E8%83%BD-%E6%83%85%E4%BA%BA%E8%8A%82%E7%9A%84%E7%9B%B4%E6%92%AD/" title="『weekly』读代码之外的软技能 情人节的直播">『weekly』读代码之外的软技能 情人节的直播</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>最新评论</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">N1U @ N1V</span>
+  </div>
+  <div class="powered-by">
+    基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2025/06/30/『Web-Security』Cookie与会话安全/',
+    favicon: {
+      show: "欢迎回来",
+      hide: "N1V6"
+    },
+    search : {
+      placeholder: "文章搜索",
+      empty: "关于 「 ${query} 」，什么也没搜到",
+      stats: "${time} ms 内找到 ${hits} 条结果"
+    },
+    valine: true,fancybox: true,
+    copyright: '复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>
